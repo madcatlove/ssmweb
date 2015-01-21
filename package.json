@@ -14,6 +14,7 @@
     "express": "~4.11.0",
     "express-session": "^1.10.1",
     "morgan": "~1.5.1",
+    "mysql": "^2.5.4",
     "redis-session": "^0.1.0",
     "serve-favicon": "~2.2.0"
   }
