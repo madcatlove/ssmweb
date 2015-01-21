@@ -5,9 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//----------------------------------------------
+// Session part with Redis store
+//----------------------------------------------
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+var redisConfig = require('./config/redisConfig');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
 var app = express();
 
 // view engine setup
@@ -19,20 +25,46 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 
+
+//---------------------------
+// Session handler
+//---------------------------
+var redisSessionStore = new RedisStore({
+   host : redisConfig.host,
+   port : redisConfig.port,
+   db   : redisConfig.db,
+});
+
+app.use( session({
+    store : redisSessionStore,
+    secret: '!@#$SECMEM!@#$',
+    resave: false,
+    saveUninitialized: true,
+    //proxy: true,
+    //cookie: { secure: true }
+}));
+app.use( redisConfig.errorHandler );
+
+
+//---------------------------
+// ROUTING ( 미들웨어 / 라우팅 )
+//---------------------------
 app.use('/', routes);
 app.use('/users', users);
 
-// catch 404 and forward to error handler
+
+//---------------------------
+// 에러 핸들 미들웨어
+//---------------------------
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-// error handlers
 
 // development error handler
 // will print stacktrace
