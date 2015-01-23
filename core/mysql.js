@@ -14,7 +14,18 @@ var pool = mysql.createPool({
     password : mysqlConfig.userpwd,
     database : mysqlConfig.userdb,
     charset : 'utf8_general_ci'
-})
+});
+
+var db = {
+    getConnection : function(resultCallback) {
+        pool.getConnection( function( err, connection) {
+            if( err ) {
+                throw err;
+            }
+            resultCallback(connection);
+        })
+    }
+};
 
 /* EXPORT */
-module.exports = pool;
+module.exports = db;

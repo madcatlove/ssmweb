@@ -4,7 +4,8 @@
 
 var express = require('express'),
     router = express.Router(),
-    assert = require('assert');
+    assert = require('assert'),
+    util = require('../Util');
 
 var tutorialController = require('../controller/tutorialCont');
 
@@ -12,9 +13,10 @@ var tutorialController = require('../controller/tutorialCont');
 router.use( function(req, res, next) {
     console.log( req.params );
     next();
+
 });
 router.use('/:tid([0-9]+)', function(req, res, next) {
-    assert( req.params.tid > 0 , ' TID Must Bigger than 0 ' );
+    util.assert( req.params.tid > 0 , '잘못된 접근', 403);
     req.tid = parseInt( req.params.tid );
     next();
 });
