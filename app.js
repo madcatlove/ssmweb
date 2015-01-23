@@ -12,9 +12,9 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var redisConfig = require('./config/redisConfig');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+//----------------------------------------------
 var app = express();
+var coreRoute = require('./core/route/route');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +25,9 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'static')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
 app.use(cookieParser());
 
 
@@ -52,8 +54,7 @@ app.use( redisConfig.errorHandler );
 //---------------------------
 // ROUTING ( 미들웨어 / 라우팅 )
 //---------------------------
-app.use('/', routes);
-app.use('/users', users);
+coreRoute(app);
 
 
 //---------------------------
