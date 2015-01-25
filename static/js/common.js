@@ -45,7 +45,19 @@ var urlReq = (function() {
 })();
 
 
+//--------------------------------------------------------------
+// 로그인 처리 부분
+//--------------------------------------------------------------
 
+$(document).ready( function() {
+   console.log( $('#loginModal') );
+   $('#loginModal').on('show.bs.modal', function() {
+       // 모달창 내부 모든 인풋 초기화.
+       $('#loginModal').find('input').each( function() {
+           $(this).val('');
+       })
+   });
+});
 
 var procMemberLogin = function() {
 
@@ -65,7 +77,12 @@ var procMemberLogin = function() {
     }
 
     urlReq.post('/member/login', sParam, function(result) {
-        console.log( result );
+        if( result.error ) {
+            alert( result.data );
+            return false;
+        }
+        alert( result.data );
+
     })
 
 
