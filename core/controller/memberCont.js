@@ -29,6 +29,8 @@ var controller = {
      */
     renderJoin : function(req, res) {
 
+        res.render('member_join', {} );
+
     },
 
     /* 회원로그인 처리 컨트롤러 */
