@@ -7,7 +7,7 @@ var memberService = require('../service/memberSvc');
 var controller = {
 
     /**
-     * 회원가입 컨트롤러
+     * 회원가입 처리 컨트롤러
      * Request param : s_userid, s_userpwd, s_userpwd2
      */
     procJoin : function(req, res) {
@@ -22,7 +22,16 @@ var controller = {
 
     },
 
-    /* 회원로그인 컨트롤러 */
+    /**
+     * 회원가입 뷰 컨트롤러.
+     * @param req
+     * @param res
+     */
+    renderJoin : function(req, res) {
+
+    },
+
+    /* 회원로그인 처리 컨트롤러 */
     procLogin : function(req, res) {
 
         console.log(req.body);

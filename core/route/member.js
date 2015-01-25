@@ -18,7 +18,10 @@ router.use( function(req, res, next) {
 
 
 /* Routing */
-router.post('/login', memberController.procLogin);
+router.post('/login', memberController.procLogin); // 로그인 처리.
+
+router.get('/join', memberController.renderJoin);
+router.post('/join', memberController.procJoin);
 
 
 

@@ -1,2 +1,34 @@
+
+<!-- Login Modal -->
+<div class="modal fade" data-backdrop="static" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Member Login</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="userid">UserID</label>
+                        <input type="email" class="form-control" id="userid" placeholder="Enter User ID" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userpwd">UserPassword</label>
+                        <input type="password" class="form-control" id="userpwd" placeholder="Enter User Password" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-info">회원가입</button>
+                <button type="button" class="btn btn-primary" onclick="void(procMemberLogin());">로그인</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 </body>
 </html>

@@ -1,0 +1,41 @@
+<%- include header.ejs %>
+
+<!-- 점보트론 -->
+<div class="jumbotron">
+    <div class="container">
+        <h1> 회원 가입 </h1>
+        <p> 회원 가입후에 튜토리얼과 자유 그리기를 이용하실 수 있습니다. </p>
+    </div>
+</div>
+
+<!-- 회원가입 폼 -->
+<div class="container">
+
+    <form role="form">
+        <!-- 유저 아이디 -->
+        <div class="form-group">
+            <label for="userid">UserID</label>
+            <input type="text" class="form-control" id="userid" placeholder="Enter UserID" />
+        </div>
+
+        <!-- 유저 비밀번호 1 -->
+        <div class="form-group">
+            <label for="userpwd">Password</label>
+            <input type="password" class="form-control" id="userpwd" placeholder="Enter User Password" />
+        </div>
+
+        <!-- 유저 비밀번호 2 -->
+        <div class="form-group">
+            <label for="userpwd2">Re-type</label>
+            <input type="password" class="form-control" id="userpwd2" placeholder="Enter User Password" />
+        </div>
+
+        <!-- 서브밋 -->
+        <button class="btn btn-primary">회원가입</button>
+
+    </form>
+
+</div>
+
+
+<%- include footer.ejs %>
