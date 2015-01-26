@@ -36,18 +36,29 @@ var judgeChpt1 = {
 
         ];
 
-        jMath.normal3f(dummy[0], dummy[1], dummy[2]);
-
-
+        jMath.area2f(dummy);
     },
 
     quadangle : function(data, callback) {
+        var dummy = [
+            [-1.0, 1.0, 0.0],
+            [-1.0, -1.0, 0.0],
+            [1.0, -1.0, 0.0],
+            [1.0, 1.0, 0.0]
+        ];
 
-
+        jMath.area2f(dummy);
     },
 
     polygon : function(data, callback) {
+        var dummy = [
+            [-1.0, 1.0, 0.0],
+            [-1.0, -1.0, 0.0],
+            [1.0, -1.0, 0.0],
+            [1.0, 1.0, 0.0]
+        ];
 
+        jMath.area2f(dummy);
     }
 };
 

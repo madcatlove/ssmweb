@@ -4,34 +4,50 @@
 
 var math = {
 
-    distance2f : function (p1, p2) {
+    distance2f : function (p) {
         return Math.sqrt(
-            Math.pow((p2[0] - p1[0]), 2) +
-            Math.pow((p2[1] - p1[1]), 2)
+            Math.pow((p[1][0] - p[0][0]), 2) +
+            Math.pow((p[1][1] - p[0][1]), 2)
         );
     },
 
-    distance3f : function (p1, p2) {
+    distance3f : function (p) {
         return Math.sqrt(
-            Math.pow((p2[0] - p1[0]), 2) +
-            Math.pow((p2[1] - p1[1]), 2) +
-            Math.pow((p2[2] - p1[2]), 2)
+            Math.pow((p[1][0] - p[0][0]), 2) +
+            Math.pow((p[1][1] - p[0][1]), 2) +
+            Math.pow((p[1][2] - p[0][2]), 2)
         );
     },
 
-    //area2f : function (p1)
+    area2f : function (p) {
+        var res = 0;
 
-    normal3f : function (p1, p2, p3) {
+        for (var i = 0 ; i < p.length  ; i ++) {
+            if (i == p.length - 1) {
+                res += p[i][0] * p[0][1];
+                res -= p[0][0] * p[i][1];
+            } else {
+                res += p[i][0] * p[i + 1][1];
+                res -= p[i + 1][0] * p[i][1];
+            }
+        }
+        res /= 2;
+        console.log('area2f = ' + res);
+
+        return res;
+    },
+
+    normal3f : function (p) {
         var v1 = [
-            p1[0] - p2[0],
-            p1[1] - p2[1],
-            p2[2] - p2[2]
+            p[0][0] - p[1][0],
+            p[0][1] - p[1][1],
+            p[0][2] - p[1][2]
         ];
 
         var v2 = [
-            p2[0] - p3[0],
-            p2[1] - p3[1],
-            p2[2] - p3[2]
+            p[1][0] - p[2][0],
+            p[1][1] - p[2][1],
+            p[1][2] - p[2][2]
         ];
 
         var out = [
