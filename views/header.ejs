@@ -16,6 +16,14 @@
 
     <!-- common js -->
     <script type="text/javascript" src="/static/js/common.js"></script>
+
+    <!-- Additional Scripts -->
+    <% if (extraJS) { %>
+        <% extraJS.forEach( function(js) { %>
+            <script type="text/javascript" src="/static/js/<%= js %>"></script>
+        <% }) %>
+    <% } %>
+
 </head>
 <body>
 

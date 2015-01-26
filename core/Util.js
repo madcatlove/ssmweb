@@ -10,20 +10,11 @@ var utility = {
     },
 
     /* Create data response */
-    result : function(data, isError, ErrorMessage) {
+    result : function(data, isError) {
         var s;
-
-        if( isError ) {
-            s = {
-                data : ErrorMessage,
-                error : true
-            }
-        }
-        else {
-            s = {
-                data : data,
-                error : false
-            }
+        s = {
+            data : data,
+            error : (isError == true )
         }
 
         return s;
@@ -37,6 +28,7 @@ var utility = {
      */
     error : function( message , statusCode ) {
         var e = new Error(message);
+        e.eType = 'internal'; // 미들웨어에서 이값이 있으면 json 으로 에러 덤프.
         e.message = message;
         e.status = statusCode || 500;
         return e;

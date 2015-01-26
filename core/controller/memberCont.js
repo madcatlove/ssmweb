@@ -29,7 +29,11 @@ var controller = {
      */
     renderJoin : function(req, res) {
 
-        res.render('member_join', {} );
+        var opt = {
+            extraJS : ['member.js'], // 추가 JS 파일 (헤더에 인클루드됨)
+        }
+
+        res.render('member_join', opt);
 
     },
 
@@ -59,7 +63,7 @@ var controller = {
                 memberService.createMemberSession(req, result);
             }
             else { // 로그인 실패시
-                r = u.result(false, true, '로그인 실패');
+                r = u.result('로그인 실패', true);
             }
 
             res.json( r );

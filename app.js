@@ -71,13 +71,21 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
-        console.error(' Error Occur ',  err );
+        console.error('//----- Error Occur ----// ',  err );
 
         res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+
+        /* 에러에 eType 가 있고 internal 값을 가지고있으면 JSON 으로 렌더링 */
+        if( err.hasOwnProperty('eType') && err.eType == 'internal' ) {
+            res.json( u.result(err.message, true) );
+        }
+        /* 아니라면 에러 view 페이지로 렌더링 */
+        else {
+            res.render('error', {
+                message: err.message,
+                error: err
+            });
+        }
     });
 }
 

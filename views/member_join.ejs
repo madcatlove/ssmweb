@@ -11,7 +11,7 @@
 <!-- 회원가입 폼 -->
 <div class="container">
 
-    <form role="form">
+    <form id="member_join" role="form" onsubmit="return false;">
         <!-- 유저 아이디 -->
         <div class="form-group">
             <label for="userid">UserID</label>
@@ -31,7 +31,7 @@
         </div>
 
         <!-- 서브밋 -->
-        <button class="btn btn-primary">회원가입</button>
+        <button class="btn btn-primary" onclick="void(procMemberJoin());">회원가입</button>
 
     </form>
 
