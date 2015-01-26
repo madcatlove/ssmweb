@@ -1,12 +1,39 @@
 <%- include header.ejs %>
 
+<script type="text/javascript">
+    var dd;
+    $(document).ready( function() {
+
+        dd = new dragDropBlockList();
+
+        var s;
+        s = new sBlock(1).setBlockType(1).initBlock();
+        console.log( s );
+        dd.append(s);
+        s = new sBlock(2).setBlockType(2).initBlock();;
+        dd.append(s);
+        s = new sBlock(3).setBlockType(3).initBlock();;
+        dd.append(s);
+        s = new sBlock(3).setBlockType(3).initBlock();;
+        dd.append(s);
+        s = new sBlock(3).setBlockType(3).initBlock();;
+        dd.append(s);
+
+        dd.init();
+        dd.eventRun();
+
+
+    });
+</script>
+
+
 <div class="container-fluid" style="padding-top:60px; height:100%;">
     <div class="row" style="height: 100%;">
 
 
 
         <!-- 좌측 메뉴 -->
-        <div class="col-md-2">
+        <div class="col-md-3 block_leftside">
 
             <!-- 과제 메뉴 -->
             <div class="btn-group" style="width: 100%;">
@@ -58,35 +85,79 @@
             <!-- // 해볼것 -->
 
         </div>
+        <!-- //좌측 메뉴 -->
+
+
+
+
 
         <!-- 중앙 블락 조합 -->
-        <div class="col-md-7" style="overflow-y: scroll; height:100%;">
-            <!-- 블락 리스트 -->
-            <div style="border-bottom: 1px solid #cccccc; height: 20%;">
-                <div id="blocklist">
-                    <div class="blockitem">1</div>
-                    <div class="blockitem">2</div>
-                    <div class="blockitem">3</div>
-                    <div class="blockitem">4</div>
+        <div class="col-md-5" style="overflow-y: scroll; height:100%;">
+
+            <div class="col-md-5" style="height: 100%">
+                <!-- 블락 리스트 -->
+                <div style="border-right: 1px solid #cccccc; height: 100%;">
+                    <div id="blocklist">
+
+                    </div>
                 </div>
             </div>
 
-            <!-- 스택 리스트 -->
-            <div style="height: 80%;">
+            <div class="col-md-7" style="height: 100%;">
+                <div style="height: 100%">
 
-                <div id="stacklist" style="margin: auto;">
+                    <div id="stacklist" style="margin: auto;">
+                    </div>
 
                 </div>
 
+                <button onclick="void( console.log( JSON.stringify(dd.blocksToJSON()) ));">toJSON</button>
             </div>
         </div>
+        <!-- // 중앙 블락 조합 -->
+
+
+
+
 
         <!-- 우측 렌더링 부분 -->
-        <div class="col-md-3" style="height: 100%;">
+        <div class="col-md-4" style="height: 100%;">
             <div  style="background: steelblue;  height: 60%;" id="srender"></div>
             <div  style="background: chartreuse; height: 40%;">2</div>
         </div>
+        <!-- // 우측 렌더링 부분 -->
+
+
     </div>
 </div>
+
+
+<!-- 튜토리얼 모달창 -->
+<!-- Modal -->
+<div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="tutorialModalWindow" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"> 튜토리얼 가이드 </h4>
+            </div>
+            <div class="modal-body">
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <%- include footer.ejs %>

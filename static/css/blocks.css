@@ -23,3 +23,9 @@
     border: 1px solid #4A4B4D;
     box-shadow: 2px 2px 2px black;
 }
+
+.block_leftside {
+    padding-right : 20px;
+    border-right: 1px solid #cccccc;
+}
+
