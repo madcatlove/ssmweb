@@ -9,6 +9,8 @@ var controller = {
         var sess = req.session;
 
         var opt = {
+            extraJS : ['moveblock.js'],
+            extraCSS : ['blocks.css'],
             member : sess.member
 
         }
