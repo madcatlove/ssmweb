@@ -5,33 +5,33 @@
 var judgeChpt3 = {
 
     // Chpt3 - Matrix
-    translate : function (req, res) {
+    translate : function (data, callback) {
 
     },
 
-    rotate : function (req, res) {
+    rotate : function (data, callback) {
 
     },
 
-    scale : function (req, res) {
+    scale : function (data, callback) {
 
     },
 
-    pushPop : function (req, res) {
+    pushPop : function (data, callback) {
 
     },
 
     // Chpt3 - Camera
-    camera : function (req, res) {
+    camera : function (data, callback) {
 
     },
 
     // Chpt3 - Light
-    dirLight : function (req, res) {
+    dirLight : function (data, callback) {
 
     },
 
-    spotLight : function (req, res) {
+    spotLight : function (data, callback) {
 
     }
 };

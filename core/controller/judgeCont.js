@@ -15,10 +15,8 @@ var controller = {
         var jid = req.jid;
         var data = req.jid;
 
-        console.log( 'judge number : ', req.jid );
-
-        judgeService.execJudge(jid, data, function(judgeRes) {
-            res.send(judgeRes + "");
+        judgeService.execJudge(jid, data, function(isOk) {
+            res.send( {'isOk' : isOk} );
 
         });
 

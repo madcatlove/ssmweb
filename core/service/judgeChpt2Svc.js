@@ -4,20 +4,20 @@
 
 var judgeChpt2 = {
 
-    rect : function (req, res) {
+    rect : function (data, callback) {
 
     },
 
-    pyramid : function (req, res) {
+    pyramid : function (data, callback) {
 
     },
 
-    circle : function(req, res) {
+    circle : function(data, callback) {
 
 
     },
 
-    cylinder : function(req, res) {
+    cylinder : function(data, callback) {
 
     }
 
