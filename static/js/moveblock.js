@@ -45,12 +45,12 @@ $(document).ready( function() {
     var trashAppend = function(item) {
         var $handler = ( $('ul', $trash).length ) ? $('ul', $trash) : $("<ul />").appendTo($trash);
 
-        item.appendTo( $handler );
+        item.prependTo( $handler );
     }
 
     var stackAppend = function(item) {
 
-        item.appendTo( $stack );
+        item.prependTo( $stack );
     }
 
 
