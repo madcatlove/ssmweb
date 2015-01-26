@@ -16,7 +16,7 @@ var dataAccess = {
                 if( err ) {
                     throw u.error(err.message, 500);
                 }
-                resultCallback( result );
+                resultCallback( result[0] );
                 conn.release();
             })
         })

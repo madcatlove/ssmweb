@@ -18,6 +18,23 @@ var controller = {
         u.assert( s_userid.length > 0 , null);
         u.assert( s_userpwd > 0 && s_userpwd == s_userpwd2, null);
 
+        var member = {
+            userid: s_userid,
+            userpwd : s_userpwd
+        }
+
+        /* 이미 있는 회원인지 검사 */
+        memberService.getMemberById(s_userid, function(result) {
+            if( result ) {
+                throw u.error(' 이미 존재하는 회원', 500);
+                return false;
+            }
+
+            /* 가입 절차 진행 */
+            memberService.insertMember(member, function(fresult) {
+                res.json( fresult );
+            })
+        })
 
 
     },
