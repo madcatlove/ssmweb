@@ -9,16 +9,13 @@ var controller = {
         var sess = req.session;
 
         var opt = {
-            extraJS : ['moveblock.js'],
+            extraJS : ['moveblock.js', 'threejs/three.js'],
             extraCSS : ['blocks.css'],
             member : sess.member
 
         }
         res.render('tutorial', opt);
     }
-
-
-
 
 
 }
