@@ -2,9 +2,11 @@
  * Created by madcat on 1/26/15.
  */
 
-
-
-var procMemberJoin = function() {
+/**
+ * Member Join
+ * @returns {boolean}
+ */
+function procMemberJoin() {
 
     var userid = $('form#member_join #userid');
     var userpwd = $('form#member_join #userpwd');
@@ -43,6 +45,51 @@ var procMemberJoin = function() {
             alert(' 회원가입이 정상적으로 완료되었습니다. ');
             window.location.href = '/';
             return false;
+        }
+    })
+
+}
+
+/**
+ * Member Login
+ * @returns {boolean}
+ */
+function procMemberLogin() {
+
+    var $wLogin = $('#loginModal');
+
+    var userid = $wLogin.find('input').eq(0).val().trim();
+    var userpwd = $wLogin.find('input').eq(1).val().trim();
+
+    if( userid.length == 0 || userpwd.length == 0) {
+        alert(' 모든 항목을 입력하셔야 합니다. ');
+        return false;
+    }
+
+    var sParam = {
+        userid : userid,
+        userpwd : userpwd
+    }
+
+    urlReq.post('/member/login', sParam, function(result) {
+        if( result.error ) {
+            alert( result.data );
+            return false;
+        }
+        alert(' 반갑습니다. ');
+        $wLogin.hide();
+
+    })
+
+
+}
+
+function procMemberLogout() {
+
+    urlReq.get('/member/logout', {}, function(result) {
+        if( !result.error) {
+            alert(' 정상적으로 로그아웃 되었습니다. ');
+            window.location.reload();
         }
     })
 

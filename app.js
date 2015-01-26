@@ -65,7 +65,6 @@ app.use(function(req, res, next) {
         next();
     });
     sdomain.on('error', function(e) {
-        console.log(' /-- DOMAIN ERROR --/ ', e);
         next(e);
     });
 });
@@ -87,7 +86,11 @@ app.use(function(req, res, next) {
 console.log( app.get('env') );
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
-        console.log(' //----- ERROR HANDLER ------// ', err);
+        console.error(' //----- ERROR HANDLER ------// ');
+        console.error( err );
+        console.error( err.stack );
+
+
         res.status(err.status || 500);
 
         /* 에러에 eType 가 있고 internal 값을 가지고있으면 JSON 으로 렌더링 */

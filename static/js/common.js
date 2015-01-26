@@ -58,32 +58,3 @@ $(document).ready( function() {
        })
    });
 });
-
-var procMemberLogin = function() {
-
-    var $wLogin = $('#loginModal');
-
-    var userid = $wLogin.find('input').eq(0).val().trim();
-    var userpwd = $wLogin.find('input').eq(1).val().trim();
-
-    if( userid.length == 0 || userpwd.length == 0) {
-        alert(' 모든 항목을 입력하셔야 합니다. ');
-        return false;
-    }
-
-    var sParam = {
-        userid : userid,
-        userpwd : userpwd
-    }
-
-    urlReq.post('/member/login', sParam, function(result) {
-        if( result.error ) {
-            alert( result.data );
-            return false;
-        }
-        alert( result.data );
-
-    })
-
-
-};

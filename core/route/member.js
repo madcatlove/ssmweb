@@ -20,10 +20,10 @@ router.use( function(req, res, next) {
 /* Routing */
 router.post('/login', memberController.procLogin); // 로그인 처리.
 
-router.get('/join', memberController.renderJoin);
-router.post('/join', memberController.procJoin);
+router.get('/join', memberController.renderJoin); // 회원가입 페이지
+router.post('/join', memberController.procJoin); // 회원가입 처리
 
-
+router.get('/logout', memberController.procLogout); // 로그아웃 처리.
 
 
 

@@ -24,9 +24,9 @@ var controller = {
         }
 
         /* 이미 있는 회원인지 검사 */
-        memberService.getMemberById(s_userid, function(result) {
+        memberService.getMemberById( member.userid, function(result) {
 
-            if( result.length != 0 ) {
+            if( result ) {
                 res.json(u.result('이미 존재하는 회원', true));
                 return;
             }
@@ -63,8 +63,6 @@ var controller = {
         var s_userid = u.trim( req.body.userid);
         var s_userpwd = u.trim( req.body.userpwd);
 
-        console.log( 'sfsdf ' );
-
 
         u.assert( s_userid.length > 0 );
         u.assert( s_userpwd.length > 0 );
@@ -76,6 +74,7 @@ var controller = {
 
         memberService.procMemberLogin(sParam, function(result) {
             var r;
+
             if( result ) { // 로그인 성공시.
                 r = u.result(true, false);
                 memberService.createMemberSession(req, result);

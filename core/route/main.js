@@ -13,19 +13,17 @@ router.use( function(req, res, next) {
 //------------------------
 
 router.get('/', function(req, res) {
-    console.log(req.session);
     var sess = req.session;
-    sess.user_name = 'kr.madcat@gmail.com';
-    sess.user_time = new Date();
-    res.render('index')
-});
 
+    console.log(sess);
 
-router.get('/test', function(req, res) {
+    var opt = {
+        extraJS : ['member.js'],
+        member : sess.member
+    }
 
-    res.render('test', {
-        title : '제목이당'
-    });
+    res.render('index', opt);
+
 });
 
 
