@@ -4,7 +4,7 @@
 
 var controller = {
 
-    judge : function (req, res) {
+    procJudge : function (req, res) {
 
         // judge 번호는
         // 미들웨어에서 jid 로 req 에 삽입되서 넘어온다.

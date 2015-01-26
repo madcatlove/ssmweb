@@ -9,30 +9,31 @@ var judgeChpt3 = {
 
     },
 
-    translate : function (req, res) {
+    rotate : function (req, res) {
 
     },
 
-    translate : function (req, res) {
+    scale : function (req, res) {
 
     },
 
-    translate : function (req, res) {
+    pushPop : function (req, res) {
 
     },
 
-    // Chpt3 - Matrix
-    translate : function (req, res) {
+    // Chpt3 - Camera
+    camera : function (req, res) {
 
     },
 
-    translate : function (req, res) {
+    // Chpt3 - Light
+    dirLight : function (req, res) {
 
     },
 
-    translate : function (req, res) {
+    spotLight : function (req, res) {
 
-    },
+    }
 };
 
 
