@@ -9,7 +9,7 @@ var controller = {
         var sess = req.session;
 
         var opt = {
-            extraJS : ['moveblock.js', 'threejs/three.js'],
+            extraJS : ['moveblock.js', 'threejs/three.js', 'threejs/blocklib.js'],
             extraCSS : ['blocks.css'],
             member : sess.member
 
