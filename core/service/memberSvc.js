@@ -26,7 +26,7 @@ var service = {
         };
 
         memberDA.insertMember( sMember, function(result) {
-
+            resultCallback(result);
         })
     },
 

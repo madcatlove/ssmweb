@@ -25,9 +25,10 @@ var controller = {
 
         /* 이미 있는 회원인지 검사 */
         memberService.getMemberById(s_userid, function(result) {
-            if( result ) {
-                throw u.error(' 이미 존재하는 회원', 500);
-                return false;
+
+            if( result.length != 0 ) {
+                res.json(u.result('이미 존재하는 회원', true));
+                return;
             }
 
             /* 가입 절차 진행 */

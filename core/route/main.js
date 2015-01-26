@@ -22,7 +22,6 @@ router.get('/', function(req, res) {
 
 
 router.get('/test', function(req, res) {
-    console.info(' entering test ');
 
     res.render('test', {
         title : '제목이당'

@@ -16,7 +16,8 @@ var dataAccess = {
                 if( err ) {
                     throw u.error(err.message, 500);
                 }
-                resultCallback( result[0] );
+
+                resultCallback( result );
                 conn.release();
             })
         })
@@ -26,8 +27,10 @@ var dataAccess = {
         var queryStatement = 'INSERT INTO memberInfo (userid, userpwd, regdate) VALUES (?,?, NOW())';
 
         db.getConnection( function(conn) {
+            console.log( conn );
             conn.query( queryStatement, [ member.userid, member.userpwd ], function(err, result) {
                 if( err ) {
+                    console.log( ' err ' , err );
                     throw u.error( err.message, 500);
                 }
                 resultCallback( result.insertId );

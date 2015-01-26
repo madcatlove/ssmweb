@@ -34,6 +34,7 @@ var procMemberJoin = function() {
     }
 
     urlReq.post('/member/join', sParam, function(result) {
+        console.log( result );
         if( result.error ) {
             alert( result.data );
             return false;

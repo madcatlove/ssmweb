@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var domain = require('domain');
+var u = require('./core/Util');
+
 
 //----------------------------------------------
 // Session part with Redis store
@@ -27,9 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(express.static(path.join(__dirname, 'static')));
 app.use('/static', express.static(path.join(__dirname, 'static')));
-
 app.use(cookieParser());
-
 
 //---------------------------
 // Session handler
@@ -54,6 +55,20 @@ app.use( redisConfig.errorHandler );
 //---------------------------
 // ROUTING ( 미들웨어 / 라우팅 )
 //---------------------------
+app.use( require('express-domain-middleware') );
+app.use(function(req, res, next) {
+    var sdomain = domain.create();
+
+    sdomain.add(req);
+    sdomain.add(res);
+    sdomain.run(function() {
+        next();
+    });
+    sdomain.on('error', function(e) {
+        console.log(' /-- DOMAIN ERROR --/ ', e);
+        next(e);
+    });
+});
 coreRoute(app);
 
 
@@ -69,10 +84,10 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
+console.log( app.get('env') );
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
-        console.error('//----- Error Occur ----// ',  err );
-
+        console.log(' //----- ERROR HANDLER ------// ', err);
         res.status(err.status || 500);
 
         /* 에러에 eType 가 있고 internal 값을 가지고있으면 JSON 으로 렌더링 */

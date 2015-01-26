@@ -27,6 +27,7 @@ var utility = {
      * @returns {Error}
      */
     error : function( message , statusCode ) {
+        console.log( message , statusCode, ' 에러 생김 ');
         var e = new Error(message);
         e.eType = 'internal'; // 미들웨어에서 이값이 있으면 json 으로 에러 덤프.
         e.message = message;
