@@ -14,11 +14,12 @@ var judge = [
 
 var service = {
 
-    execJudge : function(req, res) {
+    execJudge : function(jid, data, callback) {
         // chapter number(1 ~ 3), chapter sequence (1 ~ 8)
+        // getNumber From DA
         var chpt = 0, seq = 0;
 
-        judge[chpt][seq](res,req);
+        judge[chpt][seq](data, callback);
     }
 
 }
