@@ -41,7 +41,7 @@ var service = {
         };
 
         memberDA.getMemberById( sMember.userid, function(result) {
-            console.log( result, sMember.userpwd == result.userpwd, sMember.userpwd );
+
             if( result && result.userpwd == sMember.userpwd) {
                 resultCallback( result );
             }

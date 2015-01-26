@@ -6,7 +6,13 @@ var controller = {
 
     /* 튜토리얼 진행 컨트롤러 */
     procTutorial : function(req, res) {
-        res.send( 'Hello' + req.tid );
+        var sess = req.session;
+
+        var opt = {
+            member : sess.member
+
+        }
+        res.render('tutorial', opt);
     }
 
 
