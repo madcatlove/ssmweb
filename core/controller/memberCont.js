@@ -69,7 +69,8 @@ var controller = {
 
     /* 회원로그아웃 컨트롤러 */
     procLogout : function(req, res) {
-
+        memberService.removeMemberSession(req);
+        res.json( u.result(true, false) );
     },
 }
 

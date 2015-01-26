@@ -62,6 +62,17 @@ var service = {
         };
     },
 
+    /* 세션 만료 */
+    removeMemberSession : function(req) {
+        var sess = req.session;
+        if( !sess) return;
+
+        if( sess.hasOwnProperty('member') ) {
+            delete sess.member;
+            sess.member = null;
+        }
+    },
+
     /* 세션 멤버정보와 주어진 멤버 정보가 같은지 ? */
     assertMemberEqual : function(req, member) {
         var sess = req.session;
