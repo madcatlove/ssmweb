@@ -26,11 +26,18 @@ sGL.prototype.initRenderer = function() {
     return this;
 }
 
+sGL.prototype.reconstruct = function() {
+    this.initAll().insertDOM();
+    return this;
+}
+
+
 /**
  * DOM 에 Renderer 추가.
  */
 sGL.prototype.insertDOM = function() {
     this.targetView.html( this.renderer.domElement );
+    return this;
 }
 
 /**
