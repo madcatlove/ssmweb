@@ -14,7 +14,7 @@ var judgeChpt1 = require('./judgeChpt1Svc'),
  */
 var judge = [
     [judgeChpt1.point, judgeChpt1.line, judgeChpt1.triangle, judgeChpt1.quadangle, judgeChpt1.polygon],
-    [judgeChpt2.rect, judgeChpt2.pyramid, judgeChpt2.circle, judgeChpt2.cylinder],
+    [judgeChpt2.rect, judgeChpt2.pyramid, judgeChpt2.sphere, judgeChpt2.cylinder],
     [judgeChpt3.rotate, judgeChpt3.translate, judgeChpt3.scale, judgeChpt3.pushPop, judgeChpt3.camera, judgeChpt3.dirLight, judgeChpt3.spotLight]
 ];
 
@@ -29,13 +29,13 @@ var service = {
 
         tutorialDA.getTutorialInfo(params.jid, function(result) {
 
-            var tutorial = result[0];
+          //  var tutorial = result[0];
 
-            var chptSeq = tutorial.chapterSeq - 1;
-            var probSeq = tutorial.problemSeq - 1;
+            //var chptSeq = tutorial.chapterSeq - 1;
+           // var probSeq = tutorial.problemSeq - 1;
 
-            judge[chptSeq][probSeq](params, callback);
-
+//            judge[chptSeq][probSeq](params, callback);
+            judge[1][0](params, callback);
         });
 
     }

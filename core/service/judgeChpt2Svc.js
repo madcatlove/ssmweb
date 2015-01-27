@@ -8,10 +8,14 @@ var judgeChpt2 = {
 
     /**
      * 직육면체 판정
+     * 1. 각 면에 대한 노멀벡터를 구하여 반대 면에 대한 벡터의 합이 0인지 확인
+     * 2. 3쌍의 벡터의 합이 모두 0이면 통과
+     * 3. 각 면에 대한 벡터의 크기는 면에 크기에 따라 다르므로 넓이를 구하여 계산 할 필요 없음
      * @param data
      * @param callback
      */
     rect : function (data, callback) {
+
         var dummy = [
             // CCW
             [-1.0, 1.0, 1.0],
@@ -46,6 +50,8 @@ var judgeChpt2 = {
             }
         }
 
+        console.log(normals);
+
         //return (res[0] == 0) && (res[1] == 0) && (res[2] == 0);
 
     },
@@ -64,7 +70,7 @@ var judgeChpt2 = {
      * @param data
      * @param callback
      */
-    circle : function(data, callback) {
+    sphere : function(data, callback) {
         var dummy = [0.0, 0.0, 0.0, 5];
 
     },

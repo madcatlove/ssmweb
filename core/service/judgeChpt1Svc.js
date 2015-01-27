@@ -20,7 +20,7 @@ var judgeChpt1 = {
 
     /**
      * 선 판정
-     * 1. 선은 2개의 점이 필요함
+     * 1. 2개의 점
      * 2.
      * @param data
      * @param callback
@@ -44,6 +44,8 @@ var judgeChpt1 = {
 
     /**
      * 삼각형 판정
+     * 1. 점이 3개 필요
+     * 2. 세개의 점의 패러미터와 위치가 일치
      * @param data
      * @param callback
      */
@@ -60,10 +62,13 @@ var judgeChpt1 = {
 
     /**
      * 사각형 판정
+     * 1. 시작점 비교
+     * 2. 넓이 비교( 넓이를 구할 때 CCW가 보장되어야 하므로 방향이 다른 경우에 결과가 다름)
      * @param data
      * @param callback
      */
     quadangle : function(data, callback) {
+        console.log("quadangle");
         var dummy = [
             [-1.0, 1.0, 0.0],
             [-1.0, -1.0, 0.0],
@@ -75,7 +80,22 @@ var judgeChpt1 = {
     },
 
     /**
+     * 원 판정
+     * @param data
+     * @param callback
+     */
+    circle : function(data, callback) {
+        var dummy = [0.0, 0.0, 5];
+
+
+
+
+    },
+
+    /**
      * 다각형 판정
+     * 1. 시작점 비교
+     * 2. 넓이 비교( 넓이를 구할 때 CCW가 보장되어야 하므로 방향이 다른 경우에 결과가 다름)
      * @param data
      * @param callback
      */
