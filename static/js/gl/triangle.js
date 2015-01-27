@@ -3,7 +3,24 @@
  */
 
 sGL.prototype.initCamera = function() {
-    var camera = new THREE.OrthographicCamera( window.innerWidth/ - 100, window.innerWidth / 100, window.innerHeight / 100, window.innerHeight / -100, 0.1, 1000 );
+    this.camera = new THREE.OrthographicCamera(
+        this.targetView.width()/ - 100,this.targetView.width() / 100,
+        this.targetView.height() / 100, this.targetView.height() / -100,
+        0.1, 1000
+    );
+
+
+    this.camera.position.y = 10;
+    this.camera.lookAt(new THREE.Vector3(0,0,0));
+ //   this.camera.rotation.x = 180  * Math.PI / 180;
+    this.camera.rotation.z = 270  * Math.PI / 180;
+
+
+
+    var size = 10;
+    var step = 1;
+    var gridHelper = new THREE.GridHelper( size, step );
+    this.scene.add( gridHelper );
 
     return this;
 }
@@ -77,8 +94,8 @@ var getNewLine = function( item1, item2 ) {
     var material = new THREE.LineBasicMaterial({ color: 0xff0000 });
     var geometry = new THREE.Geometry();
     geometry.vertices.push(
-        new THREE.Vector3( item1.data.x, item1.data.y,0),
-        new THREE.Vector3( item2.data.x, item2.data.y,0)
+        new THREE.Vector3( item1.data.x,0, item1.data.y),
+        new THREE.Vector3( item2.data.x,0, item2.data.y)
     );
     var line = new THREE.Line( geometry, material );
 
