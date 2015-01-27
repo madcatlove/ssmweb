@@ -16,10 +16,16 @@ var service = {
         if(!tid) {
             throw u.error('Invalid TID ', 500);
         }
-
         tid = parseInt( tid );
+        tutorialDA.getTutorialInfo(tid, function(result) {
 
-        tutorialDA.getTutorialInfo(tid, resultCallback);
+            var data = result[0];
+            if( typeof data != 'undefined'  ) {
+                var blockStr = data.available_block.split(',');
+                data.available_block = blockStr;
+            }
+            resultCallback( data );
+        });
     },
 
     /**

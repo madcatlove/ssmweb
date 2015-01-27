@@ -24,7 +24,7 @@ router.use('/:tid([0-9]+)', function(req, res, next) {
 
 /* Routing */
 router.get('/:tid([0-9]+)', tutorialController.procTutorial ); // 단계별 튜토리얼 진행
-
+router.get('/:tid([0-9]+)/info', tutorialController.getTutorialInfo); // 단계별 튜토리얼 정보 가져옴.
 
 
 

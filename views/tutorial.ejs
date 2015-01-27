@@ -1,27 +1,33 @@
 <%- include header.ejs %>
 
 <script type="text/javascript">
-    var dd;
+
+    var tutorialBlock, tempSeq = 1;
+
     $(document).ready( function() {
 
-        dd = new dragDropBlockList();
+        /* Block Initialize */
+        urlReq.get('/tutorial/<%=tid%>/info', {}, function(result) {
+            if( result.error ) {
+                alert(' 기본정보 요청중 에러가 발생하였습니다. ');
+            }
+            else {
+                var data = result.data;
+                var available_block = data.available_block;
+                var guide_content = data.guide_content;
+                var practice_content = data.practice_content;
 
-        var s;
-        s = new sBlock(1).setBlockType(1).initBlock();
-        console.log( s );
-        dd.append(s);
-        s = new sBlock(2).setBlockType(2).initBlock();;
-        dd.append(s);
-        s = new sBlock(3).setBlockType(3).initBlock();;
-        dd.append(s);
-        s = new sBlock(4).setBlockType(3).initBlock();;
-        dd.append(s);
-        s = new sBlock(5).setBlockType(3).initBlock();;
-        dd.append(s);
+                /* Block Append */
+                tutorialBlock = new dragDropBlockList();
+                for(var i = 0; i < available_block.length; i++) {
+                    tutorialBlock.append( new sBlock(i+1).setBlockType( available_block[i]).initBlock() );
+                }
 
-        dd.init();
-        dd.eventRun();
-
+                /* Run */
+                tutorialBlock.init();
+                tutorialBlock.eventRun();
+            }
+        })
 
     });
 </script>
@@ -111,7 +117,7 @@
 
                 </div>
 
-                <button onclick="void( console.log( JSON.stringify(dd.blocksToJSON()) ));">toJSON</button>
+                <button onclick="void( console.log( JSON.stringify(tutorialBlock.blocksToJSON()) ));">toJSON</button>
             </div>
         </div>
         <!-- // 중앙 블락 조합 -->
