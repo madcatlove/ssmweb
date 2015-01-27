@@ -4,10 +4,10 @@
 
 var judgeChpt3 = {
 
-    // Chpt3 - Matrix
 
     /**
-     * 물체 이동 판정
+     * 9) 물체 이동 판정
+     * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
      * @param data
      * @param callback
      */
@@ -16,7 +16,8 @@ var judgeChpt3 = {
     },
 
     /**
-     * 물체 회전 판정
+     * 10)  물체 회전 판정
+     * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
      * @param data
      * @param callback
      */
@@ -25,7 +26,8 @@ var judgeChpt3 = {
     },
 
     /**
-     * 물체 확대 판정
+     * 11) 물체 확대 판정
+     * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
      * @param data
      * @param callback
      */
@@ -34,7 +36,7 @@ var judgeChpt3 = {
     },
 
     /**
-     * 푸시 팝 매트릭스 판정
+     * 12) 푸시 팝 매트릭스 판정
      * @param data
      * @param callback
      */
@@ -42,36 +44,46 @@ var judgeChpt3 = {
 
     },
 
-    // Chpt3 - Camera
-
     /**
-     * 카메라 판정
+     * 13) 펄스펙티브 카메라 판정
+     * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    camera : function (data, callback) {
-
-    },
-
-    // Chpt3 - Light
-
-    /**
-     * 방향성 빛 판정
-     * @param data
-     * @param callback
-     */
-    dirLight : function (data, callback) {
+    perspective : function (data, callback) {
 
     },
 
     /**
-     * 포인트 빛 판정
+     * 14) 오쏘고날 카메라 판정
+     * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    spotLight : function (data, callback) {
+    orthogonal : function (data, callback) {
+
+    },
+
+    /**
+     * 15) 카메라 포지션 판정
+     * 1. 입력 패러미터 비교
+     * @param data
+     * @param callback
+     */
+    position : function (data, callback) {
+
+    },
+
+    /**
+     * 16) 룩엣 판정
+     * 1. 입력 패러미터 비교
+     * @param data
+     * @param callback
+     */
+    lookat : function (data, callback) {
 
     }
+
 };
 
 
