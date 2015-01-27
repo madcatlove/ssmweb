@@ -1,0 +1,79 @@
+/**
+ * Created by Lee on 2015-01-27.
+ */
+
+sGL.prototype.run = function() {
+
+    var self = this;
+
+    $(document).on('removedEvent', function(event) {
+        console.log(' re initialize ');
+        self.initAll();
+        self.insertDOM();
+    })
+
+
+    $(document).on('movedEvent', function(event, eData) {
+        var movedlist = eData.movedlist;
+        console.log( 'movedlist' , movedlist );
+        var isBegin = false;
+        var tStack = [];
+        var count = 0;
+
+        for( var i = 0; i < movedlist.length; i++) {
+            var item = movedlist[i];
+
+            // 블락 타입이 BEGIN 인경우 추가.
+            if( self.BEGIN == item.blockType ) {
+                isBegin = true;
+                continue;
+            }
+
+            if( self.END == item.blockType ) {
+                /* 스타트가 되어있다면 */
+                if(isBegin) {
+                    if( tStack.length > 0 ) {
+                        var line = getNewLine( tStack[0], tStack[tStack.length-1] );
+                        self.scene.add(line);
+                    }
+                }
+                isBegin = false;
+                continue;
+            }
+
+            if( isBegin ) {
+
+                // 버텍스 2와 같다면.
+                if( self.VERTEX2 == item.blockType ) {
+                    console.log( ' 진입 ' );
+                    tStack.push( item.toJSON() );
+                    count++;
+
+                    if( count >= 2 ) {
+                        var item1 = tStack[count-2];
+                        var item2 = tStack[count-1];
+                        var line = getNewLine( item1, item2 );
+                        self.scene.add(line);
+
+                    }
+                }
+            }
+        } /* end for */
+
+    })
+
+
+
+}
+
+var getNewLine = function( item1, item2 ) {
+    var material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(
+        new THREE.Vector3( item1.data.x, item1.data.y,0),
+        new THREE.Vector3( item2.data.x, item2.data.y,0)
+    );
+    var line = new THREE.Line( geometry, material );
+
+    return line;
+}
