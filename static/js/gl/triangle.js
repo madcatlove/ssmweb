@@ -6,10 +6,9 @@ sGL.prototype.run = function() {
 
     var self = this;
 
+    // 삭제된 이벤트가 발생하면 전부 재 랜더링.
     $(document).on('removedEvent', function(event) {
-        console.log(' re initialize ');
-        self.initAll();
-        self.insertDOM();
+        self.reconstruct();
     })
 
 
