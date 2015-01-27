@@ -4,6 +4,21 @@
 
 var math = {
 
+    isEqualFloat : function (p) {
+
+        for (var i = 0 ; i < p.length ; i ++) {
+
+            if (parseFloat(p[i][0]) != parseFloat(p[i][1])) {
+
+                return false;
+
+            }
+
+        }
+
+        return true;
+    },
+
     /**
      * 2차원에서 두점 사이의 길이
      * @param p

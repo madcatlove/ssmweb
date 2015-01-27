@@ -18,9 +18,7 @@ var judgeChpt1 = {
         var sPoint = extraInfo.startpoint;
 
         if (block.blockType == blockInfo[0] &&
-            parseFloat(block.data.x) == parseFloat(sPoint.x)  &&
-            parseFloat(block.data.y) == parseFloat(sPoint.y) ) {
-
+            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
             res = true;
         }
 
@@ -39,8 +37,7 @@ var judgeChpt1 = {
         var dis = parseFloat(extraInfo.distance);
 
         if (data[0].blockType == 1 &&
-            parseFloat(data[1].data.x) == parseFloat(sPoint.x)  &&
-            parseFloat(data[1].data.y) == parseFloat(sPoint.y) ) {
+            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
 
             var dist1 = parseFloat(jMath.distance2f([data[1], data[2]]));
             var dist2 = parseFloat(jMath.distance2f([data[2], data[3]]));
@@ -74,16 +71,16 @@ var judgeChpt1 = {
         var seq = extraInfo.seq;
 
         if (data[0].blockType == 1 &&
-            parseFloat(data[1].data.x) == parseFloat(sPoint.x)  &&
-            parseFloat(data[1].data.y) == parseFloat(sPoint.y) ) {
+            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]]) ) {
 
-            if (parseFloat(data[2].data.x)  != parseFloat(seq[0].x) ||
-                parseFloat(data[2].data.y)  != parseFloat(seq[0].y) ||
-
-                parseFloat(data[3].data.x)  != parseFloat(seq[1].x) ||
-                parseFloat(data[3].data.y)  != parseFloat(seq[1].y) ||
-
-                data[4].blockType != 2) {
+            if (jMath.isEqualFloat(
+                    [
+                        [data[2].data.x, seq[0].x],
+                        [data[2].data.y, seq[0].y],
+                        [data[3].data.x, seq[1].x],
+                        [data[3].data.y, seq[1].y],
+                    ]
+                ) || data[4].blockType != 2) {
 
                 res = false;
             }
@@ -109,19 +106,18 @@ var judgeChpt1 = {
 
 
         if (data[0].blockType == 1 &&
-            parseFloat(data[1].data.x) == parseFloat(sPoint.x)  &&
-            parseFloat(data[1].data.y) == parseFloat(sPoint.y) ) {
+            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]]) ) {
 
-            if (parseFloat(data[2].data.x)  != parseFloat(seq[0].x) ||
-                parseFloat(data[2].data.y)  != parseFloat(seq[0].y) ||
-
-                parseFloat(data[3].data.x)  != parseFloat(seq[1].x) ||
-                parseFloat(data[3].data.y)  != parseFloat(seq[1].y) ||
-
-                parseFloat(data[4].data.x)  != parseFloat(seq[2].x) ||
-                parseFloat(data[4].data.y)  != parseFloat(seq[2].y) ||
-
-                data[5].blockType != 2) {
+            if (jMath.isEqualFloat(
+                    [
+                        [data[2].data.x, seq[0].x],
+                        [data[2].data.y, seq[0].y],
+                        [data[3].data.x, seq[1].x],
+                        [data[3].data.y, seq[1].y],
+                        [data[4].data.x, seq[2].x],
+                        [data[4].data.y, seq[2].y],
+                    ]
+                ) || data[5].blockType != 2) {
 
                 res = false;
             }
