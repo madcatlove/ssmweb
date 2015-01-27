@@ -2,6 +2,14 @@
  * Created by Lee on 2015-01-27.
  */
 
+sGL.prototype.initCamera = function() {
+    var camera = new THREE.OrthographicCamera( window.innerWidth/ - 100, window.innerWidth / 100, window.innerHeight / 100, window.innerHeight / -100, 0.1, 1000 );
+
+    return this;
+}
+
+
+
 sGL.prototype.run = function() {
 
     var self = this;
