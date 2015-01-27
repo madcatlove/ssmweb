@@ -7,14 +7,14 @@ var jMath = require('../Math');
 var judgeChpt2 = {
 
     /**
-     * 6) 직육면체 Low 판정
+     * 5) 직육면체 Low 판정
      * 1. 각 면에 대한 노멀벡터를 구하여 반대 면에 대한 벡터의 합이 0인지 확인
      * 2. 3쌍의 벡터의 합이 모두 0이면 통과
      * 3. 각 면에 대한 벡터의 크기는 면에 크기에 따라 다르므로 넓이를 구하여 계산 할 필요 없음
      * @param data
      * @param callback
      */
-    rect : function (data, callback) {
+    rect : function (blockInfo, extraInfo, data, callback) {
 
         var dummy = [
             // CCW
@@ -57,24 +57,24 @@ var judgeChpt2 = {
     },
 
     /**
-     * 7) 직육면체 High 판정
+     * 6) 직육면체 High 판정
      * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    box : function(data, callback) {
+    box : function(blockInfo, extraInfo, data, callback) {
         var dummy = [0.0, 0.0, 0.0, 5];
 
     },
 
 
     /**
-     * 8) 구 판정
+     * 7) 구 판정
      * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    sphere : function(data, callback) {
+    sphere : function(blockInfo, extraInfo, data, callback) {
         var dummy = [0.0, 0.0, 0.0, 5];
 
     }

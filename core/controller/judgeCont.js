@@ -19,7 +19,7 @@ var controller = {
 
         var params = {
             jid :  req.jid,
-            data :  req.jid
+            data : JSON.parse(req.data)
         };
 
         /**

@@ -6,81 +6,81 @@ var judgeChpt3 = {
 
 
     /**
-     * 9) 물체 이동 판정
+     * 8) 물체 이동 판정
      * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
      * @param data
      * @param callback
      */
-    translate : function (data, callback) {
+    translate : function (blockInfo, extraInfo, data, callback) {
 
     },
 
     /**
-     * 10)  물체 회전 판정
+     * 9)  물체 회전 판정
      * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
      * @param data
      * @param callback
      */
-    rotate : function (data, callback) {
+    rotate : function (blockInfo, extraInfo, data, callback) {
 
     },
 
     /**
-     * 11) 물체 확대 판정
+     * 10) 물체 확대 판정
      * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
      * @param data
      * @param callback
      */
-    scale : function (data, callback) {
+    scale : function (blockInfo, extraInfo, data, callback) {
 
     },
 
     /**
-     * 12) 푸시 팝 매트릭스 판정
+     * 11) 푸시 팝 매트릭스 판정
      * @param data
      * @param callback
      */
-    pushPop : function (data, callback) {
+    pushPop : function (blockInfo, extraInfo, data, callback) {
 
     },
 
     /**
-     * 13) 펄스펙티브 카메라 판정
+     * 12) 펄스펙티브 카메라 판정
      * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    perspective : function (data, callback) {
+    perspective : function (blockInfo, extraInfo, data, callback) {
 
     },
 
     /**
-     * 14) 오쏘고날 카메라 판정
+     * 13) 오쏘고날 카메라 판정
      * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    orthogonal : function (data, callback) {
+    orthogonal : function (blockInfo, extraInfo, data, callback) {
 
     },
 
     /**
-     * 15) 카메라 포지션 판정
+     * 14) 카메라 포지션 판정
      * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    position : function (data, callback) {
+    position : function (blockInfo, extraInfo, data, callback) {
 
     },
 
     /**
-     * 16) 룩엣 판정
+     * 15) 룩엣 판정
      * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    lookat : function (data, callback) {
+    lookat : function (blockInfo, extraInfo, data, callback) {
 
     }
 
