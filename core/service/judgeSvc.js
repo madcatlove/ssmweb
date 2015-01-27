@@ -13,7 +13,7 @@ var judgeChpt1 = require('./judgeChpt1Svc'),
  * @type {*[]}
  */
 var judge = [
-    [judgeChpt1.point, judgeChpt1.line, judgeChpt1.triangle, judgeChpt1.quadangle, judgeChpt1.circle],
+    [judgeChpt1.point, judgeChpt1.line, judgeChpt1.triangle, judgeChpt1.quadangle],
     [judgeChpt2.rect, judgeChpt2.box, judgeChpt2.sphere],
     [judgeChpt3.translate, judgeChpt3.rotate, judgeChpt3.scale, judgeChpt3.pushPop,
         judgeChpt3.perspective, judgeChpt3.orthogonal, judgeChpt3.position, judgeChpt3.lookat]
@@ -30,13 +30,22 @@ var service = {
 
         tutorialDA.getTutorialInfo(params.jid, function(result) {
 
-          //  var tutorial = result[0];
+            var tutorial = result[0];
 
-            //var chptSeq = tutorial.chapterSeq - 1;
-           // var probSeq = tutorial.problemSeq - 1;
+            var chptSeq = tutorial.chapterSeq - 1;
+            var probSeq = tutorial.problemSeq - 1;
 
-//            judge[chptSeq][probSeq](params, callback);
-            judge[1][0](params, callback);
+            var blockInfo = tutorial.available_block.split(",");
+            blockInfo = blockInfo.map(function (val) { return +val; });
+
+            console.log(tutorial.extrainfo);
+            var extraInfo = JSON.parse(tutorial.extrainfo);
+
+            if (params.data.length == tutorial.length) {
+                judge[chptSeq][probSeq](blockInfo, extraInfo, params.data, callback);
+            } else {
+                callback(false);
+            }
         });
 
     }

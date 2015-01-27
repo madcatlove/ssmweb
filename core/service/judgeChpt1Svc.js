@@ -11,11 +11,22 @@ var judgeChpt1 = {
      * @param data
      * @param callback
      */
-    point : function (data, callback) {
-        var dummy = [1.0, 2.0, 0.0];
+    point : function (blockInfo, extraInfo, data, callback) {
+        var res = false;
 
-        console.log('dummy = ' + dummy)
-        callback(dummy.length == 3);
+        console.log(extraInfo+"");
+
+        var block = data[0];
+
+        if (block.blockType == blockInfo[0] &&
+            block.data.x == 1.0  &&
+            block.data.y == 1.0) {
+
+            res = true;
+
+        }
+
+        callback(res);
     },
 
     /**
@@ -25,21 +36,19 @@ var judgeChpt1 = {
      * @param data
      * @param callback
      */
-    line : function (data, callback) {
-        var dummy = [
-            [1.0, 2.0, 3.0],
-            [4.0, 5.0, 6.0]
-        ];
+    line : function (blockInfo, extraInfo, data, callback) {
+        var res = false;
 
 
-        var isOk = true;
+        for (var i = 0 ; i < data.length ; i ++) {
 
-        //if (dummy.length == 2 && dummy[0].length == 3 && dummy[1].length == 3) {
-        //    isOk = false;
-        //} else if (jMath.distance3d(dummy[0], dummy[1]) == )
-        console.log(jMath.distance3f(dummy[0], dummy[1])+' ??');
+            var block = data[i];
 
-        callback(jMath.distance3f(dummy[0], dummy[1]) == 10);
+
+        }
+
+        callback(res);
+
     },
 
     /**
@@ -49,7 +58,7 @@ var judgeChpt1 = {
      * @param data
      * @param callback
      */
-    triangle : function(data, callback) {
+    triangle : function(blockInfo, extraInfo, data, callback) {
         var dummy = [
             [-1.0, 0.0, 0.5],
             [1.0, 1.0, 1.0],
@@ -67,7 +76,7 @@ var judgeChpt1 = {
      * @param data
      * @param callback
      */
-    quadangle : function(data, callback) {
+    quadangle : function(blockInfo, extraInfo, data, callback) {
         var dummy = [
             [-1.0, 1.0, 0.0],
             [-1.0, -1.0, 0.0],
@@ -76,18 +85,8 @@ var judgeChpt1 = {
         ];
 
         jMath.area2f(dummy);
-    },
-
-    /**
-     * 5) 원 판정
-     * 1. 입력 패러미터 비교
-     * @param data
-     * @param callback
-     */
-    circle : function(data, callback) {
-        var dummy = [0.0, 0.0, 5];
-
     }
+
 
 };
 
