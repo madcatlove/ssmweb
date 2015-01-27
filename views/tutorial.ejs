@@ -4,6 +4,13 @@
 
     var tutorialBlock, tempSeq = 1;
 
+    $(document).ajaxStart(function() {
+        $('#loading').fadeIn('fast');
+    })
+    $(document).ajaxStop( function() {
+        $('#loading').fadeOut('fast');
+    })
+
     $(document).ready( function() {
 
         /* Block Initialize */
@@ -16,6 +23,9 @@
                 var available_block = data.available_block;
                 var guide_content = data.guide_content;
                 var practice_content = data.practice_content;
+
+                $('.guideContent').html( guide_content );
+                $('.practiceContent').html( practice_content );
 
                 /* Block Append */
                 tutorialBlock = new dragDropBlockList();
@@ -62,13 +72,8 @@
                     <h3 class="panel-title"> 2D 점찍기 </h3>
                 </div>
 
-                <div class="panel-body">
-                    가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보
-                    가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보
-                    가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보
-                    가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보
-                    가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보
-                    가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보가이드 정보
+                <div class="panel-body guideContent">
+
                 </div>
             </div>
             <!-- //가이드 정보 -->
@@ -79,7 +84,7 @@
                     <h3 class="panel-title"> 직접 한번 해보세요 </h3>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body practiceContent">
                     <ol>
                         <li> 점은 여기서 찍구요.</li>
                         <li> 그다음 해보시고.</li>
@@ -147,17 +152,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title"> 튜토리얼 가이드 </h4>
             </div>
-            <div class="modal-body">
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
-                가이드 가이드 가이드 가이드 가이드 가이드 가이드<br />
+            <div class="modal-body guideContent">
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
