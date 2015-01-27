@@ -38,10 +38,10 @@ var service = {
             var blockInfo = tutorial.available_block.split(",");
             blockInfo = blockInfo.map(function (val) { return +val; });
 
-            console.log(tutorial.extrainfo);
             var extraInfo = JSON.parse(tutorial.extrainfo);
+           // console.log(params.data.length + ' ? ' + blockInfo.length);
 
-            if (params.data.length == tutorial.length) {
+            if (params.data.length == blockInfo.length) {
                 judge[chptSeq][probSeq](blockInfo, extraInfo, params.data, callback);
             } else {
                 callback(false);

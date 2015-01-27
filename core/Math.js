@@ -11,8 +11,8 @@ var math = {
      */
     distance2f : function (p) {
         return Math.sqrt(
-            Math.pow((p[1][0] - p[0][0]), 2) +
-            Math.pow((p[1][1] - p[0][1]), 2)
+            Math.pow((p[1].data.x - p[0].data.x), 2) +
+            Math.pow((p[1].data.y - p[0].data.y), 2)
         );
     },
 
