@@ -6,7 +6,7 @@ $(document).ready( function() {
     // 시작하자마자 모달창 띄움.
     $('#tutorialModal').modal({
        backdrop: 'static',
-       keyboard: false,
+       //keyboard: false,
        show: true,
     });
 
