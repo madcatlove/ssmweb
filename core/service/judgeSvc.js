@@ -2,10 +2,16 @@
  * Created by jangjunho on 15. 1. 26..
  */
 
+var tutorialDA = require('../dataAccess/tutorialDA');
+
 var judgeChpt1 = require('./judgeChpt1Svc'),
     judgeChpt2 = require('./judgeChpt2Svc'),
     judgeChpt3 = require('./judgeChpt3Svc');
 
+/**
+ * 판정 함수들을 배열 형식으로 리스팅한다. 챕터 1에 3번 문제는 judge[0][2] 이런 식.
+ * @type {*[]}
+ */
 var judge = [
     [judgeChpt1.point, judgeChpt1.line, judgeChpt1.triangle, judgeChpt1.quadangle, judgeChpt1.polygon],
     [judgeChpt2.rect, judgeChpt2.pyramid, judgeChpt2.circle, judgeChpt2.cylinder],
@@ -14,13 +20,24 @@ var judge = [
 
 var service = {
 
+    /**
+     * jid에 따른 튜토리얼 정보를 가져 온 후, 튜토리얼의 챕터 번호와 문제 번호를 인덱스로 하여 판정 함수를 호출한다.
+     * @param params
+     * @param callback
+     */
     execJudge : function(params, callback) {
-        // chapter number(1 ~ 3), chapter sequence (1 ~ 8)
-        // getNumber From DA
 
-        //var chpt = 0, seq = 0;
+        tutorialDA.getTutorialInfo(params.jid, function(result) {
 
-        judge[0][3](params, callback);
+            var tutorial = result[0];
+
+            var chptSeq = tutorial.chapterSeq - 1;
+            var probSeq = tutorial.problemSeq - 1;
+
+            judge[chptSeq][probSeq](params, callback);
+
+        });
+
     }
 
 }

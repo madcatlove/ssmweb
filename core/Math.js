@@ -4,6 +4,11 @@
 
 var math = {
 
+    /**
+     * 2차원에서 두점 사이의 길이
+     * @param p
+     * @returns {number}
+     */
     distance2f : function (p) {
         return Math.sqrt(
             Math.pow((p[1][0] - p[0][0]), 2) +
@@ -11,6 +16,11 @@ var math = {
         );
     },
 
+    /**
+     * 3차원에서 두점 사이의 길이
+     * @param p
+     * @returns {number}
+     */
     distance3f : function (p) {
         return Math.sqrt(
             Math.pow((p[1][0] - p[0][0]), 2) +
@@ -19,6 +29,11 @@ var math = {
         );
     },
 
+    /**
+     * 2차원에서 다각형의 면의 넓이
+     * @param p
+     * @returns {number}
+     */
     area2f : function (p) {
         var res = 0;
 
@@ -37,6 +52,11 @@ var math = {
         return res;
     },
 
+    /**
+     * 3차원에서 한 면에서의 노멀벡터
+     * @param p
+     * @returns {*[]}
+     */
     normal3f : function (p) {
         var v1 = [
             p[0][0] - p[1][0],

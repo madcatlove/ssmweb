@@ -7,6 +7,11 @@ var judgeService = require('../service/judgeSvc');
 
 var controller = {
 
+    /**
+     * 패러미터 객체를 만들고 판정 시작
+     * @param req
+     * @param res
+     */
     procJudge : function (req, res) {
 
         // judge 번호는
@@ -17,6 +22,9 @@ var controller = {
             data :  req.jid
         };
 
+        /**
+         * judgeSvc의 execJudge를 통하여 판정을 기다린다
+         */
         judgeService.execJudge(params, function(isOk) {
             res.send( {'isOk' : isOk} );
 

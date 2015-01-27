@@ -6,6 +6,11 @@ var jMath = require('../Math');
 
 var judgeChpt2 = {
 
+    /**
+     * 직육면체 판정
+     * @param data
+     * @param callback
+     */
     rect : function (data, callback) {
         var dummy = [
             // CCW
@@ -41,19 +46,34 @@ var judgeChpt2 = {
             }
         }
 
-        return (res[0] == 0) && (res[1] == 0) && (res[2] == 0);
+        //return (res[0] == 0) && (res[1] == 0) && (res[2] == 0);
 
     },
 
+    /**
+     * 사각뿔 판정
+     * @param data
+     * @param callback
+     */
     pyramid : function (data, callback) {
 
     },
 
+    /**
+     * 구 판정
+     * @param data
+     * @param callback
+     */
     circle : function(data, callback) {
         var dummy = [0.0, 0.0, 0.0, 5];
 
     },
 
+    /**
+     * 원통 판정
+     * @param data
+     * @param callback
+     */
     cylinder : function(data, callback) {
 
     }
