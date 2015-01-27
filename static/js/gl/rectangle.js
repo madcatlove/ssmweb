@@ -12,7 +12,7 @@ sGL.prototype.initCamera = function() {
 
     this.camera.position.y = -10;
     this.camera.lookAt(new THREE.Vector3(0,0,0));
- //   this.camera.rotation.x = 180  * Math.PI / 180;
+    //   this.camera.rotation.x = 180  * Math.PI / 180;
     this.camera.rotation.z = 360  * Math.PI / 180;
 
 

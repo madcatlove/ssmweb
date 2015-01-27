@@ -12,7 +12,7 @@ sGL.prototype.initCamera = function() {
 
     this.camera.position.y = -10;
     this.camera.lookAt(new THREE.Vector3(0,0,0));
- //   this.camera.rotation.x = 180  * Math.PI / 180;
+    //   this.camera.rotation.x = 180  * Math.PI / 180;
     this.camera.rotation.z = 360  * Math.PI / 180;
 
 
@@ -55,12 +55,6 @@ sGL.prototype.run = function() {
 
             if( self.END == item.blockType ) {
                 /* 스타트가 되어있다면 */
-                if(isBegin) {
-                    if( tStack.length > 0 ) {
-                        var line = getNewLine( tStack[0], tStack[tStack.length-1] );
-                        self.scene.add(line);
-                    }
-                }
                 isBegin = false;
                 continue;
             }
@@ -69,7 +63,6 @@ sGL.prototype.run = function() {
 
                 // 버텍스 2와 같다면.
                 if( self.VERTEX2 == item.blockType ) {
-                    console.log( ' 진입 ' );
                     tStack.push( item.toJSON() );
                     count++;
 
