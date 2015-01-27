@@ -106,6 +106,7 @@ dragDropBlockList.prototype.eventRun = function() {
                     break;
                 }
             }
+            console.log( _self.movedlist );
 
             if( t+1 != _self.movedlist.length ) {
                 alert(' 중간 블럭을 뺄 수 없습니다. ');

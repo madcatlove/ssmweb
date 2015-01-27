@@ -117,13 +117,25 @@ var dataAccess = {
     getMemberChapterCount : function(member, resultCallback) {
         var queryStatement = '';
 
-        SELECT CI.title `title`, count(MINFO.chapterSeq) `count` FROM
-        (SELECT TI.chapterSeq FROM tutorialResult T LEFT OUTER JOIN tutorialInfo TI ON T.tutorialSeq = TI.seq
-        WHERE T.memberSeq = 4
-        ) MINFO,
-            chapterInfo CI
-        WHERE CI.seq = MINFO.chapterSeq
-        GROUP BY MINFO.chapterSeq
+        queryStatement += ' SELECT CI.title `title`, count(MINFO.chapterSeq) `count` FROM';
+        queryStatement += ' (SELECT TI.chapterSeq FROM tutorialResult T LEFT OUTER JOIN tutorialInfo TI ON T.tutorialSeq = TI.seq';
+        queryStatement += ' WHERE T.memberSeq = ? ';
+        queryStatement += ' ) MINFO,';
+        queryStatement += ' chapterInfo CI';
+        queryStatement += ' WHERE CI.seq = MINFO.chapterSeq';
+        queryStatement += ' GROUP BY MINFO.chapterSeq';
+
+        db.getConnection( function(conn) {
+            conn.query(queryStatement, [member.seq], function(err, result) {
+                if( err ) {
+                    console.error(' tutorialDA Error ( getMemberChapterCount ) ', err );
+                    throw u.error( err.message, 500 );
+                }
+                resultCallback(result);
+
+                conn.release();
+            })
+        })
     }
 
 
