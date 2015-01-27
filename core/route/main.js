@@ -15,8 +15,6 @@ router.use( function(req, res, next) {
 router.get('/', function(req, res) {
     var sess = req.session;
 
-    console.log(sess);
-
     var opt = {
         extraJS : ['member.js'],
         member : sess.member
