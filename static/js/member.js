@@ -78,6 +78,7 @@ function procMemberLogin() {
         }
         alert(' 반갑습니다. ');
         $wLogin.hide();
+        window.location.reload();
 
     })
 

@@ -18,13 +18,21 @@
     <!-- common js -->
     <script type="text/javascript" src="/static/js/common.js"></script>
 
-    <!-- style -->
+    <!-- custom style -->
     <style type="text/css">
+
+        @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+        /* FONT OVERRIDE */
+        h1,h2,h3,h4,h5,h6 {
+            font-family: 'Nanum Gothic';
+        }
+
         html,body {
             height: 100%;
-            /*overflow: hidden;*/
         }
     </style>
+
+
     <% if( typeof(extraCSS) != 'undefined' ) { %>
         <% extraCSS.forEach( function(css) { %>
             <link rel="stylesheet" href="/static/css/<%= css%>" />
@@ -50,15 +58,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">GLove</a>
+            <a class="navbar-brand" href="/">GLove</a>
         </div>
         <div class="navbar-collapse collapse">
+            <!-- 상단 네비게이션 바 -->
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorial<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Action</a></li>
                         <li><a href="#">Another action</a></li>
@@ -69,12 +76,20 @@
                         <li><a href="#">One more separated link</a></li>
                     </ul>
                 </li>
+                <li><a href="#about">FreeDraw</a></li>
+                <li><a href="#contact">Gallery</a></li>
+
             </ul>
             <div class="navbar-form navbar-right">
                 <% if( member ) { %>
-                <button type="submit" class="btn btn-success"  onclick="void(procMemberLogout())"><%=member.userid%> Sign out</button>
+                <span style="color: #cccccc;"><strong><%=member.userid%></strong> 님 반갑습니다. &nbsp;</span>
+                <button type="submit" class="btn btn-success"  onclick="void(procMemberLogout())">
+                    <span class="glyphicon glyphicon-off"></span> Sign out
+                </button>
                 <% } else { %>
-                <button type="submit" class="btn btn-success"  data-toggle="modal" data-target="#loginModal">Sign in</button>
+                <button type="submit" class="btn btn-success"  data-toggle="modal" data-target="#loginModal">
+                    <span class="glyphicon glyphicon-user"></span>  Sign in
+                </button>
                 <% } %>
             </div>
         </div><!--/.navbar-collapse -->
