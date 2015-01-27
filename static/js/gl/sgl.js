@@ -30,7 +30,7 @@ sGL.prototype.initRenderer = function() {
  * DOM 에 Renderer 추가.
  */
 sGL.prototype.insertDOM = function() {
-    this.targetView.append( this.renderer.domElement );
+    this.targetView.html( this.renderer.domElement );
 }
 
 /**
@@ -48,8 +48,8 @@ sGL.prototype.initScene = function() {
  * @returns {sGL}
  */
 sGL.prototype.initCamera = function() {
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    this.camera.position.z = 1000;
+    this.camera = new THREE.PerspectiveCamera(75, this.targetView.width()/this.targetView.height() , 0.1, 1000);
+    this.camera.position.z = 5;
 
     return this;
 }
@@ -67,3 +67,35 @@ sGL.prototype.renders = function() {
     render();
 
 }
+
+
+/**var blockNameList = [
+ '', 'Begin', 'End',
+ 'Vertex2', 'Vertex3',
+ 'DrawCircle', 'DrawBox', 'DrawSphere',
+ 'PushMatrix', 'PopMatrix',
+ 'Translate', 'Rotate', 'Scale',
+ 'Perspective', 'Othographic', 'lookAt',
+ 'DirectionalLight', 'SpotLight',
+ 'cameraPosition', 'LightPosition',
+ ];*/
+/* STATIC VARIABLE */
+sGL.prototype.BEGIN             = 1;
+sGL.prototype.END               = 2;
+sGL.prototype.VERTEX2           = 3;
+sGL.prototype.VERTEX3           = 4;
+sGL.prototype.DRAWCIRCLE        = 5;
+sGL.prototype.DRAWBOX           = 6;
+sGL.prototype.DRAWSPHERE        = 7;
+sGL.prototype.PUSHMATRIX        = 8;
+sGL.prototype.POPMATRIX         = 9;
+sGL.prototype.TRANSLATE         = 10;
+sGL.prototype.ROTATE            = 11;
+sGL.prototype.SCALE             = 12;
+sGL.prototype.PERSPECTIVE       = 13;
+sGL.prototype.OTHOGRAPHIC       = 14;
+sGL.prototype.LOOKAT            = 15;
+sGL.prototype.DIRECTIONALLIGHT  = 16;
+sGL.prototype.SPOTLIGHT         = 17;
+sGL.prototype.CAMERAPOSITION    = 18;
+sGL.prototype.LIGHTPOSITION     = 19;

@@ -1,5 +1,5 @@
 <%- include header.ejs %>
-
+<script type="text/javascript" src="/static/js/gl/triangle.js"></script>
 <script type="text/javascript">
 
     var tutorialBlock, tempSeq = 1;
@@ -48,7 +48,7 @@
         vSGL.initAll();
         vSGL.insertDOM();
         vSGL.renders();
-
+        vSGL.run();
 
     })
 </script>

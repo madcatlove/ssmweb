@@ -15,7 +15,6 @@ function dragDropBlockList() {
  * @param block
  */
 dragDropBlockList.prototype.append = function( block ) {
-    console.log(' 진입' , block);
     this.blocklist.push(block);
 
 }
@@ -55,7 +54,6 @@ dragDropBlockList.prototype.getBlockBySeq = function(seq) {
         }
     }
 
-    console.log(' NON-BLOCK ');
     return {};
 }
 
@@ -86,6 +84,10 @@ dragDropBlockList.prototype.eventRun = function() {
             var blockSeq = ui.draggable.attr('data-blockseq');
             _self.movedlist.push( _self.getBlockBySeq( blockSeq ) );
             trashAppend(ui.draggable );
+
+
+            /* 이벤트 발생 */
+            $(document).trigger('movedEvent', { movedlist : _self.movedlist });
         }
     })
 
@@ -106,7 +108,6 @@ dragDropBlockList.prototype.eventRun = function() {
                     break;
                 }
             }
-            console.log( _self.movedlist );
 
             if( t+1 != _self.movedlist.length ) {
                 alert(' 중간 블럭을 뺄 수 없습니다. ');
@@ -116,6 +117,11 @@ dragDropBlockList.prototype.eventRun = function() {
 
 
             stackAppend( ui.draggable );
+
+            /* 이벤트 발생 */
+            $(document).trigger('removedEvent');
+            $(document).trigger('movedEvent', { movedlist : _self.movedlist });
+
         }
     })
 
