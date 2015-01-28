@@ -17,6 +17,7 @@ var judgeChpt2 = {
     rect : function (blockInfo, extraInfo, data, callback) {
         var res = true;
         var sPoint = extraInfo.startpoint;
+        var size = extrainfo.size
 
         if (data[0].blockType == 1 &&
             parseFloat(data[1].data.x) == parseFloat(sPoint.x)  &&
@@ -90,15 +91,15 @@ var judgeChpt2 = {
      * @param callback
      */
     box : function(blockInfo, extraInfo, data, callback) {
-        var res = true;
         var size = extraInfo.size;
 
-        if (
-            parseFloat(data[0].data.w) != parseFloat(size.w) &&
-            parseFloat(data[0].data.h) != parseFloat(size.h) &&
-            parseFloat(data[0].data.d) != parseFloat(size.d) ) {
-            res = false;
-        }
+        var res = jMath.isEqualFloat(
+            [
+                [data[0].data.w, size.w],
+                [data[0].data.h, size.h],
+                [data[0].data.d, size.d]
+            ]
+        );
 
         callback(res);
     },
@@ -111,12 +112,13 @@ var judgeChpt2 = {
      * @param callback
      */
     sphere : function(blockInfo, extraInfo, data, callback) {
-        var res = true;
         var size = extraInfo.size;
 
-        if ( parseFloat(data[0].data.d) != parseFloat(size.d) ) {
-            res = false;
-        }
+        var res = jMath.isEqualFloat(
+            [
+                [data[0].data.d, size.d]
+            ]
+        );
 
         callback(res);
 

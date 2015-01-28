@@ -41,7 +41,17 @@ var service = {
             var extraInfo = JSON.parse(tutorial.extrainfo);
            // console.log(params.data.length + ' ? ' + blockInfo.length);
 
+            /**
+             * 데이터베이스에 있는 튜토리얼의 블럭 정보의 개수와
+             * 넘어온 데이터의 블럭 개수가 일치하는지 확인한다.
+             */
             if (params.data.length == blockInfo.length) {
+                /**
+                 * 데이터베이스의 블럭 정보( EX) 1,3,3)
+                 * 데이터베이스의 추가 정보(시작점, 시퀀스, 사이즈 등)
+                 * 포스트를 통하여 넘어온 데이터 정보
+                 * 결과를 반환 해줄 콜백 메서드
+                 */
                 judge[chptSeq][probSeq](blockInfo, extraInfo, params.data, callback);
             } else {
                 callback(false);
