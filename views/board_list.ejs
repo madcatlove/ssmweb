@@ -1,124 +1,86 @@
 <%- include header.ejs %>
 
 <script type="text/javascript">
+    $(document).ready( function() {
+        $('#accordion').collapse('hide');
+    })
+
     var oBoard = new sBoard();
     oBoard.setBoard(<%=tid%>, <%=page%>, 10);
     oBoard.retriveData();
 
 </script>
 
-<div class="container-fluid" style="padding-top:60px;">
 
-    <div class="container">
-
-
-        <div class="panel-group" id="accordion">
-
-            <div class="panel panel-info" data-toggle="collapse" data-target="#collapseOne">
+<script id="parentList" type="text/x-jquery-tmpl">
+ <!-- data-toggle="collapse" data-target="#collapse${seq}" -->
+    <div class="panel panel-info" id="parentCollapse${seq}">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-md-9">
-                            <h4 class="panel-title">#3300 <span class="badge">3</span></h4>
+                            <h4 class="panel-title">#${seq} <span class="badge">3</span></h4>
                         </div>
                         <div class="col-md-3 text-center">
-                            madcat / 2014-10-11
+                            ${ userid} / ${regdate}
                         </div>
                     </div>
                     <div class="divider"></div>
                     <div class="row">
                         <div class="col-md-12">
-                        asdfsdafsdfsdafsadfsdafsad<br>
-                        asdfasdfdsafsdfsdfsadfsdaf<br>
-                        asdfsdafsdfsdafsadfsdafsad<br>
-                        asdfasdfdsafsdfsdfsadfsdaf<br>
-                        asdfsdafsdfsdafsadfsdafsad<br>
-                        asdfasdfdsafsdfsdfsadfsdaf<br>
+                            ${content}
                         </div>
                     </div>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
 
-                       <!-- 이렇게 한세트 -->
-                       <div class="well">
-                           <!-- 번호 / 작성자 -->
-                           <div class="row">
-                               <div class="col-md-9">#1234</div>
-                               <div class="col-md-3 text-right">지나가는행인 / 2015-01-02 </div>
-                           </div>
-
-                           <div class="divider"></div>
-
-                           <!-- 내용부분 -->
-                           <div class="row">
-                               <div class="col-md-12">
-                                   ~~~~~~~ <br />
-                                   ~~~~~~~ <br />
-                                   ~~~~~~~ <br />
-                                   ~~~~~~~ <br />
-                               </div>
-                           </div>
-                       </div>
-                        <!--//한세트끝-->
-
-                        <!-- 이렇게 한세트 -->
-                        <div class="well">
-                            <!-- 번호 / 작성자 -->
-                            <div class="row">
-                                <div class="col-md-9">#1234</div>
-                                <div class="col-md-3 text-right">지나가는행인 / 2015-01-02 </div>
-                            </div>
-
-                            <div class="divider"></div>
-
-                            <!-- 내용부분 -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    ~~~~~~~ <br />
-                                    ~~~~~~~ <br />
-                                    ~~~~~~~ <br />
-                                    ~~~~~~~ <br />
-                                </div>
-                            </div>
-                        </div>
-                        <!--//한세트끝-->
+                    <div class="row text-right">
+                        <button data-toggle="collapse" data-target="#collapse${seq}">답변보기</button>
+                        <button data-seq="${seq}"><span class="glyphicon glyphicon-folder-open"></span> 답변등록 </button>
                     </div>
                 </div>
-            </div>
 
-
-
-
-
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            Collapsible Group Item #2
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
+                <div id="collapse${seq}" class="panel-collapse collapse">
                     <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                     </div>
                 </div>
+    </div>
+</script>
+
+<script id="childList" type="text/x-jquery-tmpl">
+   <!-- 이렇게 한세트 -->
+   <div class="well">
+       <!-- 번호 / 작성자 -->
+       <div class="row">
+           <div class="col-md-9">#${seq}</div>
+           <div class="col-md-3 text-right">${userid} / ${regdate} </div>
+       </div>
+
+       <div class="divider"></div>
+
+       <!-- 내용부분 -->
+       <div class="row">
+           <div class="col-md-12">
+               ${content}
+           </div>
+       </div>
+   </div>
+    <!--//한세트끝-->
+</script>
+
+
+<div class="container-fluid" style="padding-top:60px;">
+
+    <div class="container">
+
+        <div class="row" style="padding: 10px;">
+            <div class="col-md-12">
+                <textarea id="newArticleContent" class="form-control" rows="5"></textarea>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                            Collapsible Group Item #3
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
+
+            <div class="col-md-12 text-right" style="margin-top:5px;">
+                <button class="btn btn-default">질문 작성</button>
             </div>
+        </div>
+
+        <div class="panel-group">
         </div>
 
 
@@ -139,6 +101,32 @@
 
 
 </div>
+
+
+
+
+<!-- 답글 작성 Modal -->
+<div class="modal fade" data-parentSeq='' id="replyArticleModal" tabindex="-1" role="dialog" aria-labelledby="replyArticleModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="margin-top: 5%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><span></span> 에 대한 답변 등록</h4>
+            </div>
+            <div class="modal-body">
+                <label for="replyContent">답변 내용</label>
+                <textarea id="replyContent" class="form-control" rows="5"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary">답변 등록</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- // 답글 작성 Modal -->
+
+
 
 
 <%- include footer.ejs %>
