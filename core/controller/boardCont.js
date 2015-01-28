@@ -32,6 +32,9 @@ var controller = {
         var content = req.body.content;
         var parentSeq = req.body.parentSeq;
 
+        if( !parentSeq) parentSeq = -1;
+        else parentSeq = parseInt(parentSeq);
+
 
         async.waterfall([
                 /* tid 가 유효한지 확인 */
@@ -46,9 +49,6 @@ var controller = {
 
                 /* 게시글 작성 */
                 function postArticle( o, _callback) {
-                    if( !parentSeq) parentSeq = -1;
-                    else parentSeq = parseInt(parentSeq);
-
                     var articleInfo =  {
                         memberSeq : memberSession.seq,
                         content : u.trim(content),
@@ -65,6 +65,7 @@ var controller = {
                     })
 
                 }
+
             ],
             function finalTask(err, result) {
                 res.json(u.result(result) );

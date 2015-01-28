@@ -38,6 +38,23 @@ var dataAccess = {
 
     },
 
+    /* 댓글 부모번호 (주어진 articleId 로 업데이트함 ) 업데이트 */
+    updateParentSeq : function( articleId, resultCallback) {
+
+        var queryStatement = 'UPDATE qnaBoard SET parentSeq = ? WHERE seq = ?';
+
+        db.getConnection( function(conn) {
+            conn.query( queryStatement, [articleId, articleId], function(err, result) {
+                if( err ) {
+                    throw u.error( err.message, 500);
+                }
+                resultCallback( result.affectedRows );
+                conn.release();
+            })
+        })
+
+    },
+
     /* 게시판 글 리스트 가져오기 */
     getArticleList : function( sParam, resultCallback) {
 

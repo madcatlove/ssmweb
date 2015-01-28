@@ -12,7 +12,18 @@ var service = {
             u.assert(article.memberSeq);
             u.assert(article.content && article.content.length > 0);
 
-            boardDA.postArticle(article, resultCallback);
+            boardDA.postArticle(article, function(insertId) {
+
+                if( article.parentSeq == -1 ) {
+                    boardDA.updateParentSeq( insertId, function( affectRow ) {
+                        resultCallback( insertId );
+                    })
+                }
+                else {
+                    resultCallback( insertId );
+                }
+
+            });
         }
         ,
 
