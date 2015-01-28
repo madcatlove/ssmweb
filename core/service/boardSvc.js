@@ -7,6 +7,26 @@ var crypto = require('crypto');
 
 
 var service = {
+
+        /* 게시판 글 리스트 가져오기 */
+        getArticleList : function( sParam, resultCallback) {
+            u.assert( sParam.tid > 0 );
+            u.assert( sParam.page > 0 );
+            if( !sParam.countOffset ) sParam.countOffset = 10;
+
+            // 시작점
+            var startOffset = (sParam.page -1) * sParam.countOffset;
+            sParam.startOffset = startOffset;
+
+            boardDA.getArticleList( sParam, function(result) {
+                //-- DA 에서 받아온 데이터 콜백으로 넘김
+                //-- 나중에 뭔가 처리를 위해서..
+                resultCallback( result );
+            })
+        },
+
+
+
         /* 게시판 글 작성 */
         postArticle : function( article, resultCallback) {
             u.assert(article.memberSeq);
@@ -27,12 +47,7 @@ var service = {
         }
         ,
 
-        /* 게시판 글 리스트 가져오기 */
-        getArticleList : function( sParam, resultCallback) {
-            u.assert( sParam.tid > 0 );
-            u.assert( sParam.page > 0 );
 
-        }
 }
 
 

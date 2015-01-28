@@ -10,6 +10,11 @@ var async = require('async');
 
 var controller = {
 
+    /**
+     * 게시글 가져오는 컨트롤러
+     * @param req
+     * @param res
+     */
     getArticleList : function(req, res) {
         var memberSession = req.session.member;
         if( !req.page ) req.page = 1;
@@ -18,14 +23,20 @@ var controller = {
 
         var sParam = {
             tid : req.tid,
-            page : page
+            page : page,
+            countOffset : countOffset // 한페이지에 표시할 부모글 갯수.
         }
 
         boardService.getArticleList( sParam, function(result) {
-
+            res.json(u.result( result));
         })
     },
 
+    /**
+     * 게시글 작성 컨트롤러
+     * @param req
+     * @param res
+     */
     postArticle : function(req, res) {
 
         var memberSession = req.session.member;
@@ -73,10 +84,20 @@ var controller = {
         )
     },
 
+    /**
+     * 게시글 삭제 컨트롤러
+     * @param req
+     * @param res
+     */
     removeArticle : function(req, res) {
 
     },
 
+    /**
+     * 게시글 수정 컨트롤러
+     * @param req
+     * @param res
+     */
     modifyArticle : function(req, res) {
 
     },
