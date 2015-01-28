@@ -1,0 +1,144 @@
+<%- include header.ejs %>
+
+<script type="text/javascript">
+    var oBoard = new sBoard();
+    oBoard.setBoard(<%=tid%>, <%=page%>, 10);
+    oBoard.retriveData();
+
+</script>
+
+<div class="container-fluid" style="padding-top:60px;">
+
+    <div class="container">
+
+
+        <div class="panel-group" id="accordion">
+
+            <div class="panel panel-info" data-toggle="collapse" data-target="#collapseOne">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h4 class="panel-title">#3300 <span class="badge">3</span></h4>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            madcat / 2014-10-11
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                        asdfsdafsdfsdafsadfsdafsad<br>
+                        asdfasdfdsafsdfsdfsadfsdaf<br>
+                        asdfsdafsdfsdafsadfsdafsad<br>
+                        asdfasdfdsafsdfsdfsadfsdaf<br>
+                        asdfsdafsdfsdafsadfsdafsad<br>
+                        asdfasdfdsafsdfsdfsadfsdaf<br>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+
+                       <!-- 이렇게 한세트 -->
+                       <div class="well">
+                           <!-- 번호 / 작성자 -->
+                           <div class="row">
+                               <div class="col-md-9">#1234</div>
+                               <div class="col-md-3 text-right">지나가는행인 / 2015-01-02 </div>
+                           </div>
+
+                           <div class="divider"></div>
+
+                           <!-- 내용부분 -->
+                           <div class="row">
+                               <div class="col-md-12">
+                                   ~~~~~~~ <br />
+                                   ~~~~~~~ <br />
+                                   ~~~~~~~ <br />
+                                   ~~~~~~~ <br />
+                               </div>
+                           </div>
+                       </div>
+                        <!--//한세트끝-->
+
+                        <!-- 이렇게 한세트 -->
+                        <div class="well">
+                            <!-- 번호 / 작성자 -->
+                            <div class="row">
+                                <div class="col-md-9">#1234</div>
+                                <div class="col-md-3 text-right">지나가는행인 / 2015-01-02 </div>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <!-- 내용부분 -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    ~~~~~~~ <br />
+                                    ~~~~~~~ <br />
+                                    ~~~~~~~ <br />
+                                    ~~~~~~~ <br />
+                                </div>
+                            </div>
+                        </div>
+                        <!--//한세트끝-->
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            Collapsible Group Item #2
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            Collapsible Group Item #3
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- pagination -->
+        <div class="center-block text-center">
+        <ul class="pagination">
+            <li><a href="#">«</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">»</a></li>
+        </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<%- include footer.ejs %>
