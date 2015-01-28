@@ -2,6 +2,7 @@
  * Created by jangjunho on 15. 1. 26..
  */
 var jMath = require('../Math');
+var bType = require('../BlockType');
 
 var judgeChpt1 = {
 
@@ -43,7 +44,7 @@ var judgeChpt1 = {
         /**
          * 첫 블럭의 타입이 1(비긴)인지, 시작점이 일치하는지 확인
          */
-        if (data[0].blockType == 1 && data[4].blockType == 2 &&
+        if (data[0].blockType == bType.BEGIN && data[4].blockType == bType.END &&
             jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
 
             /**
@@ -54,11 +55,8 @@ var judgeChpt1 = {
             var dist1 = parseFloat(jMath.distance2f([data[1], data[2]]));
             var dist2 = parseFloat(jMath.distance2f([data[2], data[3]]));
 
-            if (dist1 != dis ||
-                dist2 != dis) {
-
+            if (dist1 != dis || dist2 != dis) {
                 res = false;
-
             }
 
         } else {
@@ -81,7 +79,7 @@ var judgeChpt1 = {
         var sPoint = extraInfo.startpoint;
         var seq = extraInfo.seq; // 데이터베이스의 엑스트라 인포에서 점의 순서 정보
 
-        if (data[0].blockType == 1 &&  data[4].blockType == 2 &&
+        if (data[0].blockType == bType.BEGIN &&  data[4].blockType == bType.END &&
             jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
 
             /**
