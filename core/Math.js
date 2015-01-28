@@ -83,7 +83,7 @@ var math = {
     /**
      * 3차원에서 한 면에서의 노멀벡터
      * @param p
-     * @returns {*[]}
+     * @returns {{x: number, y: number, z: number}}
      */
     normal3f : function (p) {
         var v1 = [

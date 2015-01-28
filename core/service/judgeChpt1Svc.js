@@ -43,7 +43,7 @@ var judgeChpt1 = {
         /**
          * 첫 블럭의 타입이 1(비긴)인지, 시작점이 일치하는지 확인
          */
-        if (data[0].blockType == 1 &&
+        if (data[0].blockType == 1 && data[4].blockType == 2 &&
             jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
 
             /**
@@ -55,8 +55,7 @@ var judgeChpt1 = {
             var dist2 = parseFloat(jMath.distance2f([data[2], data[3]]));
 
             if (dist1 != dis ||
-                dist2 != dis ||
-                data[4].blockType != 2) {
+                dist2 != dis) {
 
                 res = false;
 
@@ -82,7 +81,7 @@ var judgeChpt1 = {
         var sPoint = extraInfo.startpoint;
         var seq = extraInfo.seq; // 데이터베이스의 엑스트라 인포에서 점의 순서 정보
 
-        if (data[0].blockType == 1 &&
+        if (data[0].blockType == 1 &&  data[4].blockType == 2 &&
             jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
 
             /**
@@ -95,7 +94,7 @@ var judgeChpt1 = {
                         [data[3].data.x, seq[1].x],
                         [data[3].data.y, seq[1].y],
                     ]
-                ) || data[4].blockType != 2) {
+                ) ) {
 
                 res = false;
             }
@@ -119,7 +118,7 @@ var judgeChpt1 = {
         var sPoint = extraInfo.startpoint;
         var seq = extraInfo.seq;
 
-        if (data[0].blockType == 1 &&
+        if (data[0].blockType == 1 &&  data[5].blockType == 2 &&
             jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
 
             if (!jMath.isEqualFloat(
@@ -130,8 +129,7 @@ var judgeChpt1 = {
                         [data[3].data.y, seq[1].y],
                         [data[4].data.x, seq[2].x],
                         [data[4].data.y, seq[2].y],
-                    ]
-                ) || data[5].blockType != 2) {
+                    ] ) ) {
 
                 res = false;
             }
