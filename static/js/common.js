@@ -58,3 +58,13 @@ $(document).ready( function() {
        })
    });
 });
+
+//--------------------------------------------------------------
+// AJAX LOADING
+//--------------------------------------------------------------
+$(document).ajaxStart(function() {
+    $('#loading').fadeIn('fast');
+})
+$(document).ajaxStop( function() {
+    $('#loading').fadeOut('slow');
+})

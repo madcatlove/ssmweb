@@ -11,6 +11,23 @@ var async = require('async');
 var controller = {
 
     /**
+     * 게시글 리스트 뷰 컨트롤러( Render )
+     */
+    getArticleListView : function(req, res) {
+        var memberSession = req.session.member;
+        var page = req.param('page') || 1;
+
+        var opt = {
+            member : memberSession,
+            tid : req.tid,
+            page : page,
+            extraJS : ['member.js', 'board.js']
+        };
+        res.render('board_list', opt);
+
+    },
+
+    /**
      * 게시글 가져오는 컨트롤러
      * @param req
      * @param res
