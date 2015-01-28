@@ -17,22 +17,28 @@ var judgeChpt2 = {
     rect : function (blockInfo, extraInfo, data, callback) {
         var res = true;
         var sPoint = extraInfo.startpoint;
-        var size = extrainfo.size
 
-        if (data[0].blockType == 1 &&
-            parseFloat(data[1].data.x) == parseFloat(sPoint.x)  &&
-            parseFloat(data[1].data.y) == parseFloat(sPoint.y) ) {
+        if (data[0].blockType == 1 && data[9].blockType == 2 &&
+            jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
 
-            if (parseFloat(data[2].data.x)  != parseFloat(seq[0].x) ||
-                parseFloat(data[2].data.y)  != parseFloat(seq[0].y) ||
+            /**
+             * 각 면에대한 노멀벡터 구하기
+             * @type {*[]}
+             */
+            var normals = [
+                jMath.normal3f( [data[1].data, data[2].data, data[3].data, data[4].data] ), // 앞면
+                jMath.normal3f( [data[5].data, data[8].data, data[7].data, data[6].data] ), // 뒷면
 
-                parseFloat(data[3].data.x)  != parseFloat(seq[1].x) ||
-                parseFloat(data[3].data.y)  != parseFloat(seq[1].y) ||
+                jMath.normal3f( [data[5].data, data[1].data, data[4].data, data[8].data] ), // 윗면
+                jMath.normal3f( [data[6].data, data[7].data, data[3].data, data[2].data] ), // 아랫면
 
-                parseFloat(data[4].data.x)  != parseFloat(seq[2].x) ||
-                parseFloat(data[4].data.y)  != parseFloat(seq[2].y) ||
+                jMath.normal3f( [data[4].data, data[3].data, data[7].data, data[8].data] ), // 오른면
+                jMath.normal3f( [data[1].data, data[5].data, data[6].data, data[2].data] ), // 왼면
+            ];
 
-                data[5].blockType != 2) {
+            if (!jMath.isSumOfNormalZero(normals[0], normals[1]) || // 앞면과 뒷면에 노멀벡터의 합이 0인가
+                !jMath.isSumOfNormalZero(normals[2], normals[3]) || // 윗면, 아랫면
+                !jMath.isSumOfNormalZero(normals[4], normals[5]) ) { // 오른면, 왼면
 
                 res = false;
             }
@@ -42,45 +48,6 @@ var judgeChpt2 = {
         }
 
         callback(res);
-
-        //
-        //var dummy = [
-        //    // CCW
-        //    [-1.0, 1.0, 1.0],
-        //    [-1.0, -1.0, 1.0],
-        //    [1.0, -1.0, 1.0],
-        //    [1.0, 1.0, 1.0],
-        //
-        //    // CW
-        //    [-1.0, 1.0, -1.0],
-        //    [-1.0, -1.0, -1.0],
-        //    [1.0, -1.0, -1.0],
-        //    [1.0, 1.0, -1.0],
-        //
-        //];
-        //
-        //var normals = [
-        //    jMath.normal3f([ dummy[0], dummy[1], dummy[2], dummy[3] ]),
-        //    jMath.normal3f([ dummy[4], dummy[7], dummy[6], dummy[5] ]),
-        //
-        //    jMath.normal3f([ dummy[4], dummy[0], dummy[3], dummy[7] ]),
-        //    jMath.normal3f([ dummy[5], dummy[6], dummy[2], dummy[1] ]),
-        //
-        //    jMath.normal3f([ dummy[3], dummy[2], dummy[6], dummy[7] ]),
-        //    jMath.normal3f([ dummy[0], dummy[4], dummy[5], dummy[1] ])
-        //];
-        //
-        //var res = [0, 0, 0];
-        //
-        //for (var i = 0 ; i < normals.length ; i ++) {
-        //    for (var j = 0 ; j < 3; j ++) {
-        //        res[j] += normals[i][j];
-        //    }
-        //}
-        //
-        //console.log(normals);
-
-        //return (res[0] == 0) && (res[1] == 0) && (res[2] == 0);
 
     },
 
@@ -93,7 +60,7 @@ var judgeChpt2 = {
     box : function(blockInfo, extraInfo, data, callback) {
         var size = extraInfo.size;
 
-        var res = jMath.isEqualFloat(
+        var res = data[0].blockType == 6 && jMath.isEqualFloat(
             [
                 [data[0].data.w, size.w],
                 [data[0].data.h, size.h],
@@ -114,7 +81,7 @@ var judgeChpt2 = {
     sphere : function(blockInfo, extraInfo, data, callback) {
         var size = extraInfo.size;
 
-        var res = jMath.isEqualFloat(
+        var res = data[0].blockType == 7 && jMath.isEqualFloat(
             [
                 [data[0].data.d, size.d]
             ]

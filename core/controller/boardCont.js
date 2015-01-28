@@ -63,7 +63,6 @@ var controller = {
         if( !parentSeq) parentSeq = -1;
         else parentSeq = parseInt(parentSeq);
 
-
         async.waterfall([
                 /* tid 가 유효한지 확인 */
                 function validTutorialSequence( _callback) {

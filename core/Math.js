@@ -4,19 +4,32 @@
 
 var math = {
 
+    /**
+     * 점들의 위치가 같은지 같지 않은지 판별
+     * @param p
+     * @returns {boolean}
+     */
     isEqualFloat : function (p) {
 
         for (var i = 0 ; i < p.length ; i ++) {
-
             if (parseFloat(p[i][0]) != parseFloat(p[i][1])) {
-
                 return false;
-
             }
-
         }
 
         return true;
+    },
+
+    /**
+     * 두개의 노멀벡터간의 차를 구하여 0 인지 확인
+     * @param n1
+     * @param n2
+     * @returns {boolean}
+     */
+    isSumOfNormalZero : function (n1, n2) {
+        return n1.x - n2.x == 0 &&
+                n1.y - n2.y == 0 &&
+                n1.z - n2.z == 0;
     },
 
     /**
@@ -70,33 +83,29 @@ var math = {
     /**
      * 3차원에서 한 면에서의 노멀벡터
      * @param p
-     * @returns {*[]}
+     * @returns {{x: number, y: number, z: number}}
      */
     normal3f : function (p) {
         var v1 = [
-            p[0][0] - p[1][0],
-            p[0][1] - p[1][1],
-            p[0][2] - p[1][2]
+            p[0].x - p[1].x,
+            p[0].y - p[1].y,
+            p[0].z - p[1].z
         ];
 
         var v2 = [
-            p[1][0] - p[2][0],
-            p[1][1] - p[2][1],
-            p[1][2] - p[2][2]
+            p[1].x - p[2].x,
+            p[1].y - p[2].y,
+            p[1].z - p[2].z
         ];
 
-        var out = [
-            v1[1] * v2[2] - v1[2] * v2[1],
-            v1[2] * v2[0] - v1[0] * v2[2],
-            v1[0] * v2[1] - v1[1] * v2[0]
-        ];
+        var out = {
+            x: v1[1] * v2[2] - v1[2] * v2[1],
+            y: v1[2] * v2[0] - v1[0] * v2[2],
+            z: v1[0] * v2[1] - v1[1] * v2[0]
+        };
 
-        console.log('out[0] = ' + out[0] + ' out[1] = ' + out[1] + ' out[2] = ' + out[2]);
         return out;
     }
-
-
-
 
 };
 
