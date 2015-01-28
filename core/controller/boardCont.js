@@ -11,7 +11,19 @@ var async = require('async');
 var controller = {
 
     getArticleList : function(req, res) {
+        var memberSession = req.session.member;
+        if( !req.page ) req.page = 1;
+        var page = parseInt(req.page);
+        var countOffset = req.body.countOffset;
 
+        var sParam = {
+            tid : req.tid,
+            page : page
+        }
+
+        boardService.getArticleList( sParam, function(result) {
+
+        })
     },
 
     postArticle : function(req, res) {
@@ -55,7 +67,7 @@ var controller = {
                 }
             ],
             function finalTask(err, result) {
-                console.log( err, result );
+                res.json(u.result(result) );
             }
         )
     },

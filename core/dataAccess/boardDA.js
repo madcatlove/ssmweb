@@ -36,6 +36,11 @@ var dataAccess = {
             })
         })
 
+    },
+
+    /* 게시판 글 리스트 가져오기 */
+    getArticleList : function( sParam, resultCallback) {
+
     }
 
 }
