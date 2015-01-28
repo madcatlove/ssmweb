@@ -215,7 +215,35 @@ var judgeChpt3 = {
      * @param callback
      */
     position : function (blockInfo, extraInfo, data, callback) {
+        var res = true;
 
+        var size = extraInfo.size;
+        var pos = extraInfo.campos;
+
+        /**
+         * 입력 패러미터 비교 방식
+         */
+        if (data[0].blockType == 6 && data[1].blockType == 18) {
+
+            var isProperBox = jMath.isEqualFloat([
+                [data[0].data.w, size.w],
+                [data[0].data.h, size.h],
+                [data[0].data.d, size.d]]);
+
+            var isProperPos =  jMath.isEqualFloat([
+                [data[1].data.x, pos.x],
+                [data[1].data.y, pos.y],
+                [data[1].data.z, pos.z]]);
+
+            if (!isProperBox || !isProperPos) {
+                res = false;
+            }
+
+        } else {
+            res = false;
+        }
+
+        callback(res);
     },
 
     /**

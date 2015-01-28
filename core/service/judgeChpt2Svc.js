@@ -60,7 +60,7 @@ var judgeChpt2 = {
     box : function(blockInfo, extraInfo, data, callback) {
         var size = extraInfo.size;
 
-        var res = jMath.isEqualFloat(
+        var res = data[0].blockType == 6 && jMath.isEqualFloat(
             [
                 [data[0].data.w, size.w],
                 [data[0].data.h, size.h],
@@ -81,7 +81,7 @@ var judgeChpt2 = {
     sphere : function(blockInfo, extraInfo, data, callback) {
         var size = extraInfo.size;
 
-        var res = jMath.isEqualFloat(
+        var res = data[0].blockType == 7 && jMath.isEqualFloat(
             [
                 [data[0].data.d, size.d]
             ]
