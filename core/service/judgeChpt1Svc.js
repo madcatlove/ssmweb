@@ -14,16 +14,12 @@ var judgeChpt1 = {
     point : function (blockInfo, extraInfo, data, callback) {
         var res = false;
 
-        console.log(extraInfo+"");
-
         var block = data[0];
+        var sPoint = extraInfo.startpoint;
 
         if (block.blockType == blockInfo[0] &&
-            block.data.x == 1.0  &&
-            block.data.y == 1.0) {
-
+            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
             res = true;
-
         }
 
         callback(res);
@@ -32,19 +28,30 @@ var judgeChpt1 = {
     /**
      * 2) 선 판정
      * 1. 2개의 점
-     * 2.
      * @param data
      * @param callback
      */
     line : function (blockInfo, extraInfo, data, callback) {
-        var res = false;
+        var res = true;
+        var sPoint = extraInfo.startpoint;
+        var dis = parseFloat(extraInfo.distance);
 
+        if (data[0].blockType == 1 &&
+            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
 
-        for (var i = 0 ; i < data.length ; i ++) {
+            var dist1 = parseFloat(jMath.distance2f([data[1], data[2]]));
+            var dist2 = parseFloat(jMath.distance2f([data[2], data[3]]));
 
-            var block = data[i];
+            if (dist1 != dis ||
+                dist2 != dis ||
+                data[4].blockType != 2) {
 
+                res = false;
 
+            }
+
+        } else {
+            res = false;
         }
 
         callback(res);
@@ -59,32 +66,67 @@ var judgeChpt1 = {
      * @param callback
      */
     triangle : function(blockInfo, extraInfo, data, callback) {
-        var dummy = [
-            [-1.0, 0.0, 0.5],
-            [1.0, 1.0, 1.0],
-            [0.0, 2.0, 0.0],
+        var res = true;
+        var sPoint = extraInfo.startpoint;
+        var seq = extraInfo.seq;
 
-        ];
+        if (data[0].blockType == 1 &&
+            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]]) ) {
 
-        jMath.area2f(dummy);
+            if (jMath.isEqualFloat(
+                    [
+                        [data[2].data.x, seq[0].x],
+                        [data[2].data.y, seq[0].y],
+                        [data[3].data.x, seq[1].x],
+                        [data[3].data.y, seq[1].y],
+                    ]
+                ) || data[4].blockType != 2) {
+
+                res = false;
+            }
+
+        } else {
+            res = false;
+        }
+
+        callback(res);
     },
 
     /**
      * 4) 사각형 판정
-     * 1. 시작점 비교
-     * 2. 넓이 비교( 넓이를 구할 때 CCW가 보장되어야 하므로 방향이 다른 경우에 결과가 다름)
+     * 1. 점이 4개 필요
+     * 2. 네개의 점의 패러미터와 위치가 일치
      * @param data
      * @param callback
      */
     quadangle : function(blockInfo, extraInfo, data, callback) {
-        var dummy = [
-            [-1.0, 1.0, 0.0],
-            [-1.0, -1.0, 0.0],
-            [1.0, -1.0, 0.0],
-            [1.0, 1.0, 0.0]
-        ];
+        var res = true;
+        var sPoint = extraInfo.startpoint;
+        var seq = extraInfo.seq;
 
-        jMath.area2f(dummy);
+
+        if (data[0].blockType == 1 &&
+            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]]) ) {
+
+            if (jMath.isEqualFloat(
+                    [
+                        [data[2].data.x, seq[0].x],
+                        [data[2].data.y, seq[0].y],
+                        [data[3].data.x, seq[1].x],
+                        [data[3].data.y, seq[1].y],
+                        [data[4].data.x, seq[2].x],
+                        [data[4].data.y, seq[2].y],
+                    ]
+                ) || data[5].blockType != 2) {
+
+                res = false;
+            }
+
+        } else {
+            res = false;
+        }
+
+        callback(res);
     }
 
 
