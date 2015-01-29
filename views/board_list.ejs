@@ -1,9 +1,6 @@
 <%- include header.ejs %>
 
 <script type="text/javascript">
-    $(document).ready( function() {
-        $('#accordion').collapse('hide');
-    })
 
     var oBoard = new sBoard();
     oBoard.setBoard(<%=tid%>, <%=page%>, 10);
@@ -33,7 +30,7 @@
 
                     <div class="row text-right">
                         <button data-toggle="collapse" data-target="#collapse${seq}">답변보기</button>
-                        <button data-seq="${seq}"><span class="glyphicon glyphicon-folder-open"></span> 답변등록 </button>
+                        <button data-seq="${seq}"> <span class="glyphicon glyphicon-folder-open"></span> 답변등록 </button>
                     </div>
                 </div>
 
@@ -72,11 +69,11 @@
 
         <div class="row" style="padding: 10px;">
             <div class="col-md-12">
-                <textarea id="newArticleContent" class="form-control" rows="5"></textarea>
+                <textarea id="newArticleContent" class="form-control" rows="5" placeholder="질문을 작성해보세요."></textarea>
             </div>
 
             <div class="col-md-12 text-right" style="margin-top:5px;">
-                <button class="btn btn-default">질문 작성</button>
+                <button class="btn btn-default" onclick="void(oBoard.writeArticle(<%=tid%>));">질문 작성</button>
             </div>
         </div>
 
@@ -85,16 +82,8 @@
 
 
         <!-- pagination -->
-        <div class="center-block text-center">
-        <ul class="pagination">
-            <li><a href="#">«</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">»</a></li>
-        </ul>
+        <div id="sPagination" class="center-block text-center">
+        <ul class="pagination"></ul>
         </div>
 
     </div>
@@ -119,7 +108,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary">답변 등록</button>
+                <button type="button" class="btn btn-primary" onclick="void(oBoard.writeReplyArticle(<%=tid%>));">답변 등록</button>
             </div>
         </div>
     </div>
