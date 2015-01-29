@@ -1,5 +1,5 @@
 <%- include header.ejs %>
-<script type="text/javascript" src="/static/js/gl/3d.pushpop.js"></script>
+
 <script type="text/javascript">
 
     var tutorialBlock, tempSeq = 1;
@@ -47,13 +47,14 @@
 </script>
 
 
+
 <div class="container-fluid" style="padding-top:60px; height:100%;">
     <div class="row" style="height: 100%;">
 
 
 
         <!-- 좌측 메뉴 -->
-        <div class="col-md-3 block_leftside">
+        <div class="col-md-3 block_leftside" style="height: 100%;">
 
             <!-- 과제 메뉴 -->
             <div class="btn-group" style="width: 100%;">
@@ -98,6 +99,17 @@
                 </div>
             </div>
             <!-- // 해볼것 -->
+
+            <div class="col-md-12 text-right">
+                <br />
+                <button class="btn btn-info" onclick="void(procMoveBoard(<%=tid%>, 1));">
+                    <span class="glyphicon glyphicon-comment"></span> 질문게시판
+                </button>
+
+                <button class="btn btn-info" onclick="void(procJudge( tutorialBlock.blocksToJSON(), <%=tid%>));">
+                    <span class="glyphicon glyphicon-play"></span> 실행
+                </button>
+            </div>
 
         </div>
         <!-- //좌측 메뉴 -->
