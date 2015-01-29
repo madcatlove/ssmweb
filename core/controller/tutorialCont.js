@@ -11,7 +11,10 @@ var controller = {
         var sess = req.session;
 
         var opt = {
-            extraJS : ['sblock/moveblock.js', 'threejs/three.js', 'gl/sgl.js', 'tutorial.js', 'sblock/sblock.js'],
+            extraJS : [
+                'sblock/moveblock.js', 'threejs/three.js', 'threejs/OrbitControls.js',
+                'gl/sgl.js', 'tutorial.js',
+                'sblock/sblock.js'],
             extraCSS : ['blocks.css'],
             member : sess.member,
             tid : req.tid,

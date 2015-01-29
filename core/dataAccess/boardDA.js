@@ -68,7 +68,8 @@ var dataAccess = {
             //-- 부모글만 가져오는 쿼리
             queryStatement += ' (SELECT * FROM qnaBoard WHERE tutorialSeq = ? AND seq = parentSeq ORDER BY seq DESC LIMIT '+limitIdentifier+')'
             queryStatement += ' UNION';
-                //-- 대댓글 붙이기
+
+            //-- 대댓글 붙이기
             queryStatement += ' (';
             queryStatement += '   SELECT QB1.* FROM qnaBoard QB1,';
             queryStatement += '  (SELECT * FROM qnaBoard WHERE tutorialSeq = ? AND seq = parentSeq ORDER BY seq DESC LIMIT '+limitIdentifier+' ) QB2';
