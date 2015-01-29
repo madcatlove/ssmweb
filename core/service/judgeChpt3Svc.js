@@ -2,6 +2,9 @@
  * Created by jangjunho on 15. 1. 26..
  */
 
+var jMath = require('../Math');
+var bType = require('../BlockType');
+
 var judgeChpt3 = {
 
     /**
@@ -19,7 +22,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == 6 && data[1].blockType == 10) {
+        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.TRANSLATE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -57,7 +60,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == 6 && data[1].blockType == 11) {
+        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.ROTATE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -96,7 +99,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == 6 && data[1].blockType == 12) {
+        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.SCALE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -143,7 +146,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == 6 && data[1].blockType == 13) {
+        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.PERSPECTIVE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -182,7 +185,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == 6 && data[1].blockType == 14) {
+        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.ORTHOGRAPHIC) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -223,7 +226,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == 6 && data[1].blockType == 18) {
+        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.CAM_POS) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],

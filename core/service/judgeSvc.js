@@ -39,7 +39,6 @@ var service = {
             blockInfo = blockInfo.map(function (val) { return +val; });
 
             var extraInfo = JSON.parse(tutorial.extrainfo);
-           // console.log(params.data.length + ' ? ' + blockInfo.length);
 
             /**
              * 데이터베이스에 있는 튜토리얼의 블럭 정보의 개수와

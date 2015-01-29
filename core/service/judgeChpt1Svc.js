@@ -52,9 +52,11 @@ var judgeChpt1 = {
              * 마지막 블럭의 타입이 2(엔드)인지 확인
              * @type {Number}
              */
-            var dist1 = parseFloat(jMath.distance2f([data[1], data[2]]));
-            var dist2 = parseFloat(jMath.distance2f([data[2], data[3]]));
 
+            jMath.isEqualFloat(
+                [jMath.distance2f([data[1], data[2]]), dis],
+                [jMath.distance2f([data[2], data[3]]), dis]
+            );
             if (dist1 != dis || dist2 != dis) {
                 res = false;
             }
@@ -116,7 +118,7 @@ var judgeChpt1 = {
         var sPoint = extraInfo.startpoint;
         var seq = extraInfo.seq;
 
-        if (data[0].blockType == 1 &&  data[5].blockType == 2 &&
+        if (data[0].blockType == bType.BEGIN &&  data[5].blockType == bType.END &&
             jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
 
             if (!jMath.isEqualFloat(
