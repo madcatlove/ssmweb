@@ -23,6 +23,9 @@ var service = {
             if( typeof data != 'undefined'  ) {
                 var blockStr = data.available_block.split(',');
                 data.available_block = blockStr;
+
+                var jsfile = data.js_filename.split(',');
+                data.js_filename = jsfile;
             }
             resultCallback( data );
         });

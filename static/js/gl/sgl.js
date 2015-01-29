@@ -106,3 +106,4 @@ sGL.prototype.DIRECTIONALLIGHT  = 16;
 sGL.prototype.SPOTLIGHT         = 17;
 sGL.prototype.CAMERAPOSITION    = 18;
 sGL.prototype.LIGHTPOSITION     = 19;
+sGL.prototype.IDENTITYMATRIX    = 20;

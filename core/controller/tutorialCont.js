@@ -3,6 +3,7 @@
  */
 var u = require('../Util');
 var tutorialService = require('../service/tutorialSvc');
+var async = require('async');
 
 var controller = {
 
@@ -20,7 +21,29 @@ var controller = {
             tid : req.tid,
 
         }
-        res.render('tutorial', opt);
+
+
+        async.waterfall([
+
+            /* 튜토리얼 기본정보 */
+            function getTutorialInfo( _callback) {
+                tutorialService.getTutorialInfo( req.tid, function(result) {
+                    var jsfile = result.js_filename;
+                    for( var js in jsfile ) opt.extraJS.push( '/gl/' + result.js_filename[js] );
+
+                    _callback(null);
+                })
+            },
+
+            ],
+
+            /* 최종 실행 콜백 */
+            function finalExec( err, result) {
+                res.render('tutorial', opt);
+            }
+
+        );
+
     },
 
     /* 튜토리얼 정보를 가져오는 컨트롤러 */
