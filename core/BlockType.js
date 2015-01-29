@@ -34,8 +34,10 @@ var blockType = {
 
         var cntInfos = [];
 
-        for (var i = 0 ; i < blockInfo.length ; i ++) cntInfos[i] = 0;
-        for (var i = 0 ; i < blockInfo.length ; i ++) cntInfos[blockInfo[i]] ++;
+        for (var i = 0 ; i < 30 ; i ++) cntInfos[i] = 0;
+        for (var i = 0 ; i < blockInfo.length ; i ++) {
+            cntInfos[parseInt(blockInfo[i])] ++;
+        }
         for (var i = 0 ; i < paramInfo.length ; i ++) cntInfos[paramInfo[i].blockType] --;
 
         for (var i = 0 ; i < cntInfos.length ; i ++) {
@@ -44,6 +46,7 @@ var blockType = {
             }
         }
 
+        return true;
     }
 
 };

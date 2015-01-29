@@ -20,27 +20,29 @@ var judgeChpt2 = {
         var res = true;
         var sPoint = extraInfo.startpoint;
 
-        if (data[0].blockType == bType.BEGIN && data[9].blockType == bType.END &&
-            jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
+        if (data[0].blockType == bType.BEGIN && data[5].blockType == bType.END &&
+            data[6].blockType == bType.BEGIN && data[11].blockType == bType.END &&
+
+            jMath.isEqualFloat([[data[1].data.x, sPoint[0].x], [data[1].data.y, sPoint[0].y], [data[1].data.z, sPoint[0].z]] ) &&
+            jMath.isEqualFloat([[data[7].data.x, sPoint[1].x], [data[7].data.y, sPoint[1].y], [data[7].data.z, sPoint[1].z]] )) {
 
             /**
              * 각 면에대한 노멀벡터 구하기
              * @type {*[]}
              */
             var normals = [
-                jMath.normal3f( [data[1].data, data[2].data, data[3].data, data[4].data] ), // 앞면
-                jMath.normal3f( [data[5].data, data[8].data, data[7].data, data[6].data] ), // 뒷면
+                jMath.normal3f( [data[1].data, data[2].data, data[3].data] ), // 윗면
+                jMath.normal3f( [data[7].data, data[8].data, data[9].data] ), // 밑면
 
-                jMath.normal3f( [data[5].data, data[1].data, data[4].data, data[8].data] ), // 윗면
-                jMath.normal3f( [data[6].data, data[7].data, data[3].data, data[2].data] ), // 아랫면
-
-                jMath.normal3f( [data[4].data, data[3].data, data[7].data, data[8].data] ), // 오른면
-                jMath.normal3f( [data[1].data, data[5].data, data[6].data, data[2].data] ), // 왼면
+                jMath.normal3f( [data[2].data, data[3].data, data[4].data] ), // 윗면
+                jMath.normal3f( [data[8].data, data[9].data, data[10].data] ), // 밑면
             ];
 
-            if (!jMath.isSumOfNormalZero(normals[0], normals[1]) || // 앞면과 뒷면에 노멀벡터의 합이 0인가
-                !jMath.isSumOfNormalZero(normals[2], normals[3]) || // 윗면, 아랫면
-                !jMath.isSumOfNormalZero(normals[4], normals[5]) ) { // 오른면, 왼면
+            console.log(normals);
+
+            if (!jMath.isSumOfNormalZero(normals[0], normals[1]) ||
+                !jMath.isSumOfNormalZero(normals[2], normals[3])
+            ) {
 
                 res = false;
             }
@@ -60,15 +62,11 @@ var judgeChpt2 = {
      * @param callback
      */
     box : function(blockInfo, extraInfo, data, callback) {
-        var size = extraInfo.size;
+        var sPoint = extraInfo.startpoint;
 
-        var res = data[0].blockType == bType.DRAW_BOX && jMath.isEqualFloat(
-            [
-                [data[0].data.w, size.w],
-                [data[0].data.h, size.h],
-                [data[0].data.d, size.d]
-            ]
-        );
+        var res = data[0].blockType == bType.DRAW_BOX &&
+            jMath.isEqualFloat([[data[0].data.x, sPoint.x], [data[0].data.y, sPoint.y],
+                [data[0].data.z, sPoint.z], [data[0].data.size, extraInfo.size]]) ;
 
         callback(res);
     },

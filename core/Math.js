@@ -4,15 +4,25 @@
 
 var math = {
 
+    isEqualStartPoint2f : function (p) {
+
+        for (var i = 0 ; i < p.length - 1 ; i ++) {
+            if (p[i].x != p[i+1].x || p[i].x != p[i+1].x || p[i].x != p[i+1].x) {
+                return false;
+            }
+        }
+
+        return true;
+    },
+
     /**
      * 점들의 위치가 같은지 같지 않은지 판별
      * @param p
      * @returns {boolean}
      */
     isEqualFloat : function (p) {
-
         for (var i = 0 ; i < p.length ; i ++) {
-            if (parseFloat(p[i][0]) != parseFloat(p[i][1])) {
+            if (p[i][0] != p[i][1]) {
                 return false;
             }
         }

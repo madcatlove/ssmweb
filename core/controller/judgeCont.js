@@ -22,11 +22,14 @@ var controller = {
             data : JSON.parse(req.data)
         };
 
+        //console.log(params.data);
+
         /**
          * judgeSvc의 execJudge를 통하여 판정을 기다린다
          */
         judgeService.execJudge(params, function(isOk) {
-            res.send( {'isOk' : isOk} );
+            console.log(isOk);
+            res.json(u.result(isOk, false));
 
         });
 
