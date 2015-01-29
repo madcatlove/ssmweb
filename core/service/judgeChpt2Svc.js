@@ -7,6 +7,7 @@ var bType = require('../BlockType');
 
 var judgeChpt2 = {
 
+    // 변경 - 모든 면 -> 두면 만
     /**
      * 5) 직육면체 Low 판정
      * 1. 각 면에 대한 노멀벡터를 구하여 반대 면에 대한 벡터의 합이 0인지 확인

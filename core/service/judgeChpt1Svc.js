@@ -45,7 +45,7 @@ var judgeChpt1 = {
          * 첫 블럭의 타입이 1(비긴)인지, 시작점이 일치하는지 확인
          */
         if (data[0].blockType == bType.BEGIN && data[4].blockType == bType.END &&
-            jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
+            jMath.isEqualFloat( [[block.data.x, sPoint.x], [block.data.y, sPoint.y]]) ) {
 
             /**
              * 점과 점 사이의 거리를 구하여 해당 거리가 데이터베이스의 거리와 일치하는지,
@@ -54,8 +54,8 @@ var judgeChpt1 = {
              */
 
             jMath.isEqualFloat(
-                [jMath.distance2f([data[1], data[2]]), dis],
-                [jMath.distance2f([data[2], data[3]]), dis]
+                [ jMath.distance2f([data[1], data[2]]), dis ],
+                [ jMath.distance2f([data[2], data[3]]), dis ]
             );
             if (dist1 != dis || dist2 != dis) {
                 res = false;
@@ -82,7 +82,7 @@ var judgeChpt1 = {
         var seq = extraInfo.seq; // 데이터베이스의 엑스트라 인포에서 점의 순서 정보
 
         if (data[0].blockType == bType.BEGIN &&  data[4].blockType == bType.END &&
-            jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
+            jMath.isEqualFloat( [[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]] ) ) {
 
             /**
              *  점의 순서정보와 넘어온 블럭 정보들을 비교

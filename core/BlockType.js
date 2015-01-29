@@ -22,7 +22,29 @@ var blockType = {
     DIR_LIGHT : 16,
     SPOT_LIGHT : 17,
     CAM_POS : 18,
-    LIGHT_POS : 19
+    LIGHT_POS : 19,
+
+    /**
+     * 올바른 블럭 패러미터가 왔는지 확인.
+     * @param blockInfo
+     * @param paramInfo
+     * @returns {boolean}
+     */
+    isRightBlocks : function (blockInfo, paramInfo) {
+
+        var cntInfos = [];
+
+        for (var i = 0 ; i < blockInfo.length ; i ++) cntInfos[i] = 0;
+        for (var i = 0 ; i < blockInfo.length ; i ++) cntInfos[blockInfo[i]] ++;
+        for (var i = 0 ; i < paramInfo.length ; i ++) cntInfos[paramInfo[i].blockType] --;
+
+        for (var i = 0 ; i < cntInfos.length ; i ++) {
+            if (cntInfos[i] != 0) {
+                return false;
+            }
+        }
+
+    }
 
 };
 

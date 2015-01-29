@@ -3,6 +3,7 @@
  */
 
 var tutorialDA = require('../dataAccess/tutorialDA');
+var bType = require('../BlockType');
 
 var judgeChpt1 = require('./judgeChpt1Svc'),
     judgeChpt2 = require('./judgeChpt2Svc'),
@@ -44,7 +45,8 @@ var service = {
              * 데이터베이스에 있는 튜토리얼의 블럭 정보의 개수와
              * 넘어온 데이터의 블럭 개수가 일치하는지 확인한다.
              */
-            if (params.data.length == blockInfo.length) {
+            if (params.data.length == blockInfo.length &&
+                bType.isRightBlocks(blockInfo, params.data) ) {
                 /**
                  * 데이터베이스의 블럭 정보( EX) 1,3,3)
                  * 데이터베이스의 추가 정보(시작점, 시퀀스, 사이즈 등)
