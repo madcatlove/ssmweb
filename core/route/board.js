@@ -43,6 +43,7 @@ router.param('bid', function(req, res, next, bid) {
 
 
 /* Routing */
+router.get('/:tid+/info', boardController.getBoardInfo); /* 게시판 정보 컨트롤러 */
 router.get('/:tid+/view', boardController.getArticleListView); /* 게시판 리스트 뷰 컨트롤러 */
 router.get('/:tid+/:page?', boardController.getArticleList); /* 게시판 리스트 컨트롤러 */
 router.post('/:tid', boardController.postArticle); /* 게시판 글 작성 컨트롤러 */

@@ -44,8 +44,15 @@ var service = {
                 }
 
             });
-        }
-        ,
+        },
+
+        /* 게시판 부모글이 몇개인지 조회 */
+        getParentArticleCount : function( tid, resultCallback) {
+            u.assert( tid );
+            boardDA.getParentArticleCount(tid, function(result) {
+                resultCallback( parseInt(result[0].count) );
+            });
+        },
 
 
 }

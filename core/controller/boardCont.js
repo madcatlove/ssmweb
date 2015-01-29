@@ -36,7 +36,8 @@ var controller = {
         var memberSession = req.session.member;
         if( !req.page ) req.page = 1;
         var page = parseInt(req.page);
-        var countOffset = req.body.countOffset;
+        var countOffset = req.query.countOffset;
+
 
         var sParam = {
             tid : req.tid,
@@ -99,6 +100,47 @@ var controller = {
             }
         )
     },
+
+    /**
+     * 튜토리얼별 질문게시판 정보 가져오는 컨트롤러
+     * @param req
+     * @param res
+     */
+    getBoardInfo : function(req, res) {
+        var boardInfo = {};
+        var tid = req.tid;
+
+        async.waterfall([
+            /* tid 가 유효한지 확인 */
+            function validTutorialSequence( _callback) {
+                tutorialService.getTutorialInfo(req.tid, function(result) {
+                    if( !result ) {
+                        throw u.error(' Invalid Tutorial ID ', 500);
+                    }
+                    _callback(null, true);
+                })
+            },
+
+            /* 부모글 갯수 삽입 */
+            function injectParentArticleCount(o, _callback) {
+                boardService.getParentArticleCount( tid, function(result) {
+                    boardInfo.parentCount = result;
+                    _callback( null, true );
+                })
+            }
+
+
+        ],
+
+            /* 최종 Task */
+            function finalTask(err, result) {
+                res.json(u.result( boardInfo ) );
+            }
+
+        );
+
+    },
+
 
     /**
      * 게시글 삭제 컨트롤러

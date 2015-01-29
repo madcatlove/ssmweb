@@ -66,12 +66,13 @@ var dataAccess = {
             queryStatement += ' SELECT B.*, MEMBER.userid FROM';
             queryStatement += ' (';
             //-- 부모글만 가져오는 쿼리
-            queryStatement += ' (SELECT * FROM qnaBoard WHERE tutorialSeq = ? AND seq = parentSeq LIMIT '+limitIdentifier+')'
+            queryStatement += ' (SELECT * FROM qnaBoard WHERE tutorialSeq = ? AND seq = parentSeq ORDER BY seq DESC LIMIT '+limitIdentifier+')'
             queryStatement += ' UNION';
-                //-- 대댓글 붙이기
+
+            //-- 대댓글 붙이기
             queryStatement += ' (';
             queryStatement += '   SELECT QB1.* FROM qnaBoard QB1,';
-            queryStatement += '  (SELECT * FROM qnaBoard WHERE tutorialSeq = ? AND seq = parentSeq LIMIT '+limitIdentifier+' ) QB2';
+            queryStatement += '  (SELECT * FROM qnaBoard WHERE tutorialSeq = ? AND seq = parentSeq ORDER BY seq DESC LIMIT '+limitIdentifier+' ) QB2';
             queryStatement += '  WHERE';
             queryStatement += '   QB1.tutorialSeq = ? AND QB1.seq != QB1.parentSeq AND';
             queryStatement += '   QB1.parentSeq = QB2.seq';
@@ -91,7 +92,28 @@ var dataAccess = {
             })
 
         })
-    }
+    },
+
+
+    /* 부모글이 몇개인지 가져옴 */
+    getParentArticleCount : function(tid, resultCallback) {
+        var queryStatement = 'SELECT count(seq) AS `count` FROM qnaBoard WHERE tutorialSeq = ? AND seq = parentSeq';
+
+        db.getConnection( function(conn) {
+
+            conn.query( queryStatement, [tid], function(err, result) {
+
+                if( err ) {
+                    console.error(' boardDA Error (getParentArticleCount)', err);
+                    throw u.error( err.message, 500);
+                }
+                resultCallback( result );
+
+                conn.release();
+            })
+
+        })
+    },
 
 }
 

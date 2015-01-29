@@ -94,14 +94,14 @@ var getBlockInfo = (function() {
     // 0 번째 버림.
     blockInfo.push({});
 
-    // 리스트 생성시작 (-_-;;)
+    // 리스트 생성시작 (-_-;;)  ( 블락타입, 블락이름, 파라메터갯수 , 파라메터정보(이름) )
     blockInfo.push( createBlockInfo( 1, blockNameList[1], 0, []));
     blockInfo.push( createBlockInfo( 2, blockNameList[2], 0, []));
     blockInfo.push( createBlockInfo( 3, blockNameList[3], 2, ['x','y']));
     blockInfo.push( createBlockInfo( 4, blockNameList[4], 3, ['x','y','z']));
     blockInfo.push( createBlockInfo( 5, blockNameList[5], 3, ['x','y','r']));
-    blockInfo.push( createBlockInfo( 6, blockNameList[6], 3, ['w','h','d']));
-    blockInfo.push( createBlockInfo( 7, blockNameList[7], 1, ['r']));
+    blockInfo.push( createBlockInfo( 6, blockNameList[6], 4, ['size','x','y','z']));
+    blockInfo.push( createBlockInfo( 7, blockNameList[7], 3, ['R', 'Lo', 'La']));
     blockInfo.push( createBlockInfo( 8, blockNameList[8], 0, []));
     blockInfo.push( createBlockInfo( 9, blockNameList[9], 0, []));
     blockInfo.push( createBlockInfo( 10, blockNameList[10], 3, ['x','y','z']));
