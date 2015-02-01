@@ -86,7 +86,7 @@ var getBlockInfo = (function() {
         'Perspective', 'Othographic', 'lookAt',
         'DirectionalLight', 'SpotLight',
         'cameraPosition', 'LightPosition',
-        'IdentityMatrix',
+        'IdentityMatrix', 'LightDirection',
     ];
 
     /** 블락  정보 리스트 생성 */
@@ -112,10 +112,11 @@ var getBlockInfo = (function() {
     blockInfo.push( createBlockInfo( 14, blockNameList[14], 6, ['left','right','top','bottom','near','far']));
     blockInfo.push( createBlockInfo( 15, blockNameList[15], 3, ['x','y','z']));
     blockInfo.push( createBlockInfo( 16, blockNameList[16], 2, ['hex','intensity']));
-    blockInfo.push( createBlockInfo( 17, blockNameList[17], 4, ['hex','intensity','distance','angle']));
+    blockInfo.push( createBlockInfo( 17, blockNameList[17], 4, ['hex','intensity','angle','exp']));
     blockInfo.push( createBlockInfo( 18, blockNameList[18], 3, ['x','y','z']));
     blockInfo.push( createBlockInfo( 19, blockNameList[19], 3, ['x','y','z']));
     blockInfo.push( createBlockInfo( 20, blockNameList[20], 0, []) );
+    blockInfo.push( createBlockInfo( 21, blockNameList[21], 3, ['x','y','z']));
 
     return function(blockType) {
         for( var i = 1; blockInfo.length; i++) {
