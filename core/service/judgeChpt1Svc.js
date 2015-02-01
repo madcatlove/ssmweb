@@ -54,8 +54,6 @@ var judgeChpt1 = {
              * @type {Number}
              */
 
-            console.log('dis1 = ' + jMath.distance2f([data[1], data[2]]));
-            console.log('dis2 = ' + jMath.distance2f([data[2], data[3]]));
             if (jMath.distance2f([data[1], data[2]]) != dis ||
                 jMath.distance2f([data[2], data[3]]) != dis) {
                 res = false;
