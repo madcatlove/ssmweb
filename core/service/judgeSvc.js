@@ -53,7 +53,17 @@ var service = {
                  * 포스트를 통하여 넘어온 데이터 정보
                  * 결과를 반환 해줄 콜백 메서드
                  */
-                judge[chptSeq][probSeq](blockInfo, extraInfo, params.data, callback);
+                judge[chptSeq][probSeq](blockInfo, extraInfo, params.data, function(finalResult) {
+
+                    // 결과값이 있다면 기록.
+                    if( finalResult ) {
+                        tutorialDA.markTutorialSuccess( params.member, params.jid, function( markResult) {
+                            callback( finalResult );
+                        })
+                    } else {
+                        callback( finalResult );
+                    }
+                });
             } else {
                 callback(false);
             }

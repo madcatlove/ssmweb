@@ -78,10 +78,11 @@ var dataAccess = {
      * @callback last inserted id
      */
     markTutorialSuccess : function(member, tid, resultCallback) {
-        var queryStatement = 'INSERT INTO tutorialResult (tutorialSeq, memberSeq, regdate) VALUES (?,?,NOW())';
+        var queryStatement  = 'INSERT INTO tutorialResult (tutorialSeq, memberSeq, regdate) VALUES (?,?,NOW())';
+            queryStatement += ' ON DUPLICATE KEY UPDATE regdate = NOW(); '; // 중복시 regdate 만 업데이트.
 
         db.getConnection( function(conn) {
-            conn.query( queryStatement, [member.seq, tid], function(err, result) {
+            conn.query( queryStatement, [tid, member.seq], function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error (markTutorialSuccess) ', err);
                     throw u.error( err.message, 500);
@@ -136,7 +137,10 @@ var dataAccess = {
                 conn.release();
             })
         })
-    }
+    },
+
+
+
 
 
 

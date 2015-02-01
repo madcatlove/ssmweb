@@ -14,12 +14,12 @@ var controller = {
      */
     procJudge : function (req, res) {
 
-        // judge 번호는
-        // 미들웨어에서 jid 로 req 에 삽입되서 넘어온다.
+        var memberSession = req.session.member;
 
         var params = {
             jid :  req.jid,
-            data : JSON.parse(req.data)
+            data : JSON.parse(req.data),
+            member : memberSession
         };
 
         //console.log(params.data);
@@ -28,9 +28,7 @@ var controller = {
          * judgeSvc의 execJudge를 통하여 판정을 기다린다
          */
         judgeService.execJudge(params, function(isOk) {
-            console.log(isOk);
-            res.json(u.result(isOk, false));
-
+            res.json( u.result(isOk, false) );
         });
 
     }
