@@ -64,7 +64,7 @@ var judgeChpt2 = {
     box : function(blockInfo, extraInfo, data, callback) {
         var sPoint = extraInfo.startpoint;
 
-        var res = data[0].blockType == bType.DRAW_BOX &&
+        var res = data[0].blockType == bType.DRAWBOX &&
             jMath.isEqualFloat([[data[0].data.x, sPoint.x], [data[0].data.y, sPoint.y],
                 [data[0].data.z, sPoint.z], [data[0].data.size, extraInfo.size]]) ;
 
@@ -79,9 +79,11 @@ var judgeChpt2 = {
      * @param callback
      */
     sphere : function(blockInfo, extraInfo, data, callback) {
-        var size = extraInfo.size;
+        var sPoint = extraInfo.startpoint;
+        var axis = extraInfo.axis;
+        var rad = extraInfo.rad;
 
-        var res = data[0].blockType == bType.DRAW_SPHERE && jMath.isEqualFloat(
+        var res = data[0].blockType == bType.DRAWSPHERE && jMath.isEqualFloat(
             [
                 [data[0].data.d, size.d]
             ]
