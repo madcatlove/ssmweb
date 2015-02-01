@@ -39,7 +39,7 @@ sBlock.prototype.toHTML = function() {
     s.append( blockName + "<br />");
     for( var i = 0; i < numBlockParam; i++) {
         if( i != 0 && i % 2 == 0 ) s.append("<br />");
-        s.append( paramName[i] + ' : ' + '<input type="text" data-paramname="'+ paramName[i] +'" style="width:15px;" /> ');
+        s.append( paramName[i] + ' : ' + '<input type="text" class="input" data-paramname="'+ paramName[i] +'" style="width:15px;" /> ');
     }
     this.blockQuery = s;
 
