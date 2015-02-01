@@ -4,6 +4,9 @@
  */
 var db = require('../mysql');
 var u  = require('../Util');
+var fs = require('fs');
+var path = require('path');
+var async = require('async');
 
 /*
  TABLE NAME - tutorialInfo -
@@ -182,6 +185,85 @@ var dataAccess = {
                 conn.release();
             })
         })
+    },
+
+    /**
+     * 튜토리얼 컨텐츠 가져옴( 가이드, 연습내용, 이미지정보 )
+     * @return { guide : ~~ , practice : ~~~ , image : ~~~ }
+     * @param tid
+     * @param resultCallback
+     */
+    getTutorialContent : function(tid, resultCallback) {
+        var contentPath  = path.resolve( __dirname , '../../static/content');
+            contentPath += '/' + tid;
+
+        var cData = {
+            guide : '',
+            practice : '',
+            image : []
+        };
+
+        fs.exists( contentPath, function(b) {
+            if( !b ) {
+                resultCallback( cData );
+            }
+            else {
+
+                async.parallel([
+                    /* 가이드 파일 읽어와서 추가 */
+                    function getGuideFile( _callback) {
+                        fs.readFile( contentPath + '/guide.html', 'UTF8', function(err, data) {
+                            if( err ) {
+                                _callback( err );
+                            }
+                            else {
+                                cData.guide = data;
+                                _callback(null);
+                            }
+                        })
+                    },
+
+                    /* 연습내용 파일 읽어와서 추가 */
+                    function getPracticeFile( _callback) {
+                        fs.readFile( contentPath + '/practice.html', 'UTF8', function(err, data) {
+                            if( err ) {
+                                _callback( err );
+                            }
+                            else {
+                                cData.practice = data;
+                                _callback(null);
+                            }
+                        })
+                    },
+
+                    /* 이미지 파일 읽어와서 추가 */
+                    function getImageFile( _callback) {
+                        fs.readdir( contentPath, function(err, filelist) {
+                            var imglist = [];
+
+                            for(var i = 0; i < filelist.length; i++) {
+                                var sfile = filelist[i],
+                                    sfile_ext = sfile.split('.');
+                                sfile_ext = sfile_ext[ sfile_ext.length -1 ];
+
+                                if ( /(png|gif|jpg|bmp)$/gi.test(sfile_ext) ) imglist.push( sfile );
+                            }
+                            cData.image = imglist;
+
+                            _callback(null);
+                        })
+                    }
+                ]
+                ,
+                    function finalExec(err, result) {
+                        resultCallback( cData );
+                    }
+
+                );
+
+            }
+        });
+
     }
 
 

@@ -18,24 +18,56 @@ var service = {
             throw u.error('Invalid TID ', 500);
         }
         tid = parseInt( tid );
-        tutorialDA.getTutorialInfo(tid, function(result) {
 
-            var data = result[0];
-            if( typeof data != 'undefined'  ) {
-                var blockStr = data.available_block.split(',');
-                data.available_block = blockStr;
+        async.waterfall([
 
-                if( data.js_filename != null ) {
-                    var jsfile = data.js_filename.split(',');
-                    data.js_filename = jsfile;
-                }
-                else {
-                    data.js_filename = [];
-                }
+            //-----------------------------
+            // 튜토리얼 기본정보 가져옴
+            //-----------------------------
+            function get_tutorialInfo( _callback) {
+                tutorialDA.getTutorialInfo(tid, function(result) {
 
+                    var data = result[0];
+                    if( typeof data != 'undefined'  ) {
+                        var blockStr = data.available_block.split(',');
+                        data.available_block = blockStr;
+
+                        if( data.js_filename != null ) {
+                            var jsfile = data.js_filename.split(',');
+                            data.js_filename = jsfile;
+                        }
+                        else {
+                            data.js_filename = [];
+                        }
+
+                    }
+                    _callback( null, data );
+                });
+            },
+
+            //-----------------------------
+            // 튜토리얼 가이드 정보 가져옴.
+            //-----------------------------
+            function get_tutorialExtracontent( data, _callback) {
+                tutorialDA.getTutorialContent(tid, function( contentResult ) {
+                    data.guide_content = contentResult.guide;
+                    data.practice_content = contentResult.practice;
+                    data.image_content = contentResult.image;
+
+                    _callback( null, data );
+                })
+            },
+
+        ],
+
+            //-----------------------------
+            // 최종콜백
+            //-----------------------------
+            function finalExec( err, result) {
+                resultCallback(result);
             }
-            resultCallback( data );
-        });
+        );
+
     },
 
     /**
