@@ -24,8 +24,14 @@ var service = {
                 var blockStr = data.available_block.split(',');
                 data.available_block = blockStr;
 
-                var jsfile = data.js_filename.split(',');
-                data.js_filename = jsfile;
+                if( data.js_filename != null ) {
+                    var jsfile = data.js_filename.split(',');
+                    data.js_filename = jsfile;
+                }
+                else {
+                    data.js_filename = [];
+                }
+
             }
             resultCallback( data );
         });

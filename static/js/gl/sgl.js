@@ -75,6 +75,13 @@ sGL.prototype.renders = function() {
 
 }
 
+/**
+ * 가짜 런..
+ */
+sGL.prototype.run = function() {
+
+}
+
 
 /**var blockNameList = [
  '', 'Begin', 'End',
@@ -107,3 +114,4 @@ sGL.prototype.SPOTLIGHT         = 17;
 sGL.prototype.CAMERAPOSITION    = 18;
 sGL.prototype.LIGHTPOSITION     = 19;
 sGL.prototype.IDENTITYMATRIX    = 20;
+sGL.prototype.LIGHTDIRECTION    = 21;
