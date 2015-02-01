@@ -1,17 +1,61 @@
 <%- include header.ejs %>
+<style type="text/css">
+    #sCarousel .item img{
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+</style>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#sCarousel").owlCarousel({
+
+            navigation : false, // Show next and prev buttons
+            slideSpeed : 300,
+            paginationSpeed : 400,
+            singleItem:true,
+            autoPlay: true
+
+
+            // "singleItem:true" is a shortcut for:
+            // items : 1,
+            // itemsDesktop : false,
+            // itemsDesktopSmall : false,
+            // itemsTablet: false,
+            // itemsMobile : false
+
+        });
+
+    });
+</script>
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <div class="container">
-        <h1>GLove ::</h1>
-        <br/>
-        <img src="http://placehold.it/1080x300"/>
-        <br/>
-        <br/>
-        <p>Welcome to Online Graphics Education Project.<br>You can learn computer graphics theory based on OpenGL using block coding.</p>
-        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<!--<div class="jumbotron">-->
+    <!--<div class="container">-->
+        <!--<h1>GLove ::</h1>-->
+        <!--<br/>-->
+        <!--<img src="http://placehold.it/1080x300"/>-->
+        <!--<br/>-->
+        <!--<br/>-->
+        <!--<p>Welcome to Online Graphics Education Project.<br>You can learn computer graphics theory based on OpenGL using block coding.</p>-->
+        <!--<p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+<div class="container" style="margin-top:60px;">
+    <div id="sCarousel" class="owl-carousel">
+        <div class="item"><img src="http://owlgraphic.com/owlcarousel/demos/assets/fullimage1.jpg" alt="The Last of us"></div>
+        <div class="item"><img src="http://owlgraphic.com/owlcarousel/demos/assets/fullimage2.jpg" alt="GTA V"></div>
+        <div class="item"><img src="http://owlgraphic.com/owlcarousel/demos/assets/fullimage3.jpg" alt="Mirror Edge"></div>
     </div>
+
 </div>
+
+
 
 <div class="container">
     <!-- Example row of columns -->
