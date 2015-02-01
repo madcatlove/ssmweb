@@ -212,12 +212,12 @@ var judgeChpt3 = {
     },
 
     /**
-     * 14) 카메라 포지션 판정
+     * 14) 카메라 포지션 / 룩엣 판정
      * 1. 입력 패러미터 비교
      * @param data
      * @param callback
      */
-    position : function (blockInfo, extraInfo, data, callback) {
+    positionLookat : function (blockInfo, extraInfo, data, callback) {
         var res = true;
 
         var size = extraInfo.size;
@@ -250,14 +250,31 @@ var judgeChpt3 = {
     },
 
     /**
-     * 15) 룩엣 판정
-     * 1. 입력 패러미터 비교
+     * 15) 디렉셔널 라이트
+     * @param blockInfo
+     * @param extraInfo
      * @param data
      * @param callback
      */
-    lookat : function (blockInfo, extraInfo, data, callback) {
+    dirLight : function (blockInfo, extraInfo, data, callback) {
 
+        callback(false);
+    },
+
+    /**
+     * 16) 스팟 라이트
+     * @param blockInfo
+     * @param extraInfo
+     * @param data
+     * @param callback
+     */
+    spotLight : function (blockInfo, extraInfo, data, callback) {
+
+        callback(false);
     }
+
+
+
 
 };
 

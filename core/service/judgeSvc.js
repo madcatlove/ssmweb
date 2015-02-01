@@ -17,11 +17,11 @@ var judge = [
     [judgeChpt1.point, judgeChpt1.line, judgeChpt1.triangle, judgeChpt1.quadangle],
     [judgeChpt2.rect, judgeChpt2.box, judgeChpt2.sphere],
     [judgeChpt3.translate, judgeChpt3.rotate, judgeChpt3.scale, judgeChpt3.pushPop,
-        judgeChpt3.perspective, judgeChpt3.orthogonal, judgeChpt3.position, judgeChpt3.lookat]
+        judgeChpt3.perspective, judgeChpt3.orthogonal, judgeChpt3.positionLookat,
+        judgeChpt3.dirLight, judgeChpt3.spotLight]
 ];
 
 var service = {
-
     /**
      * jid에 따른 튜토리얼 정보를 가져 온 후, 튜토리얼의 챕터 번호와 문제 번호를 인덱스로 하여 판정 함수를 호출한다.
      * @param params
