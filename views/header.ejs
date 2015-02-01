@@ -100,15 +100,32 @@
                 <li class="active"><a href="#">Home</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorial<b class="caret"></b></a>
+
+
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
+                        <%
+                            if( tutorialChapterList ) {
+                                for(var key in  tutorialChapterList) {
+                        %>
+                                <li class="divider"></li>
+                                <li class="dropdown-header"> <%=key%></li>
+                                <li class="divider"></li>
+
+                                <% for( var i = 0; i < tutorialChapterList[key].length; i++) {
+                                    var item = tutorialChapterList[key][i];
+                                %>
+                                    <li><a href="#"><%=item.title%>(<%=item.seq%>)</a></li>
+                                <% } %>
+
+
+                        <%
+                            }
+                            }
+                        %>
+
                     </ul>
+
+
                 </li>
                 <li><a href="#about">FreeDraw</a></li>
                 <li><a href="#contact">Gallery</a></li>

@@ -23,7 +23,21 @@ var controller = {
             page : page,
             extraJS : ['member.js', 'board.js']
         };
-        res.render('board_list', opt);
+
+        async.waterfall([
+            /* 튜토리얼 챕터별 리스트 생성 */
+            function makeChapterList( _callback) {
+                tutorialService.getTutorialChapterList( function(result) {
+                    opt.tutorialChapterList = result;
+                    _callback( null );
+                })
+            }
+        ],
+            /* 최종 실행 콜백 */
+            function finalExec( err, result) {
+                res.render('board_list', opt);
+            }
+        );
 
     },
 

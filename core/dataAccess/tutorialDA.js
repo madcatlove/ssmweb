@@ -162,6 +162,27 @@ var dataAccess = {
 
     },
 
+    /**
+     * 챕터별 튜토리얼 리스트 가져옴
+     * @param resultCallback
+     */
+    getTutorialChapterList : function(resultCallback) {
+        var queryStatement  = ' SELECT TI.title, TI.seq, CI.title `chapter` FROM tutorialInfo TI, chapterInfo CI ';
+            queryStatement += ' WHERE TI.chapterSeq = CI.seq';
+            queryStatement += ' ORDER BY CI.seq ASC, TI.problemSeq ASC';
+
+        db.getConnection( function(conn) {
+            conn.query( queryStatement, function(err, result) {
+                if( err ) {
+                    console.error(' tutorialDA Error ( getTutorialChapterList ) ', err );
+                    throw u.error( err.message, 500 );
+                }
+                resultCallback(result);
+
+                conn.release();
+            })
+        })
+    }
 
 
 }

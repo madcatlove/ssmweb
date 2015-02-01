@@ -116,6 +116,30 @@ var service = {
             }
         )
 
+    },
+
+    /**
+     * 챕터별 튜토리얼 리스트 가져옴 (2D, 3D, 3D+)
+     * @param resultCallback
+     * @return { items }
+     */
+    getTutorialChapterList : function(resultCallback) {
+
+        var items = {};
+
+        tutorialDA.getTutorialChapterList( function(result) {
+            for(var i = 0; i < result.length; i++) {
+                var item = result[i];
+
+                if( !items.hasOwnProperty( item.chapter ) ) {
+                    items[ item.chapter ] = [];
+                }
+                items[ item.chapter].push( item );
+            }
+
+            resultCallback( items );
+        })
+
     }
 
 

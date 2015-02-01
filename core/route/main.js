@@ -2,6 +2,8 @@
 var express = require('express'),
     router = express.Router();
 
+var mainController = require('../controller/mainCont');
+
 
 /* Middleware */
 router.use( function(req, res, next) {
@@ -12,17 +14,7 @@ router.use( function(req, res, next) {
 // ROUTING start with '/'
 //------------------------
 
-router.get('/', function(req, res) {
-    var sess = req.session;
-
-    var opt = {
-        extraJS : ['member.js'],
-        member : sess.member
-    }
-
-    res.render('index', opt);
-
-});
+router.get('/', mainController.index);
 
 
 
