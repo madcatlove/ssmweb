@@ -35,7 +35,7 @@ var controller = {
             },
 
             /* 튜토리얼 진행이 가능한지? */
-            function validTutorialStep( _callback) {
+            /*function validTutorialStep( _callback) {
                 tutorialService.isValidStep( req.tid, function(result) {
                     if( result ) {
                         _callback( null );
@@ -44,7 +44,7 @@ var controller = {
                         throw u.error(' 현재 단계에 접근할수 없습니다. ', 403, 'external');
                     }
                 })
-            },
+            },*/
 
             /* 튜토리얼 챕터별 리스트 생성 */
             function makeChapterList( _callback) {
