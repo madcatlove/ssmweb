@@ -22,7 +22,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.TRANSLATE) {
+        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.TRANSLATE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -60,7 +60,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.ROTATE) {
+        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.ROTATE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -92,24 +92,23 @@ var judgeChpt3 = {
      */
     scale : function (blockInfo, extraInfo, data, callback) {
         var res = true;
-
-        var size = extraInfo.size;
-        var scale = extraInfo.scale;
+        var seq = extraInfo.seq;
 
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.SCALE) {
-
-            var isProperBox = jMath.isEqualFloat([
-                [data[0].data.w, size.w],
-                [data[0].data.h, size.h],
-                [data[0].data.d, size.d]]);
+        if (data[0].blockType == bType.SCALE && data[1].blockType == bType.DRAWBOX) {
 
             var isProperScale =  jMath.isEqualFloat([
-                [data[1].data.x, scale.x],
-                [data[1].data.y, scale.y],
-                [data[1].data.z, scale.z]]);
+                [data[0].data.x, seq[0].info.x],
+                [data[0].data.y, seq[0].info.y],
+                [data[0].data.z, seq[0].info.z]]);
+
+            var isProperBox = jMath.isEqualFloat([
+                [data[1].data.x, seq[1].info.x],
+                [data[1].data.y, seq[1].info.y],
+                [data[1].data.z, seq[1].info.z],
+                [data[1].data.size, seq[1].info.size]]);
 
             if (!isProperBox || !isProperScale) {
                 res = false;
@@ -146,7 +145,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.PERSPECTIVE) {
+        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.PERSPECTIVE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -185,7 +184,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.ORTHOGRAPHIC) {
+        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.OTHOGRAPHIC) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -226,7 +225,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAW_BOX && data[1].blockType == bType.CAM_POS) {
+        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.CAMERAPOSITION) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],

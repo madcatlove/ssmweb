@@ -79,13 +79,11 @@ var judgeChpt2 = {
      * @param callback
      */
     sphere : function(blockInfo, extraInfo, data, callback) {
-        var sPoint = extraInfo.startpoint;
-        var axis = extraInfo.axis;
-        var rad = extraInfo.rad;
-
         var res = data[0].blockType == bType.DRAWSPHERE && jMath.isEqualFloat(
             [
-                [data[0].data.d, size.d]
+                [data[0].data.Lo, extraInfo.Lo],
+                [data[0].data.La, extraInfo.La],
+                [data[0].data.R, extraInfo.R]
             ]
         );
 
