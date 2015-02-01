@@ -26,6 +26,12 @@ dragDropBlockList.prototype.init = function() {
     for(var i = 0; i < this.blocklist.length; i++) {
         this.$source.append( this.blocklist[i].toHTML() );
     }
+
+    $(document).ready( function() {
+        $('.input').bind('click', function(e) {
+           $(this).focus();
+        });
+    })
 }
 
 /**
