@@ -139,8 +139,28 @@ var dataAccess = {
         })
     },
 
+    /**
+     * 주어진 튜토리얼 아이디(tid) 보다 작은 result 의 갯수를 가져옴.
+     * @param tid
+     * @param resultCallback
+     */
+    getTutorialResultCount : function(tid, resultCallback) {
 
+        var queryStatement = 'SELECT count(seq) `count` FROM tutorialResult WHERE tutorialSeq < ?';
 
+        db.getConnection( function(conn) {
+            conn.query( queryStatement, [tid], function(err, result) {
+                if( err ) {
+                    console.error(' tutorialDA Error ( getTutorialResultCount ) ', err );
+                    throw u.error( err.message, 500 );
+                }
+                resultCallback( result );
+
+                conn.release();
+            })
+        })
+
+    },
 
 
 

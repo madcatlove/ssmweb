@@ -2,7 +2,8 @@
  * 튜토리얼 관련 정보를 다루는 서비스
  * @type {utility|exports}
  */
-var u = require('../Util');
+var u = require('../Util'),
+    async = require('async');
 var tutorialDA = require('../dataAccess/tutorialDA');
 
 var service = {
@@ -65,6 +66,57 @@ var service = {
             }
         })
     },
+
+    /**
+     * 현재 튜토리얼이 진행가능한 상태인지 확인. (true, false 리턴)
+     * @param tid
+     * @param resultCallback
+     */
+    isValidStep : function(tid, resultCallback) {
+
+        async.waterfall([
+
+            // 현재 튜토리얼이 있는지?
+            function availableTutorial( _callback) {
+                tutorialDA.getTutorialInfo(tid, function(result) {
+                    if( result ) {
+                        _callback(null, true );
+                    }
+                    else {
+                        _callback(null, false);
+                    }
+                })
+            },
+
+            // 이전 튜토리얼이 클리어 되어있는지?
+            function completePrevTutorials( b, _callback) {
+                if( !b ) {
+                    _callback(null, false);
+                }
+                else {
+                    tutorialDA.getTutorialResultCount(tid, function (result) {
+                        var fCount = result[0].count;
+
+                        // 현재 tutorial id -1 == 완료된 갯수.
+
+                        if (fCount == tid - 1) {
+                            _callback(null, true);
+                        }
+                        else {
+                            _callback(null, false);
+                        }
+                    })
+                }
+            }
+
+        ],
+            // 최종 실행 콜백.
+            function finalExec( err, result ) {
+                resultCallback( result );
+            }
+        )
+
+    }
 
 
 

@@ -35,6 +35,19 @@ var controller = {
                 })
             },
 
+            /* 튜토리얼 진행이 가능한지? */
+            function validTutorialStep( _callback) {
+                tutorialService.isValidStep( req.tid, function(result) {
+                    if( result ) {
+                        _callback( null );
+                    }
+                    else {
+                        throw u.error(' 현재 단계에 접근할수 없습니다. ', 403, 'external');
+                    }
+                })
+            }
+
+
             ],
 
             /* 최종 실행 콜백 */
