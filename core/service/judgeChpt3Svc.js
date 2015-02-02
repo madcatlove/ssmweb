@@ -268,7 +268,7 @@ var judgeChpt3 = {
 
                     if (jMath.isEqualFloat(cmpVals)) {
 
-                        objs.remove(j);
+                        objs.splice(j,1);
                         break;
 
                     }
@@ -297,7 +297,8 @@ var judgeChpt3 = {
                 if (!jMath.isEqualFloat(cmpVals)) {
 
                     messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
-                    break;
+                    callback(messages);
+                    return;
 
                 }
 
@@ -305,7 +306,13 @@ var judgeChpt3 = {
 
         }
 
-        callback(res);
+        if (objs.length != 0) {
+
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+
+        }
+
+        callback(messages);
 
     },
 
@@ -316,9 +323,55 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
+
     dirLight : function (  extraInfo, data, callback) {
 
-        callback(false);
+        var messages = [];
+
+        var dirLight = extraInfo.dirLight;
+        var lightPos = extraInfo.lightPos;
+        var lightDir = extraInfo.lightDir;
+
+        for (var i = 0 ; i < data.length ; i ++) {
+
+            var cmpVals = [];
+
+            if (data[i].blockType == jUtils.DIRECTIONALLIGHT) {
+
+                cmpVals.push([data[i].data.hex, dirLight.hex]);
+                cmpVals.push([data[i].data.intensity, dirLight.intensity]);
+
+            } else {
+
+                var target;
+
+                if (data[i].blockType == jUtils.LIGHTPOSITION) {
+
+                    target = lightPos;
+
+                } else if (data[i].blockType == jUtils.LIGHTDIRECTION) {
+
+                    target = lightDir;
+
+                }
+
+                cmpVals.push([data[i].data.x, target.x]);
+                cmpVals.push([data[i].data.y, target.y]);
+                cmpVals.push([data[i].data.z, target.z]);
+
+            }
+
+            if (jMath.isEqualFloat(cmpVals)) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                break;
+
+            }
+
+        }
+
+        callback(messages);
+
     },
 
     /**
@@ -330,11 +383,55 @@ var judgeChpt3 = {
      */
     spotLight : function (  extraInfo, data, callback) {
 
-        callback(false);
+        var messages = [];
+
+        var spotLight = extraInfo.spotLight;
+        var lightPos = extraInfo.lightPos;
+        var lightDir = extraInfo.lightDir;
+
+        for (var i = 0 ; i < data.length ; i ++) {
+
+            var cmpVals = [];
+
+            if (data[i].blockType == jUtils.SPOTLIGHT) {
+
+                cmpVals.push([data[i].data.hex, spotLight.hex]);
+                cmpVals.push([data[i].data.intensity, spotLight.intensity]);
+                cmpVals.push([data[i].data.angle, spotLight.angle]);
+                cmpVals.push([data[i].data.exp, spotLight.exp]);
+
+            } else {
+
+                var target;
+
+                if (data[i].blockType == jUtils.LIGHTPOSITION) {
+
+                    target = lightPos;
+
+                } else if (data[i].blockType == jUtils.LIGHTDIRECTION) {
+
+                    target = lightDir;
+
+                }
+
+                cmpVals.push([data[i].data.x, target.x]);
+                cmpVals.push([data[i].data.y, target.y]);
+                cmpVals.push([data[i].data.z, target.z]);
+
+            }
+
+            if (jMath.isEqualFloat(cmpVals)) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                break;
+
+            }
+
+        }
+
+        callback(messages);
+
     }
-
-
-
 
 };
 
