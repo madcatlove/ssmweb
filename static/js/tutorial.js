@@ -116,6 +116,7 @@ function procJudge( blocks_JSON, tid ) {
                         action: function(dialog) {
                             var sourceCode = _glSourceCode;
 
+                            // get brush info manually.
                             var brush = new SyntaxHighlighter.brushes.Cpp();
                             var html;
                             brush.init({toolbar : false} );
