@@ -20,12 +20,56 @@ function initTutorialInfo(tid) {
             var available_block = data.available_block;
             var guide_content = data.guide_content;
             var practice_content = data.practice_content;
+            var tutorialTitle = data.chapterName + ' - ' + data.title;
 
             // OpenGL 코드는 전역으로 관리.
             _glSourceCode = data.glSolution;
 
-            $('.guideContent').html( guide_content );
+            // 가이드 컨텐츠 조정
+            var $guideContent = $('.guideContent div').eq(0),
+                sminHeight = 200;
+
+            $guideContent.html( guide_content );
+            $guideContent.attr('box_height', $guideContent.outerHeight(true)  ); // 원래 높이 기억.
+            $guideContent.attr('box_shrink', true);
+
+            /* 강제조정 */
+            $guideContent.css({
+                height : sminHeight + 'px',
+                'overflow-y' : 'hidden'
+            });
+
+
+            $guideContent.hover(function(){
+                    $(this).css('cursor', 'pointer');
+            });
+
+            $guideContent.click(function() {
+                var current = $(this);
+
+                if( current.attr('box_shrink') == 'true' ) {
+                    /* 축소된 상태이니 늘려줌 */
+                    var theight = current.attr('box_height') + 'px';
+                    current.animate({ height : theight }, { 'duration' : 'slow'});
+                    current.attr('box_shrink', false);
+                }
+                else {
+                    /* 증가된 상태이니 축소 */
+                    current.animate({ height : sminHeight+'px' }, { 'duration' : 'slow'});
+                    current.attr('box_shrink', true);
+                }
+            });
+
+
+
+
+            $('#testbutton').click(function(e) {
+                $guideContent.slideDown('slow');
+            })
+
+
             $('.practiceContent').html( practice_content );
+            $('.tutorialTitle').html( tutorialTitle );
 
             /* Block Append */
             tutorialBlock = new dragDropBlockList();
