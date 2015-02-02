@@ -2,7 +2,7 @@
  * Created by jangjunho on 15. 1. 26..
  */
 var jMath = require('../Math');
-var bType = require('../BlockType');
+var jUtils = require('../jUtils');
 
 var judgeChpt1 = {
 
@@ -12,7 +12,7 @@ var judgeChpt1 = {
      * @param data
      * @param callback
      */
-    point : function (blockInfo, extraInfo, data, callback) {
+    point : function ( extraInfo, data, callback) {
        // var res = false;
         var messages = [];
 
@@ -24,12 +24,16 @@ var judgeChpt1 = {
          * float으로 형변환하여 x,y 좌표가 맞는지 확인한다
          */
 
-        if (block.blockType != bType.VERTEX2) {
-            messages.push('올바르지 않은 블럭 타입입니다');
+        if (block.blockType != jUtils.VERTEX2) {
+
+            messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
+
         }
 
         if (!jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
-            messages.push('블럭의 입력 값이 옳지 않습니다');
+
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+
         }
 
         callback(messages);
@@ -41,7 +45,7 @@ var judgeChpt1 = {
      * @param data
      * @param callback
      */
-    line : function (blockInfo, extraInfo, data, callback) {
+    line : function ( extraInfo, data, callback) {
         var messages = [];
 
         var sPoint = extraInfo.startpoint;
@@ -50,15 +54,15 @@ var judgeChpt1 = {
         /**
          * 첫 블럭의 타입이 1(비긴)인지, 시작점이 일치하는지 확인
          */
-        if (data[0].blockType != bType.BEGIN || data[4].blockType != bType.END) {
+        if (data[0].blockType != jUtils.BEGIN || data[4].blockType != jUtils.END) {
 
-            messages.push('BEGIN, END를 확인하여 주세요');
+            messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
         }
 
         if (jMath.isEqualFloat( [[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
 
-            messages.push('Vertex의 시작 점을 확인 해주세요');
+            messages.push(jUtils.MSG_CHK_START_POINT);
 
         }
 
@@ -69,7 +73,7 @@ var judgeChpt1 = {
         if (jMath.distance2f([data[1], data[2]]) != dis ||
             jMath.distance2f([data[2], data[3]]) != dis) {
 
-            messages.push('Vertex의 입력 값을 확인 해주세요')
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
 
         }
 
@@ -84,21 +88,21 @@ var judgeChpt1 = {
      * @param data
      * @param callback
      */
-    triangle : function(blockInfo, extraInfo, data, callback) {
+    triangle : function( extraInfo, data, callback) {
         var messages = [];
 
         var sPoint = extraInfo.startpoint;
         var seq = extraInfo.seq; // 데이터베이스의 엑스트라 인포에서 점의 순서 정보
 
-        if (data[0].blockType != bType.BEGIN || data[4].blockType != bType.END ) {
+        if (data[0].blockType != jUtils.BEGIN || data[4].blockType != jUtils.END ) {
 
-            messages.push('BEGIN, END를 확인하여 주세요')
+            messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
         }
 
         if (!jMath.isEqualFloat( [[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]] ) ) {
 
-            messages.push('Vertex의 시작 점을 확인 해주세요')
+            messages.push(jUtils.MSG_CHK_START_POINT);
 
         }
 
@@ -111,10 +115,9 @@ var judgeChpt1 = {
                     [data[2].data.y, seq[0].y],
                     [data[3].data.x, seq[1].x],
                     [data[3].data.y, seq[1].y],
-                ]
-            ) ) {
+                ]) ) {
 
-            messages.push('Vertex를 확인하여 주세요')
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
         }
 
         callback(messages);
@@ -127,21 +130,21 @@ var judgeChpt1 = {
      * @param data
      * @param callback
      */
-    quadangle : function(blockInfo, extraInfo, data, callback) {
+    quadangle : function( extraInfo, data, callback) {
         var messages = [];
 
         var sPoint = extraInfo.startpoint;
         var seq = extraInfo.seq;
 
-        if (data[0].blockType != bType.BEGIN || data[5].blockType != bType.END) {
+        if (data[0].blockType != jUtils.BEGIN || data[5].blockType != jUtils.END) {
 
-            messages.push('BEGIN, END를 확인하여 주세요')
+            messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
         }
 
         if (!jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]])) {
 
-            messages.push('Vertex의 시작 점을 확인 해주세요')
+            messages.push(jUtils.MSG_CHK_START_POINT);
 
         }
 
@@ -155,7 +158,7 @@ var judgeChpt1 = {
                     [data[4].data.y, seq[2].y],
                 ] ) ) {
 
-            messages.push('Vertex를 확인하여 주세요')
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
 
         }
 
