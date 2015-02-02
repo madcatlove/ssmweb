@@ -36,7 +36,8 @@ var dataAccess = {
      */
     getTutorialInfo : function(tid, resultCallback) {
 
-        var queryStatement = 'SELECT * FROM  tutorialInfo WHERE seq = ?';
+        var queryStatement  = ' SELECT TI.*, CI.title `chapterName` FROM  tutorialInfo TI, chapterInfo CI WHERE TI.seq = ?';
+            queryStatement += ' AND TI.chapterSeq = CI.seq'
 
 
         db.getConnection( function(conn) {
