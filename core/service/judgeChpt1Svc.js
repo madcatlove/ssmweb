@@ -50,17 +50,15 @@ var judgeChpt1 = {
         /**
          * 첫 블럭의 타입이 1(비긴)인지, 시작점이 일치하는지 확인
          */
-        if (data[0].blockType != bType.BEGIN ||
-            data[4].blockType != bType.END
-            ) {
+        if (data[0].blockType != bType.BEGIN || data[4].blockType != bType.END) {
 
-            messages.push('BEGIN, END를 확인하여 주세요')
+            messages.push('BEGIN, END를 확인하여 주세요');
 
         }
 
         if (jMath.isEqualFloat( [[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
 
-            messages.push('Vertex의 시작 점을 확인 해주세요')
+            messages.push('Vertex의 시작 점을 확인 해주세요');
 
         }
 
@@ -92,9 +90,15 @@ var judgeChpt1 = {
         var sPoint = extraInfo.startpoint;
         var seq = extraInfo.seq; // 데이터베이스의 엑스트라 인포에서 점의 순서 정보
 
-        if (data[0].blockType == bType.BEGIN &&  data[4].blockType == bType.END ) {
+        if (data[0].blockType != bType.BEGIN || data[4].blockType != bType.END ) {
 
             messages.push('BEGIN, END를 확인하여 주세요')
+
+        }
+
+        if (!jMath.isEqualFloat( [[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]] ) ) {
+
+            messages.push('Vertex의 시작 점을 확인 해주세요')
 
         }
 
@@ -110,13 +114,9 @@ var judgeChpt1 = {
                 ]
             ) ) {
 
-            res = false;
+            messages.push('Vertex를 확인하여 주세요')
         }
 
-        if (jMath.isEqualFloat( [[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]] ) ) {
-
-
-        }
         callback(messages);
     },
 
@@ -128,33 +128,38 @@ var judgeChpt1 = {
      * @param callback
      */
     quadangle : function(blockInfo, extraInfo, data, callback) {
-        var res = true;
+        var messages = [];
+
         var sPoint = extraInfo.startpoint;
         var seq = extraInfo.seq;
-        var message = [];
 
-        if (data[0].blockType == bType.BEGIN &&  data[5].blockType == bType.END &&
-            jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
+        if (data[0].blockType != bType.BEGIN || data[5].blockType != bType.END) {
 
-            if (!jMath.isEqualFloat(
-                    [
-                        [data[2].data.x, seq[0].x],
-                        [data[2].data.y, seq[0].y],
-                        [data[3].data.x, seq[1].x],
-                        [data[3].data.y, seq[1].y],
-                        [data[4].data.x, seq[2].x],
-                        [data[4].data.y, seq[2].y],
-                    ] ) ) {
+            messages.push('BEGIN, END를 확인하여 주세요')
 
-                //res = false;
-                message.push('  에러낫음 ㅋ');
-            }
-
-        } else {
-            res = false;
         }
 
-        callback(message);
+        if (!jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]])) {
+
+            messages.push('Vertex의 시작 점을 확인 해주세요')
+
+        }
+
+        if (!jMath.isEqualFloat(
+                [
+                    [data[2].data.x, seq[0].x],
+                    [data[2].data.y, seq[0].y],
+                    [data[3].data.x, seq[1].x],
+                    [data[3].data.y, seq[1].y],
+                    [data[4].data.x, seq[2].x],
+                    [data[4].data.y, seq[2].y],
+                ] ) ) {
+
+            messages.push('Vertex를 확인하여 주세요')
+
+        }
+
+        callback(messages);
     }
 
 
