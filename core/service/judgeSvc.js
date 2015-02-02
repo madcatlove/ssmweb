@@ -48,6 +48,11 @@ var service = {
              * 포스트를 통하여 넘어온 데이터 정보
              * 결과를 반환 해줄 콜백 메서드
              */
+
+            if (params.data.length != blockInfo.length) {
+                callback(['블럭의 갯수가 잘못되었습니다']);
+            }
+
             judge[chptSeq][probSeq](blockInfo, extraInfo, params.data, function(messages) {
 
                 /**
@@ -55,9 +60,6 @@ var service = {
                  * 넘어온 데이터의 블럭 개수가 일치하는지 확인한다.
                  */
 
-                if (params.data.length != blockInfo.length) {
-                    messages.unshift('블럭의 갯수가 잘못되었습니다')
-                }
 
                 //if (!bType.isRightBlocks(blockInfo, params.data)) {
                 //    messages.unshift('올바른 블럭들이 아닙니다')
@@ -72,9 +74,6 @@ var service = {
                     callback( messages );
                 }
             });
-            //} else {
-            //    callback(false);
-            //}
         });
 
     }
