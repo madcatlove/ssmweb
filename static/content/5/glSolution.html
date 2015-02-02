@@ -1,0 +1,11 @@
+/******** 5단계 : 직육면체 그리기 Low-API ********/
+
+void Display()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glBegin(GL_POLYGON);
+        glVertex3f(-2.0, 2.0, 2.0); // 좌 상단
+    glEnd();
+
+    glFlush();
+}

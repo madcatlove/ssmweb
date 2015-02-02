@@ -1,0 +1,18 @@
+/******** 2단계 : 선 그리기 ********/
+
+void Display()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glBegin(GL_LINE_STRIP);         // 연결 된 선분을 그립니다
+    glVertex3f(-4.0, 0.0, 0.0);
+    glVertex3f( 0.0, 2.0, 0.0);
+    glVertex3f( 4.0, 0.0, 0.0);
+    glEnd();
+
+    glFlush();
+}
+
+/***** 추가 설명 *****/
+// GL_LINE : 두개의 정점들을 이은 선분
+// GL_LINE_STRIP : 연결된 선분
+// GL_LINE_LOOP : 시작점과 끝점을 이은 선분

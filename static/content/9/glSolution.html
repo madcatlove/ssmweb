@@ -1,0 +1,16 @@
+/********9단계 : Rotate ********/
+
+void Display()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glutSolidCube(1);
+    glTranslatef(3.0,0,0);
+    glutSolidCube(2);
+    glLoadIdentity();	// CTM 행렬 초기화
+    glTranslatef(-3,0,0);
+    glTranslatef(0,3,0);
+    glTranslated(0,-1,0);	// processing 에서는 cube를 그릴때
+    glutSolidCube(1);		// 좌표 정보를 줄수 있지만 OpenGL은 불가능
+
+    glFlush();
+}

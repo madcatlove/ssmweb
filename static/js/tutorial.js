@@ -25,20 +25,50 @@ function procJudge( blocks_JSON, tid ) {
 
     urlReq.post('/judge/'+tid, sParam, function(result) {
 
-        BootstrapDialog.show({
-            type : BootstrapDialog.TYPE_DANGER,
-            title : '아래사항을 고려해보셨나요?',
-            message : ' -_-; 123123213213213213 ',
-            buttons: [
-                {
-                    label: ' RETRY ',
-                    cssClass: 'btn-warning',
-                    action : function(dialog) {
-                        dialog.close();
+        /* 에러 발생시 */
+        if( result.error == true ) {
+            var messageData = result.data;
+
+            BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_DANGER,
+                title: '아래사항을 고려해보셨나요?',
+                message: function(dialog) {
+                    var $content = $('<ol />');
+
+                    for(var i = 0; i < messageData.length; i++) {
+                        $content.append( $('<li />').html( messageData[i] ) );
                     }
-                }
-            ] /* end button */
-        })
+
+                    return $content;
+                },
+                buttons: [
+                    {
+                        label: ' RETRY ',
+                        cssClass: 'btn-warning',
+                        action: function (dialog) {
+                            dialog.close();
+                        }
+                    }
+                ] /* end button */
+            });
+        }
+        /* 성공시 */
+        else {
+            BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_SUCCESS,
+                title : '축하합니다',
+                message : ' 완료 ',
+                buttons: [
+                    {
+                        label: ' NEXT STEP ',
+                        cssClass: 'btn-info',
+                        action: function (dialog) {
+                            dialog.close();
+                        }
+                    }
+                ] /* end button */
+            })
+        }
 
     })
 }
