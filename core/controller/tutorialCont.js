@@ -13,6 +13,7 @@ var controller = {
 
         var opt = {
             extraJS : [
+                'member.js',
                 'sblock/moveblock.js', 'threejs/three.js', 'threejs/OrbitControls.js',
                 'gl/sgl.js', 'tutorial.js',
                 'sblock/sblock.js',
@@ -52,6 +53,15 @@ var controller = {
             function makeChapterList( _callback) {
                 tutorialService.getTutorialChapterList( function(result) {
                     opt.tutorialChapterList = result;
+                    console.log( ' ttttt ', result);
+                    _callback( null );
+                })
+            },
+
+            /* 튜토리얼 진행상황 리스트 생성 */
+            function makeProgressList( _callback) {
+                tutorialService.getTutorialProgressInfo( sess.member, function(result) {
+                    opt.tutorialProgressList = result;
                     _callback( null );
                 })
             }

@@ -36,7 +36,7 @@ sBlock.prototype.toHTML = function() {
 
     /* 블락 뼈대 */
     var s =  $('<div class="blockitem" data-blockseq="'+ this.blockSeq +'" />');
-    var button = $('<button>modify</button>');
+    var button = $('<button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-wrench"></span></button>');
 
 
     /* 블락 내용 추가 */
@@ -47,12 +47,12 @@ sBlock.prototype.toHTML = function() {
     }
 
     /* 클릭시 모달창 띄움 */
-    s.append( button );
-    $('button', s).click( function(e) {
-        createModalWindowForBlock( paramName, numBlockParam, s );
-    })
-
-    /* 툴팁 생성 */
+    if( numBlockParam != 0 ) {
+        s.append(button);
+        $('button', s).click(function (e) {
+            createModalWindowForBlock(paramName, numBlockParam, s);
+        });
+    }
 
 
     this.blockQuery = s;
@@ -238,6 +238,7 @@ function updateBlockObjTitle( $blockObj ) {
     var blockHiddenInput = $('input', $blockObj );
     var stitle = [];
 
+    // 타이틀 업데이트를 위해 블락 input 정보를 긁어옴.
     for(var i = 0; i < blockHiddenInput.length; i++) {
         var item = blockHiddenInput.eq(i);
         stitle.push( item.attr('data-paramname').toUpperCase() + ' : ' + item.val() );

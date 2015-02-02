@@ -280,6 +280,36 @@ var dataAccess = {
             }
         });
 
+    },
+
+    /**
+     * 튜토리얼별 진행상황 여부 가져옴.
+     * @param member
+     * @param resultCallback
+     */
+    getTutorialProgressInfo : function(member, resultCallback) {
+
+        db.getConnection( function(conn) {
+            var queryStatement  = ' SELECT TI.seq, TR.regdate FROM ';
+                queryStatement += ' (SELECT * FROM tutorialInfo) TI ';
+                queryStatement += ' LEFT OUTER JOIN';
+                queryStatement += ' (SELECT * FROM tutorialResult WHERE memberSeq = ?) TR';
+                queryStatement += ' ON';
+                queryStatement += ' TI.seq = TR.tutorialSeq';
+
+            conn.query( queryStatement, [member.seq], function(err, result) {
+                if( err ) {
+                    console.error(' tutorialDA Error ( getTutorialProgressInfo ) ', err );
+                    throw u.error( err.message, 500 );
+                }
+
+                resultCallback(result);
+
+                conn.release();
+            })
+
+        })
+
     }
 
 

@@ -186,7 +186,13 @@ function procJudge( blocks_JSON, tid ) {
     })
 }
 
+/**
+ * 질문게시판으로 이동.
+ * @param tid
+ * @param page
+ * @returns {boolean}
+ */
 function procMoveBoard( tid , page ) {
-    window.location.href = '/board/'+tid+'?page='+page;
+    window.location.href = '/board/'+tid+'/view?page='+page;
     return false;
 }

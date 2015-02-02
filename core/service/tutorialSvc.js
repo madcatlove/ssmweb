@@ -173,6 +173,47 @@ var service = {
             resultCallback( items );
         })
 
+    },
+
+    getTutorialProgressInfo : function(member, resultCallback) {
+        u.assert( member );
+        u.assert( member.seq );
+
+        var progressList = {};
+
+        async.waterfall( [
+            function getTutorialList( _callback) {
+                tutorialDA.getTutorialList( function(result) {
+                    for(var i = 0; i < result.length; i++) {
+                        progressList[ result[i].seq ] = false;
+                    }
+
+                    _callback(null);
+                })
+            },
+
+
+            function getTutorialProgress( _callback) {
+                tutorialDA.getTutorialProgressInfo( member, function(result) {
+                    for(var i = 0; i < result.length; i++) {
+
+                        // 고유번호가있고 체크되어있다면 트루로.
+                        if( progressList.hasOwnProperty( result[i].seq ) && result[i].regdate ) {
+                            progressList[ result[i].seq ] = true;
+                        }
+                    }
+                    _callback(null);
+                } );
+            }
+        ],
+
+            /* 최종콜백 */
+            function finalExec( err, result) {
+                resultCallback( progressList );
+            }
+
+        );
+
     }
 
 

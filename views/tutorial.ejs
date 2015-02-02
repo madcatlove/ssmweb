@@ -1,4 +1,5 @@
 <%- include header.ejs %>
+<link rel="stylesheet" href="/static/css/bootstrap-select.css" />
 
 <script type="text/javascript">
     SyntaxHighlighter.all();
@@ -31,17 +32,27 @@
         <div class="col-md-3 block_leftside" style="height: 100%;">
 
             <!-- 과제 메뉴 -->
-            <div class="btn-group" style="width: 100%;">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:100%;">
-                    Action <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
+            <div style="padding-bottom: 7px;">
+                <select class="selectpicker" data-width="100%">
+
+                    <%
+                    if( tutorialChapterList ) {
+                            for(var key in  tutorialChapterList) {
+                    %>
+                        <optgroup label="<%=key%>">
+
+                    <% for( var i = 0; i < tutorialChapterList[key].length; i++) {
+                        var item = tutorialChapterList[key][i];
+                    %>
+                            <% if( tutorialProgressList[ item.seq ] ) { %>
+                                <option data-icon="glyphicon glyphicon-ok-sign" <%=(tid==item.seq) ? 'selected="selected"' : ''%>><%=item.title%></option>
+                            <% } else { %>
+                                <option <%=(tid==item.seq) ? 'selected="selected"' : ''%>><%=item.title%></option>
+                            <% }%>
+                    <% } %>
+                        </optgroup>
+                    <% }  } %>
+                </select>
             </div>
             <!-- // 과제메뉴 -->
 
@@ -147,6 +158,17 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- // 튜토리얼 모달창 -->
+
+
+<script type="text/javascript">
+    $(document).ready( function() {
+        /* select picker 활성화 */
+        $('.selectpicker').selectpicker({
+            style: 'btn-info',
+            size: 100
+        });
+    })
+</script>
 
 
 <%- include footer.ejs %>
