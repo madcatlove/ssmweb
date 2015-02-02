@@ -3,7 +3,7 @@
  */
 
 var jMath = require('../Math');
-var bType = require('../BlockType');
+var jUtils = require('../jUtils');
 
 var judgeChpt3 = {
 
@@ -13,46 +13,53 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    translate : function (blockInfo, extraInfo, data, callback) {
+    translate : function (  extraInfo, data, callback) {
 
-        var res = true;
-
-        //var size = extraInfo.size;
-        //var trans = extraInfo.trans;
+        var messages = [];
 
         var seq = extraInfo.seq;
 
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAWBOX &&
-            data[1].blockType == bType.TRANSLATE &&
-            data[2].blockType == bType.DRAWBOX &&
-            data[3].blockType == bType.IDENTITYMATRIX &&
-            data[4].blockType == bType.TRANSLATE &&
-            data[5].blockType == bType.TRANSLATE &&
-            data[6].blockType == bType.DRAWBOX
-        ) {
+        for (var i = 0 ; i < data.length ; i ++) {
 
-            var isProperBox = jMath.isEqualFloat([
-                [data[0].data.w, size.w],
-                [data[0].data.h, size.h],
-                [data[0].data.d, size.d]]);
+            if (data[i].blockType != seq[i].bType) {
 
-            var isProperTrans =  jMath.isEqualFloat([
-                [data[1].data.x, trans.x],
-                [data[1].data.y, trans.y],
-                [data[1].data.z, trans.z]]);
+                messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
+                break;
 
-            if (!isProperBox || !isProperTrans) {
-                res = false;
             }
 
-        } else {
-            res = false;
+            var cmpVals = [];
+
+            if (data[i].blockType == jUtils.DRAWBOX) {
+
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+                cmpVals.push([seq[i].info.size, data[i].data.size]);
+
+
+            } else if (data[i].blockType == jUtils.TRANSLATE) {
+
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+
+            }
+
+            if (!jMath.isEqualFloat(cmpVals)) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                break;
+
+            }
+
         }
 
-        callback(res);
+        callback(messages);
+
     },
 
     /**
@@ -61,7 +68,8 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    rotate : function (blockInfo, extraInfo, data, callback) {
+    rotate : function (  extraInfo, data, callback) {
+
         var res = true;
 
         var size = extraInfo.size;
@@ -70,7 +78,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.ROTATE) {
+        if (data[0].blockType == jUtils.DRAWBOX && data[1].blockType == jUtils.ROTATE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -84,14 +92,19 @@ var judgeChpt3 = {
                 [data[1].data.z, rotate.z]]);
 
             if (!isProperBox || !isProperRotate) {
+
                 res = false;
+
             }
 
         } else {
+
             res = false;
+
         }
 
         callback(res);
+
     },
 
     /**
@@ -100,35 +113,52 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    scale : function (blockInfo, extraInfo, data, callback) {
-        var res = true;
+    scale : function (  extraInfo, data, callback) {
+
+        var messages = [];
+
         var seq = extraInfo.seq;
 
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.SCALE && data[1].blockType == bType.DRAWBOX) {
+        for (var i = 0 ; i < data.length ; i ++) {
 
-            var isProperScale =  jMath.isEqualFloat([
-                [data[0].data.x, seq[0].info.x],
-                [data[0].data.y, seq[0].info.y],
-                [data[0].data.z, seq[0].info.z]]);
+            if (data[i].blockType != seq[i].bType) {
 
-            var isProperBox = jMath.isEqualFloat([
-                [data[1].data.x, seq[1].info.x],
-                [data[1].data.y, seq[1].info.y],
-                [data[1].data.z, seq[1].info.z],
-                [data[1].data.size, seq[1].info.size]]);
+                messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
+                break;
 
-            if (!isProperBox || !isProperScale) {
-                res = false;
             }
 
-        } else {
-            res = false;
+            var cmpVals = [];
+
+            if (data[i].blockType == jUtils.DRAWBOX) {
+
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+                cmpVals.push([seq[i].info.size, data[i].data.size]);
+
+            } else if (data[i].blockType == jUtils.SCALE) {
+
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+
+            }
+
+            if (!jMath.isEqualFloat(cmpVals)) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                break;
+
+            }
+
         }
 
-        callback(res);
+        callback(messages);
+
     },
 
     /**
@@ -136,7 +166,55 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    pushPop : function (blockInfo, extraInfo, data, callback) {
+    pushPop : function (  extraInfo, data, callback) {
+
+        var messages = [];
+
+        var seq = extraInfo.seq;
+
+        /**
+         * 입력 패러미터 비교 방식
+         */
+        for (var i = 0 ; i < data.length ; i ++) {
+
+            if (data[i].blockType != seq[i].bType) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
+                break;
+
+            }
+
+            var cmpVals = [];
+
+            if (data[i].blockType == jUtils.DRAWBOX) {
+
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+                cmpVals.push([seq[i].info.size, data[i].data.size]);
+
+            } else if (data[i].blockType == jUtils.TRANSLATE) {
+
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+
+            } else {
+
+                continue;
+
+            }
+
+            if (!jMath.isEqualFloat(cmpVals)) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                break;
+
+            }
+
+        }
+
+        callback(messages);
 
     },
 
@@ -146,37 +224,8 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    perspective : function (blockInfo, extraInfo, data, callback) {
-        var res = true;
+    perspective : function (  extraInfo, data, callback) {
 
-        var size = extraInfo.size;
-        var pers = extraInfo.pers;
-
-        /**
-         * 입력 패러미터 비교 방식
-         */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.PERSPECTIVE) {
-
-            var isProperBox = jMath.isEqualFloat([
-                [data[0].data.w, size.w],
-                [data[0].data.h, size.h],
-                [data[0].data.d, size.d]]);
-
-            var isProperPers =  jMath.isEqualFloat([
-                [data[1].data.fov, pers.fov],
-                [data[1].data.aspect, pers.aspect],
-                [data[1].data.near, pers.near],
-                [data[1].data.far, pers.far]]);
-
-            if (!isProperBox || !isProperPers) {
-                res = false;
-            }
-
-        } else {
-            res = false;
-        }
-
-        callback(res);
     },
 
     /**
@@ -185,39 +234,8 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    orthogonal : function (blockInfo, extraInfo, data, callback) {
-        var res = true;
+    orthogonal : function (  extraInfo, data, callback) {
 
-        var size = extraInfo.size;
-        var ortho = extraInfo.ortho;
-
-        /**
-         * 입력 패러미터 비교 방식
-         */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.OTHOGRAPHIC) {
-
-            var isProperBox = jMath.isEqualFloat([
-                [data[0].data.w, size.w],
-                [data[0].data.h, size.h],
-                [data[0].data.d, size.d]]);
-
-            var isProperOrtho =  jMath.isEqualFloat([
-                    [data[1].data.left, ortho.left],
-                    [data[1].data.right, ortho.right],
-                    [data[1].data.top, ortho.top],
-                    [data[1].data.bot, ortho.bot],
-                    [data[1].data.near, ortho.near]
-                    [data[1].data.far, ortho.far]]);
-
-            if (!isProperBox || !isProperOrtho) {
-                res = false;
-            }
-
-        } else {
-            res = false;
-        }
-
-        callback(res);
     },
 
     /**
@@ -226,36 +244,69 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    positionLookat : function (blockInfo, extraInfo, data, callback) {
-        var res = true;
+    positionLookat : function (  extraInfo, data, callback) {
 
-        var size = extraInfo.size;
-        var pos = extraInfo.campos;
+        var messages = [];
 
-        /**
-         * 입력 패러미터 비교 방식
-         */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.CAMERAPOSITION) {
+        var objs = extraInfo.objs;
+        var cam = extraInfo.cam;
+        var lookat = extraInfo.lookat;
 
-            var isProperBox = jMath.isEqualFloat([
-                [data[0].data.w, size.w],
-                [data[0].data.h, size.h],
-                [data[0].data.d, size.d]]);
 
-            var isProperPos =  jMath.isEqualFloat([
-                [data[1].data.x, pos.x],
-                [data[1].data.y, pos.y],
-                [data[1].data.z, pos.z]]);
+        for (var i = 0 ; i < data.length ; i ++ ){
 
-            if (!isProperBox || !isProperPos) {
-                res = false;
+            if (data[i].blockType == jUtils.DRAWBOX) {
+
+                for (var j = 0 ; j < objs.length; j ++) {
+
+                    var cmpVals = [];
+
+                    cmpVals.push([objs[j].x, data[i].data.x]);
+                    cmpVals.push([objs[j].y, data[i].data.y]);
+                    cmpVals.push([objs[j].z, data[i].data.z]);
+                    cmpVals.push([objs[j].size, data[i].data.size]);
+
+                    if (jMath.isEqualFloat(cmpVals)) {
+
+                        objs.remove(j);
+                        break;
+
+                    }
+
+                }
+
+            } else {
+
+                var cmpVals = [];
+                var target;
+
+                if (data[i].blockType == jUtils.CAMERAPOSITION) {
+
+                    target = cam;
+
+                } else if (data[i].blockType == jUtils.LOOKAT) {
+
+                    target = lookat;
+
+                }
+
+                cmpVals.push([target.x, data[i].data.x]);
+                cmpVals.push([target.y, data[i].data.y]);
+                cmpVals.push([target.z, data[i].data.z]);
+
+                if (!jMath.isEqualFloat(cmpVals)) {
+
+                    messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                    break;
+
+                }
+
             }
 
-        } else {
-            res = false;
         }
 
         callback(res);
+
     },
 
     /**
@@ -265,7 +316,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    dirLight : function (blockInfo, extraInfo, data, callback) {
+    dirLight : function (  extraInfo, data, callback) {
 
         callback(false);
     },
@@ -277,7 +328,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    spotLight : function (blockInfo, extraInfo, data, callback) {
+    spotLight : function (  extraInfo, data, callback) {
 
         callback(false);
     }

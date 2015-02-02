@@ -3,7 +3,7 @@
  */
 
 var jMath = require('../Math');
-var bType = require('../BlockType');
+var jUtils = require('../jUtils');
 
 var judgeChpt2 = {
 
@@ -16,46 +16,45 @@ var judgeChpt2 = {
      * @param data
      * @param callback
      */
-    rect : function (blockInfo, extraInfo, data, callback) {
+    rect : function ( extraInfo, data, callback) {
+
         var messages = [];
 
         var sPoint = extraInfo.startpoint;
 
-        if (data[0].blockType == bType.BEGIN && data[5].blockType == bType.END &&
-            data[6].blockType == bType.BEGIN && data[11].blockType == bType.END) {
+        if (data[0].blockType != jUtils.BEGIN || data[5].blockType != jUtils.END &&
+            data[6].blockType != jUtils.BEGIN || data[11].blockType != jUtils.END) {
 
-            messages.push('BEGIN, END를 확인하여 주세요')
+            messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
-        }
+        } else {
 
-        if (jMath.isEqualFloat(
-                [[data[1].data.x, sPoint[0].x], [data[1].data.y, sPoint[0].y], [data[1].data.z, sPoint[0].z]] ) &&
-            jMath.isEqualFloat(
-                [[data[7].data.x, sPoint[1].x], [data[7].data.y, sPoint[1].y], [data[7].data.z, sPoint[1].z]] )) {
+            if (!jMath.isEqualFloat(
+                    [[data[1].data.x, sPoint[0].x], [data[1].data.y, sPoint[0].y], [data[1].data.z, sPoint[0].z]]) ||
+                !jMath.isEqualFloat(
+                    [[data[7].data.x, sPoint[1].x], [data[7].data.y, sPoint[1].y], [data[7].data.z, sPoint[1].z]])) {
 
-            messages.push('Vertex의 시작 점을 확인 해주세요')
+                messages.push(jUtils.MSG_CHK_START_POINT);
 
-        }
+            }
 
-        /**
-         * 각 면에대한 노멀벡터 구하기
-         * @type {*[]}
-         */
-        var normals = [
-            jMath.normal3f( [data[1].data, data[2].data, data[3].data] ), // 윗면
-            jMath.normal3f( [data[7].data, data[8].data, data[9].data] ), // 밑면
+            /**
+             * 각 면에대한 노멀벡터 구하기
+             * @type {*[]}
+             */
+            var normals = [
+                jMath.normal3f([data[1].data, data[2].data, data[3].data]), // 윗면
+                jMath.normal3f([data[7].data, data[8].data, data[9].data]), // 밑면
 
-            jMath.normal3f( [data[2].data, data[3].data, data[4].data] ), // 윗면
-            jMath.normal3f( [data[8].data, data[9].data, data[10].data] ), // 밑면
-        ];
+                jMath.normal3f([data[2].data, data[3].data, data[4].data]), // 윗면
+                jMath.normal3f([data[8].data, data[9].data, data[10].data]), // 밑면
+            ];
 
-        console.log(normals);
+            if (!jMath.isSumOfNormalZero(normals[0], normals[1]) || !jMath.isSumOfNormalZero(normals[2], normals[3])) {
 
-        if (!jMath.isSumOfNormalZero(normals[0], normals[1]) ||
-            !jMath.isSumOfNormalZero(normals[2], normals[3])) {
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
 
-            messages.push('Vertex를 확인하여 주세요')
-
+            }
         }
 
         callback(messages);
@@ -68,14 +67,25 @@ var judgeChpt2 = {
      * @param data
      * @param callback
      */
-    box : function(blockInfo, extraInfo, data, callback) {
+    box : function( extraInfo, data, callback) {
+
+        var messages = [];
+
         var sPoint = extraInfo.startpoint;
 
-        var res = data[0].blockType == bType.DRAWBOX &&
-            jMath.isEqualFloat([[data[0].data.x, sPoint.x], [data[0].data.y, sPoint.y],
-                [data[0].data.z, sPoint.z], [data[0].data.size, extraInfo.size]]) ;
+        if (data[0].blockType != jUtils.DRAWBOX) {
 
-        callback(res);
+            messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
+
+        } else if (!jMath.isEqualFloat( [ [data[0].data.x, sPoint.x], [data[0].data.y, sPoint.y],
+                [data[0].data.z, sPoint.z], [data[0].data.size, extraInfo.size] ] ) ) {
+
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+
+        }
+
+        callback(messages);
+
     },
 
 
@@ -85,16 +95,27 @@ var judgeChpt2 = {
      * @param data
      * @param callback
      */
-    sphere : function(blockInfo, extraInfo, data, callback) {
-        var res = data[0].blockType == bType.DRAWSPHERE && jMath.isEqualFloat(
-            [
-                [data[0].data.Lo, extraInfo.Lo],
-                [data[0].data.La, extraInfo.La],
-                [data[0].data.R, extraInfo.R]
-            ]
-        );
+    sphere : function( extraInfo, data, callback) {
 
-        callback(res);
+        var messages = [];
+
+        if (data[0].blockType != jUtils.DRAWSPHERE) {
+
+            messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
+
+        } else if (!jMath.isEqualFloat(
+                [
+                    [data[0].data.Lo, extraInfo.Lo],
+                    [data[0].data.La, extraInfo.La],
+                    [data[0].data.R, extraInfo.R],
+                ]
+            )) {
+
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+
+        }
+
+        callback(messages);
 
     }
 
