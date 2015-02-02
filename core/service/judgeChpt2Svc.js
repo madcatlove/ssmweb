@@ -17,41 +17,48 @@ var judgeChpt2 = {
      * @param callback
      */
     rect : function (blockInfo, extraInfo, data, callback) {
-        var res = true;
+        var messages = [];
+
         var sPoint = extraInfo.startpoint;
 
         if (data[0].blockType == bType.BEGIN && data[5].blockType == bType.END &&
-            data[6].blockType == bType.BEGIN && data[11].blockType == bType.END &&
+            data[6].blockType == bType.BEGIN && data[11].blockType == bType.END) {
 
-            jMath.isEqualFloat([[data[1].data.x, sPoint[0].x], [data[1].data.y, sPoint[0].y], [data[1].data.z, sPoint[0].z]] ) &&
-            jMath.isEqualFloat([[data[7].data.x, sPoint[1].x], [data[7].data.y, sPoint[1].y], [data[7].data.z, sPoint[1].z]] )) {
+            messages.push('BEGIN, END를 확인하여 주세요')
 
-            /**
-             * 각 면에대한 노멀벡터 구하기
-             * @type {*[]}
-             */
-            var normals = [
-                jMath.normal3f( [data[1].data, data[2].data, data[3].data] ), // 윗면
-                jMath.normal3f( [data[7].data, data[8].data, data[9].data] ), // 밑면
-
-                jMath.normal3f( [data[2].data, data[3].data, data[4].data] ), // 윗면
-                jMath.normal3f( [data[8].data, data[9].data, data[10].data] ), // 밑면
-            ];
-
-            console.log(normals);
-
-            if (!jMath.isSumOfNormalZero(normals[0], normals[1]) ||
-                !jMath.isSumOfNormalZero(normals[2], normals[3])
-            ) {
-
-                res = false;
-            }
-
-        } else {
-            res = false;
         }
 
-        callback(res);
+        if (jMath.isEqualFloat(
+                [[data[1].data.x, sPoint[0].x], [data[1].data.y, sPoint[0].y], [data[1].data.z, sPoint[0].z]] ) &&
+            jMath.isEqualFloat(
+                [[data[7].data.x, sPoint[1].x], [data[7].data.y, sPoint[1].y], [data[7].data.z, sPoint[1].z]] )) {
+
+            messages.push('Vertex의 시작 점을 확인 해주세요')
+
+        }
+
+        /**
+         * 각 면에대한 노멀벡터 구하기
+         * @type {*[]}
+         */
+        var normals = [
+            jMath.normal3f( [data[1].data, data[2].data, data[3].data] ), // 윗면
+            jMath.normal3f( [data[7].data, data[8].data, data[9].data] ), // 밑면
+
+            jMath.normal3f( [data[2].data, data[3].data, data[4].data] ), // 윗면
+            jMath.normal3f( [data[8].data, data[9].data, data[10].data] ), // 밑면
+        ];
+
+        console.log(normals);
+
+        if (!jMath.isSumOfNormalZero(normals[0], normals[1]) ||
+            !jMath.isSumOfNormalZero(normals[2], normals[3])) {
+
+            messages.push('Vertex를 확인하여 주세요')
+
+        }
+
+        callback(messages);
 
     },
 
