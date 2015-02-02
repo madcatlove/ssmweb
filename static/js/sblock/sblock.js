@@ -34,15 +34,28 @@ sBlock.prototype.toHTML = function() {
     var numBlockParam = this.blockInfo.numParam; // 블럭 파라메타 갯수
     var paramName = this.blockInfo.paramName; // 블럭 파라메타의 이름.
 
+    /* 블락 뼈대 */
     var s =  $('<div class="blockitem" data-blockseq="'+ this.blockSeq +'" />');
+    var button = $('<button>modify</button>');
 
+
+    /* 블락 내용 추가 */
     s.append( blockName + "<br />");
     for( var i = 0; i < numBlockParam; i++) {
-        if( i != 0 && i % 2 == 0 ) s.append("<br />");
-        s.append( paramName[i] + ' : ' + '<input type="text" class="input" data-paramname="'+ paramName[i] +'" style="width:15px;" /> ');
+        s.append( paramName[i] + ',')
+         .append( $('<input type="hidden" class="input" value="0" data-paramname="'+ paramName[i] + '" />') );
     }
-    this.blockQuery = s;
 
+    /* 클릭시 모달창 띄움 */
+    s.append( button );
+    $('button', s).click( function(e) {
+        createModalWindowForBlock( paramName, numBlockParam, s );
+    })
+
+    /* 툴팁 생성 */
+
+
+    this.blockQuery = s;
     return this.blockQuery;
 }
 
@@ -62,9 +75,6 @@ sBlock.prototype.toJSON = function() {
         var paramName = $(this).attr('data-paramname');
         o.data[paramName] = paramVal;
     })
-
-
-    //console.log( o );
 
 
     return o;
@@ -138,5 +148,108 @@ function createBlockInfo( blockType, blockName, numParams, paramName) {
         numParam : numParams,
         paramName : paramName,
     }
+
+}
+
+/**
+ * 튜토리얼 블락을 수정하기위한 모달창 생성 함수
+ * @param param
+ * @param paramSize
+ * @param $blockObj
+ */
+function createModalWindowForBlock( param, paramSize, $blockObj ) {
+
+    var container = $('<div />');
+    var hiddenFormValue = {};
+
+    // 블락 Obj 에서 값 추출해옴 ( 폼값 유지를 위함 )
+    var hiddenFormInput = $('input', $blockObj);
+    for( var i = 0; i < hiddenFormInput.length; i++) {
+        var item = hiddenFormInput.eq(i);
+        hiddenFormValue[ item.attr('data-paramname') ] = item.val();
+    }
+
+
+    // 파라메터 갯수만큼 돌면서 폼 컨트롤 생성.
+    for( var i = 0; i < paramSize; i++) {
+        var parameterName = param[i].toUpperCase();
+
+        var formGroup = $('<div class="form-group" />');
+            formGroup.append('<label> Parameter For ' + parameterName + ' </label>');
+        var formInput = $('<input />').addClass('form-control').attr('data-paramname', param[i]);
+            formInput.val( hiddenFormValue[ param[i] ] );
+        formGroup.append( formInput );
+
+        container.append( formGroup );
+    }
+
+    BootstrapDialog.show({
+        type : BootstrapDialog.TYPE_INFO,
+        title : ' Modify Parameters ',
+        message : container,
+        buttons: [
+            {
+                label: 'Close',
+                cssClass: 'btn-danger',
+                action: function (dialog) {
+                    dialog.close();
+                }
+            },
+            {
+                label: 'Confirm',
+                cssClass: 'btn-warning',
+                action: function (dialog) {
+                    updateHiddenForm($blockObj, container);
+                    updateBlockObjTitle($blockObj);
+                    dialog.close();
+                }
+            }
+        ] /* end button */
+    })
+
+}
+
+/**
+ * Tooltip 타이틀 업데이트를 위한 함수.
+ * @param $blockObj
+ * @param $modalForm
+ */
+function updateHiddenForm( $blockObj, $modalForm ) {
+    var modalFormValue = {};
+    var modalInput = $( 'input', $modalForm );
+    var blockHiddenInput = $( 'input', $blockObj );
+
+    // 모달폼에서 생성된 값 받아옴.
+    for(var i = 0; i < modalInput.length; i++) {
+        var item = modalInput.eq(i);
+        modalFormValue[ item.attr('data-paramname') ] = item.val() || 0;
+    }
+
+    // block 오브젝트에 있는 인풋들 업데이트.
+    for(var i = 0; i < blockHiddenInput.length; i++) {
+        var item = blockHiddenInput.eq(i);
+        item.val( modalFormValue[ item.attr('data-paramname') ] );
+    }
+
+}
+
+function updateBlockObjTitle( $blockObj ) {
+
+    var blockHiddenInput = $('input', $blockObj );
+    var stitle = [];
+
+    for(var i = 0; i < blockHiddenInput.length; i++) {
+        var item = blockHiddenInput.eq(i);
+        stitle.push( item.attr('data-paramname').toUpperCase() + ' : ' + item.val() );
+    }
+
+    var strStitle = stitle.join("\n");
+
+
+    // 툴팁 다시 계산.
+    $blockObj.attr('title', strStitle)
+                .attr('data-placement', 'right')
+                .tooltip('fixTitle')
+                .tooltip('hide');
 
 }

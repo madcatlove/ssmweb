@@ -25,12 +25,20 @@ function initTutorialInfo(tid) {
             // OpenGL 코드는 전역으로 관리.
             _glSourceCode = data.glSolution;
 
-            // 가이드 컨텐츠 조정
+            $('#tutorialModal .guideContent').html( guide_content );
+
+
+            //----------------------------------------------------------
+            // -- 가이드 컨텐츠 조정 시작 --
+            //----------------------------------------------------------
             var $guideContent = $('.guideContent div').eq(0),
                 sminHeight = 200;
-
             $guideContent.html( guide_content );
-            $guideContent.attr('box_height', $guideContent.outerHeight(true)  ); // 원래 높이 기억.
+
+            var guideContentOuterHeight = $guideContent.outerHeight(true);
+            sminHeight = (sminHeight > guideContentOuterHeight ) ? guideContentOuterHeight : sminHeight;
+
+            $guideContent.attr('box_height',  guideContentOuterHeight ); // 원래 높이 기억.
             $guideContent.attr('box_shrink', true);
 
             /* 강제조정 */
@@ -59,13 +67,9 @@ function initTutorialInfo(tid) {
                     current.attr('box_shrink', true);
                 }
             });
-
-
-
-
-            $('#testbutton').click(function(e) {
-                $guideContent.slideDown('slow');
-            })
+            //----------------------------------------------------------
+            // -- 가이드 컨텐츠 조정 끝 --
+            //----------------------------------------------------------
 
 
             $('.practiceContent').html( practice_content );
@@ -84,9 +88,6 @@ function initTutorialInfo(tid) {
     })
 
 }
-
-
-
 
 
 /* 시작하자마자 가이드 모달창 띄움 */
