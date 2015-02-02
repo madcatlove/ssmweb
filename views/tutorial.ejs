@@ -1,61 +1,15 @@
 <%- include header.ejs %>
 
-<style type="text/css">
-    .modal-color-red .modal-backdrop {
-        background-color: #FAA3FF;
-    }
-    .modal-color-green .modal-backdrop {
-        background-color: #0f0;
-    }
-    .modal-color-blue .modal-backdrop {
-        background-color: #00f;
-    }
-</style>
-
 <script type="text/javascript">
-
-    var tutorialBlock, tempSeq = 1;
-
-    $(document).ready( function() {
-
-        /* customized modal */
-        $('.modal[data-color]').on('show.bs.modal hidden.bs.modal', function () {
-            console.log(' hello ' );
-            $('body').toggleClass('modal-color-'+ $(this).data('color'));
-        });
-
-        /* Block Initialize */
-        urlReq.get('/tutorial/<%=tid%>/info', {}, function(result) {
-            if( result.error ) {
-                alert(' 기본정보 요청중 에러가 발생하였습니다. ');
-            }
-            else {
-                var data = result.data;
-                var available_block = data.available_block;
-                var guide_content = data.guide_content;
-                var practice_content = data.practice_content;
-
-                $('.guideContent').html( guide_content );
-                $('.practiceContent').html( practice_content );
-
-                /* Block Append */
-                tutorialBlock = new dragDropBlockList();
-                for(var i = 0; i < available_block.length; i++) {
-                    tutorialBlock.append( new sBlock(i+1).setBlockType( available_block[i]).initBlock() );
-                }
-
-                /* Run */
-                tutorialBlock.init();
-                tutorialBlock.eventRun();
-            }
-        })
-
-    });
+    SyntaxHighlighter.all();
 </script>
 
 <script type="text/javascript">
     var vSGL = null;
     $(document).ready( function() {
+
+        initTutorialInfo(<%=tid%>);
+
         vSGL = new sGL( $('#srender') );
         vSGL.initAll();
         vSGL.insertDOM();
@@ -67,7 +21,9 @@
 
 
 <div class="container-fluid" style="padding-top:60px; height:100%;">
+
     <div class="row" style="height: 100%;">
+
 
 
 
@@ -92,10 +48,11 @@
             <!-- 가이드 정보 -->
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title"> 2D 점찍기 </h3>
+                    <h3 class="panel-title tutorialTitle">  </h3>
                 </div>
 
                 <div class="panel-body guideContent">
+                    <div style="overflow:hidden; word-break: break-all; padding:0;"></div>
 
                 </div>
             </div>
@@ -108,12 +65,7 @@
                 </div>
 
                 <div class="panel-body practiceContent">
-                    <ol>
-                        <li> 점은 여기서 찍구요.</li>
-                        <li> 그다음 해보시고.</li>
-                        <li> 그다음도 해보세요.</li>
-                        <li> 다하면 어떻게됨?</li>
-                    </ol>
+
                 </div>
             </div>
             <!-- // 해볼것 -->
@@ -196,28 +148,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- // 튜토리얼 모달창 -->
-
-
-
-<!-- 판정 경고 모달창 -->
-<!-- Modal -->
-<div class="modal fade" id="judgeFailModal" data-color="red" tabindex="-1" role="dialog" aria-labelledby="JudgeFailModalWindow" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"> 다시 한번 해보시길 바랍니다. </h4>
-            </div>
-            <div class="modal-body failContent">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- // 판정 경고 모달창 -->
 
 
 <%- include footer.ejs %>

@@ -15,10 +15,12 @@ var controller = {
             extraJS : [
                 'sblock/moveblock.js', 'threejs/three.js', 'threejs/OrbitControls.js',
                 'gl/sgl.js', 'tutorial.js',
-                'sblock/sblock.js'],
-            extraCSS : ['blocks.css'],
+                'sblock/sblock.js',
+                'syntax/shCore.js', 'syntax/shAutoloader.js', 'syntax/shBrushCpp.js'],
+            extraCSS : ['blocks.css',
+                        'shCore.css', 'shThemeDefault.css'],
             member : sess.member,
-            tid : req.tid,
+            tid : req.tid
         }
 
 

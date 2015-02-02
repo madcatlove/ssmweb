@@ -53,6 +53,7 @@ var service = {
                     data.guide_content = contentResult.guide;
                     data.practice_content = contentResult.practice;
                     data.image_content = contentResult.image;
+                    data.glSolution = contentResult.glSolution;
 
                     _callback( null, data );
                 })

@@ -36,7 +36,8 @@ var dataAccess = {
      */
     getTutorialInfo : function(tid, resultCallback) {
 
-        var queryStatement = 'SELECT * FROM  tutorialInfo WHERE seq = ?';
+        var queryStatement  = ' SELECT TI.*, CI.title `chapterName` FROM  tutorialInfo TI, chapterInfo CI WHERE TI.seq = ?';
+            queryStatement += ' AND TI.chapterSeq = CI.seq'
 
 
         db.getConnection( function(conn) {
@@ -200,7 +201,8 @@ var dataAccess = {
         var cData = {
             guide : '',
             practice : '',
-            image : []
+            image : [],
+            glSolution : ''
         };
 
         fs.exists( contentPath, function(b) {
@@ -252,7 +254,21 @@ var dataAccess = {
 
                             _callback(null);
                         })
+                    },
+
+                    /* GL SourceCode 읽어와서 추가 */
+                    function getGLSourceCode( _callback) {
+                        fs.readFile( contentPath + '/glSolution.html', 'UTF8', function(err, data) {
+                            if( err ) {
+                                _callback( err );
+                            }
+                            else {
+                                cData.glSolution = data;
+                                _callback(null);
+                            }
+                        })
                     }
+
                 ]
                 ,
                     function finalExec(err, result) {
