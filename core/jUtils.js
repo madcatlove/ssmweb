@@ -25,13 +25,23 @@ var blockType = {
     LIGHTPOSITION:19,
     IDENTITYMATRIX:20,
     LIGHTDIRECTION:21,
+
+    MSG_LACK_BLOCKS : '전달받은 블록의 수 가 부족합니다',
+
+    MSG_WRONG_BLOCK_TYPE : '올바르지 않은 블럭 타입입니다',
+    MSG_WRONG_BLOCK_PARAMS : '블럭의 입력이 옳지 않습니다',
+    MSG_WRONG_BLOCK_SEQ : '블럭의 순서가 올바르지 않습니다',
+
+    MSG_CHK_START_POINT : '시작 점을 확인 해주세요',
+
+
     /**
      * 올바른 블럭 패러미터가 왔는지 확인.
      * @param blockInfo
      * @param paramInfo
      * @returns {boolean}
      */
-    isRightBlocks : function (blockInfo, paramInfo) {
+    isRightBlocks : function (  paramInfo) {
 
         var cntInfos = [];
 

@@ -3,7 +3,7 @@
  */
 
 var jMath = require('../Math');
-var bType = require('../BlockType');
+var jUtils = require('../jUtils');
 
 var judgeChpt3 = {
 
@@ -13,46 +13,55 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    translate : function (blockInfo, extraInfo, data, callback) {
-
-        var res = true;
-
-        //var size = extraInfo.size;
-        //var trans = extraInfo.trans;
+    translate : function (  extraInfo, data, callback) {
 
         var seq = extraInfo.seq;
 
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAWBOX &&
-            data[1].blockType == bType.TRANSLATE &&
-            data[2].blockType == bType.DRAWBOX &&
-            data[3].blockType == bType.IDENTITYMATRIX &&
-            data[4].blockType == bType.TRANSLATE &&
-            data[5].blockType == bType.TRANSLATE &&
-            data[6].blockType == bType.DRAWBOX
-        ) {
+        for (var i = 0 ; i < data.length ; i ++) {
 
-            var isProperBox = jMath.isEqualFloat([
-                [data[0].data.w, size.w],
-                [data[0].data.h, size.h],
-                [data[0].data.d, size.d]]);
+            if (data[i].blockType != seq[i].bType) {
 
-            var isProperTrans =  jMath.isEqualFloat([
-                [data[1].data.x, trans.x],
-                [data[1].data.y, trans.y],
-                [data[1].data.z, trans.z]]);
+                callback([jUtils.MSG_WRONG_BLOCK_SEQ]);
+                break;
 
-            if (!isProperBox || !isProperTrans) {
-                res = false;
             }
 
-        } else {
-            res = false;
+            if (data[i].blockType == jUtils.DRAWBOX) {
+
+                if (!jMath.isEqualFloat([
+                        [seq[i].info.x, data[i].data.x],
+                        [seq[i].info.y, data[i].data.y],
+                        [seq[i].info.z, data[i].data.z],
+                        [seq[i].info.s, data[i].data.s]
+                    ])) {
+
+                    callback([jUtils.MSG_WRONG_BLOCK_PARAMS]);
+                    break;
+
+                }
+
+            } else if (data[i].blockType == jUtils.TRANSLATE) {
+
+                if (!jMath.isEqualFloat([
+                        [seq[i].info.x, data[i].data.x],
+                        [seq[i].info.y, data[i].data.y],
+                        [seq[i].info.z, data[i].data.z]
+                    ])) {
+
+                    callback([jUtils.MSG_WRONG_BLOCK_PARAMS]);
+                    break;
+
+                }
+
+            }
+
         }
 
-        callback(res);
+        callback([]);
+
     },
 
     /**
@@ -61,7 +70,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    rotate : function (blockInfo, extraInfo, data, callback) {
+    rotate : function (  extraInfo, data, callback) {
         var res = true;
 
         var size = extraInfo.size;
@@ -70,7 +79,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.ROTATE) {
+        if (data[0].blockType == jUtils.DRAWBOX && data[1].blockType == jUtils.ROTATE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -100,35 +109,40 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    scale : function (blockInfo, extraInfo, data, callback) {
-        var res = true;
+    scale : function (  extraInfo, data, callback) {
+
+        var messages = [];
+
         var seq = extraInfo.seq;
 
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.SCALE && data[1].blockType == bType.DRAWBOX) {
+        if (data[0].blockType == jUtils.SCALE && data[1].blockType == jUtils.DRAWBOX) {
 
-            var isProperScale =  jMath.isEqualFloat([
-                [data[0].data.x, seq[0].info.x],
-                [data[0].data.y, seq[0].info.y],
-                [data[0].data.z, seq[0].info.z]]);
+            messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
-            var isProperBox = jMath.isEqualFloat([
-                [data[1].data.x, seq[1].info.x],
-                [data[1].data.y, seq[1].info.y],
-                [data[1].data.z, seq[1].info.z],
-                [data[1].data.size, seq[1].info.size]]);
-
-            if (!isProperBox || !isProperScale) {
-                res = false;
-            }
-
-        } else {
-            res = false;
         }
 
-        callback(res);
+        var isProperScale =  jMath.isEqualFloat([
+            [data[0].data.x, seq[0].info.x],
+            [data[0].data.y, seq[0].info.y],
+            [data[0].data.z, seq[0].info.z]]);
+
+        var isProperBox = jMath.isEqualFloat([
+            [data[1].data.x, seq[1].info.x],
+            [data[1].data.y, seq[1].info.y],
+            [data[1].data.z, seq[1].info.z],
+            [data[1].data.size, seq[1].info.size]]);
+
+        if (!isProperBox || !isProperScale) {
+
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+
+        }
+
+        callback(messages);
+
     },
 
     /**
@@ -136,7 +150,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    pushPop : function (blockInfo, extraInfo, data, callback) {
+    pushPop : function (  extraInfo, data, callback) {
 
     },
 
@@ -146,7 +160,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    perspective : function (blockInfo, extraInfo, data, callback) {
+    perspective : function (  extraInfo, data, callback) {
         var res = true;
 
         var size = extraInfo.size;
@@ -155,7 +169,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.PERSPECTIVE) {
+        if (data[0].blockType == jUtils.DRAWBOX && data[1].blockType == jUtils.PERSPECTIVE) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -185,7 +199,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    orthogonal : function (blockInfo, extraInfo, data, callback) {
+    orthogonal : function (  extraInfo, data, callback) {
         var res = true;
 
         var size = extraInfo.size;
@@ -194,7 +208,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.OTHOGRAPHIC) {
+        if (data[0].blockType == jUtils.DRAWBOX && data[1].blockType == jUtils.OTHOGRAPHIC) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -226,7 +240,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    positionLookat : function (blockInfo, extraInfo, data, callback) {
+    positionLookat : function (  extraInfo, data, callback) {
         var res = true;
 
         var size = extraInfo.size;
@@ -235,7 +249,7 @@ var judgeChpt3 = {
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.CAMERAPOSITION) {
+        if (data[0].blockType == jUtils.DRAWBOX && data[1].blockType == jUtils.CAMERAPOSITION) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
@@ -265,7 +279,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    dirLight : function (blockInfo, extraInfo, data, callback) {
+    dirLight : function (  extraInfo, data, callback) {
 
         callback(false);
     },
@@ -277,7 +291,7 @@ var judgeChpt3 = {
      * @param data
      * @param callback
      */
-    spotLight : function (blockInfo, extraInfo, data, callback) {
+    spotLight : function (  extraInfo, data, callback) {
 
         callback(false);
     }

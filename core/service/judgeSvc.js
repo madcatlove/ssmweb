@@ -3,7 +3,6 @@
  */
 
 var tutorialDA = require('../dataAccess/tutorialDA');
-var bType = require('../BlockType');
 
 var judgeChpt1 = require('./judgeChpt1Svc'),
     judgeChpt2 = require('./judgeChpt2Svc'),
@@ -50,11 +49,12 @@ var service = {
              */
 
             if (params.data.length != blockInfo.length) {
+
                 callback(['블럭의 갯수가 잘못되었습니다']);
 
             } else {
 
-                judge[chptSeq][probSeq](blockInfo, extraInfo, params.data, function (messages) {
+                judge[chptSeq][probSeq](extraInfo, params.data, function (messages) {
 
                     /**
                      * 데이터베이스에 있는 튜토리얼의 블럭 정보의 개수와
