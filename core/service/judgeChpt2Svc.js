@@ -17,43 +17,44 @@ var judgeChpt2 = {
      * @param callback
      */
     rect : function ( extraInfo, data, callback) {
+
         var messages = [];
 
         var sPoint = extraInfo.startpoint;
 
-        if (data[0].blockType == jUtils.BEGIN && data[5].blockType == jUtils.END &&
-            data[6].blockType == jUtils.BEGIN && data[11].blockType == jUtils.END) {
+        if (data[0].blockType != jUtils.BEGIN || data[5].blockType != jUtils.END &&
+            data[6].blockType != jUtils.BEGIN || data[11].blockType != jUtils.END) {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
-        }
+        } else {
 
-        if (jMath.isEqualFloat(
-                [[data[1].data.x, sPoint[0].x], [data[1].data.y, sPoint[0].y], [data[1].data.z, sPoint[0].z]] ) &&
-            jMath.isEqualFloat(
-                [[data[7].data.x, sPoint[1].x], [data[7].data.y, sPoint[1].y], [data[7].data.z, sPoint[1].z]] )) {
+            if (!jMath.isEqualFloat(
+                    [[data[1].data.x, sPoint[0].x], [data[1].data.y, sPoint[0].y], [data[1].data.z, sPoint[0].z]]) ||
+                !jMath.isEqualFloat(
+                    [[data[7].data.x, sPoint[1].x], [data[7].data.y, sPoint[1].y], [data[7].data.z, sPoint[1].z]])) {
 
-            messages.push(jUtils.MSG_CHK_START_POINT);
+                messages.push(jUtils.MSG_CHK_START_POINT);
 
-        }
+            }
 
-        /**
-         * 각 면에대한 노멀벡터 구하기
-         * @type {*[]}
-         */
-        var normals = [
-            jMath.normal3f( [data[1].data, data[2].data, data[3].data] ), // 윗면
-            jMath.normal3f( [data[7].data, data[8].data, data[9].data] ), // 밑면
+            /**
+             * 각 면에대한 노멀벡터 구하기
+             * @type {*[]}
+             */
+            var normals = [
+                jMath.normal3f([data[1].data, data[2].data, data[3].data]), // 윗면
+                jMath.normal3f([data[7].data, data[8].data, data[9].data]), // 밑면
 
-            jMath.normal3f( [data[2].data, data[3].data, data[4].data] ), // 윗면
-            jMath.normal3f( [data[8].data, data[9].data, data[10].data] ), // 밑면
-        ];
+                jMath.normal3f([data[2].data, data[3].data, data[4].data]), // 윗면
+                jMath.normal3f([data[8].data, data[9].data, data[10].data]), // 밑면
+            ];
 
-        if (!jMath.isSumOfNormalZero(normals[0], normals[1]) ||
-            !jMath.isSumOfNormalZero(normals[2], normals[3])) {
+            if (!jMath.isSumOfNormalZero(normals[0], normals[1]) || !jMath.isSumOfNormalZero(normals[2], normals[3])) {
 
-            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
 
+            }
         }
 
         callback(messages);
@@ -72,13 +73,11 @@ var judgeChpt2 = {
 
         var sPoint = extraInfo.startpoint;
 
-        if (data[0].blockType == jUtils.DRAWBOX) {
+        if (data[0].blockType != jUtils.DRAWBOX) {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
 
-        }
-
-        if ( jMath.isEqualFloat( [ [data[0].data.x, sPoint.x], [data[0].data.y, sPoint.y],
+        } else if (!jMath.isEqualFloat( [ [data[0].data.x, sPoint.x], [data[0].data.y, sPoint.y],
                 [data[0].data.z, sPoint.z], [data[0].data.size, extraInfo.size] ] ) ) {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
@@ -100,18 +99,17 @@ var judgeChpt2 = {
 
         var messages = [];
 
-
         if (data[0].blockType != jUtils.DRAWSPHERE) {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
 
-        }
-
-        if (data[0].blockType == jUtils.DRAWSPHERE && jMath.isEqualFloat([
+        } else if (!jMath.isEqualFloat(
+                [
                     [data[0].data.Lo, extraInfo.Lo],
                     [data[0].data.La, extraInfo.La],
-                    [data[0].data.R, extraInfo.R]
-                ])) {
+                    [data[0].data.R, extraInfo.R],
+                ]
+            )) {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
 
