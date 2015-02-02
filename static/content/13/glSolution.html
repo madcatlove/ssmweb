@@ -1,0 +1,19 @@
+/******** 12단계 : Orthographic Camera  ********/
+
+void Display()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glLoadIdentity();
+    glPushMatrix();
+    glTranslatef(3.0,0,0);
+    glutSolidCube(1);
+    glPushMatrix();
+    glTranslatef(3.0,0,0);
+    glutSolidCube(2);
+    glPopMatrix();
+    glTranslatef(0,0,-5);
+    glutSolidCube(5);
+    glPopMatrix();
+
+    glFlush();
+}
