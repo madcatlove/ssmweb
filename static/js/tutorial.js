@@ -114,7 +114,16 @@ function procJudge( blocks_JSON, tid ) {
                         cssClass: 'btn-primary',
                         icon : 'glyphicon glyphicon-folder-open',
                         action: function(dialog) {
-                            dialog.setMessage( _glSourceCode );
+                            var sourceCode = _glSourceCode;
+
+                            var brush = new SyntaxHighlighter.brushes.Cpp();
+                            var html;
+                            brush.init({toolbar : false} );
+
+                            html = brush.getHtml(sourceCode );
+
+                            dialog.setMessage( html );
+                            dialog.setSize(BootstrapDialog.SIZE_WIDE);
                         }
                     },
                     {
