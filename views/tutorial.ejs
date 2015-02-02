@@ -54,13 +54,13 @@
 </script>
 
 <script type="text/javascript">
+    var vSGL = null;
     $(document).ready( function() {
-        var vSGL = new sGL( $('#srender') );
+        vSGL = new sGL( $('#srender') );
         vSGL.initAll();
         vSGL.insertDOM();
         vSGL.renders();
         vSGL.run();
-
     })
 </script>
 
