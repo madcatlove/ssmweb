@@ -28,9 +28,7 @@ var judgeChpt1 = {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
 
-        }
-
-        if (!jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
+        } else if (!jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
 
@@ -58,22 +56,24 @@ var judgeChpt1 = {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
-        }
+        } else {
 
-        if (jMath.isEqualFloat( [[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]]) ) {
+            if (!jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]])) {
 
-            messages.push(jUtils.MSG_CHK_START_POINT);
+                messages.push(jUtils.MSG_CHK_START_POINT);
 
-        }
+            }
 
-        /**
-         * 점과 점 사이의 거리를 구하여 해당 거리가 데이터베이스의 거리와 일치하는지
-         * @type {Number}
-         */
-        if (jMath.distance2f([data[1], data[2]]) != dis ||
-            jMath.distance2f([data[2], data[3]]) != dis) {
+            /**
+             * 점과 점 사이의 거리를 구하여 해당 거리가 데이터베이스의 거리와 일치하는지
+             * @type {Number}
+             */
+            if (jMath.distance2f([data[1], data[2]]) != dis ||
+                jMath.distance2f([data[2], data[3]]) != dis) {
 
-            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+
+            }
 
         }
 
@@ -89,6 +89,7 @@ var judgeChpt1 = {
      * @param callback
      */
     triangle : function( extraInfo, data, callback) {
+
         var messages = [];
 
         var sPoint = extraInfo.startpoint;
@@ -98,29 +99,32 @@ var judgeChpt1 = {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
-        }
+        } else {
 
-        if (!jMath.isEqualFloat( [[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]] ) ) {
+            if (!jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]])) {
 
-            messages.push(jUtils.MSG_CHK_START_POINT);
+                messages.push(jUtils.MSG_CHK_START_POINT);
 
-        }
+            }
 
-        /**
-         *  점의 순서정보와 넘어온 블럭 정보들을 비교
-         */
-        if (!jMath.isEqualFloat(
-                [
-                    [data[2].data.x, seq[0].x],
-                    [data[2].data.y, seq[0].y],
-                    [data[3].data.x, seq[1].x],
-                    [data[3].data.y, seq[1].y],
-                ]) ) {
+            /**
+             *  점의 순서정보와 넘어온 블럭 정보들을 비교
+             */
+            if (!jMath.isEqualFloat(
+                    [
+                        [data[2].data.x, seq[0].x],
+                        [data[2].data.y, seq[0].y],
+                        [data[3].data.x, seq[1].x],
+                        [data[3].data.y, seq[1].y],
+                    ])) {
 
-            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+            }
+
         }
 
         callback(messages);
+
     },
 
     /**
@@ -131,6 +135,7 @@ var judgeChpt1 = {
      * @param callback
      */
     quadangle : function( extraInfo, data, callback) {
+
         var messages = [];
 
         var sPoint = extraInfo.startpoint;
@@ -140,29 +145,32 @@ var judgeChpt1 = {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
 
-        }
+        } else {
 
-        if (!jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]])) {
+            if (!jMath.isEqualFloat([[data[1].data.x, sPoint.x], [data[1].data.y, sPoint.y]])) {
 
-            messages.push(jUtils.MSG_CHK_START_POINT);
+                messages.push(jUtils.MSG_CHK_START_POINT);
 
-        }
+            }
 
-        if (!jMath.isEqualFloat(
-                [
-                    [data[2].data.x, seq[0].x],
-                    [data[2].data.y, seq[0].y],
-                    [data[3].data.x, seq[1].x],
-                    [data[3].data.y, seq[1].y],
-                    [data[4].data.x, seq[2].x],
-                    [data[4].data.y, seq[2].y],
-                ] ) ) {
+            if (!jMath.isEqualFloat(
+                    [
+                        [data[2].data.x, seq[0].x],
+                        [data[2].data.y, seq[0].y],
+                        [data[3].data.x, seq[1].x],
+                        [data[3].data.y, seq[1].y],
+                        [data[4].data.x, seq[2].x],
+                        [data[4].data.y, seq[2].y],
+                    ])) {
 
-            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+
+            }
 
         }
 
         callback(messages);
+
     }
 
 

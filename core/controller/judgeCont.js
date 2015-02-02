@@ -22,8 +22,6 @@ var controller = {
             member : memberSession
         };
 
-        //console.log(params.data);
-
         /**
          * judgeSvc의 execJudge를 통하여 판정을 기다린다
          */
@@ -35,7 +33,7 @@ var controller = {
             else {
                 result = u.result( messages, false );
             }
-            console.log('judge return = '+ messages);
+            console.log('judge return = '+ result[0]);
             res.json( result );
         });
 

@@ -200,7 +200,8 @@ var dataAccess = {
         var cData = {
             guide : '',
             practice : '',
-            image : []
+            image : [],
+            glSolution : ''
         };
 
         fs.exists( contentPath, function(b) {
@@ -252,7 +253,21 @@ var dataAccess = {
 
                             _callback(null);
                         })
+                    },
+
+                    /* GL SourceCode 읽어와서 추가 */
+                    function getGLSourceCode( _callback) {
+                        fs.readFile( contentPath + '/glSolution.html', 'UTF8', function(err, data) {
+                            if( err ) {
+                                _callback( err );
+                            }
+                            else {
+                                cData.glSolution = data;
+                                _callback(null);
+                            }
+                        })
                     }
+
                 ]
                 ,
                     function finalExec(err, result) {

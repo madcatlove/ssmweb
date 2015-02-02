@@ -61,11 +61,6 @@ var service = {
                      * 넘어온 데이터의 블럭 개수가 일치하는지 확인한다.
                      */
 
-
-                    //if (!bType.isRightBlocks(blockInfo, params.data)) {
-                    //    messages.unshift('올바른 블럭들이 아닙니다')
-                    //}
-
                     // 결과값이 있다면 기록.
                     if (messages) {
                         tutorialDA.markTutorialSuccess(params.member, params.jid, function (markResult) {
