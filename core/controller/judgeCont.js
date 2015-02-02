@@ -27,8 +27,16 @@ var controller = {
         /**
          * judgeSvc의 execJudge를 통하여 판정을 기다린다
          */
-        judgeService.execJudge(params, function(isOk) {
-            res.json( u.result(isOk, false) );
+        judgeService.execJudge(params, function( messages) {
+            var result;
+            if( messages.length > 0 ) {
+                result = u.result( messages, true );
+            }
+            else {
+                result = u.result( messages, false );
+            }
+            console.log('judge return = '+ messages);
+            res.json( result );
         });
 
     }

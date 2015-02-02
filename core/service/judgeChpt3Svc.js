@@ -14,15 +14,25 @@ var judgeChpt3 = {
      * @param callback
      */
     translate : function (blockInfo, extraInfo, data, callback) {
+
         var res = true;
 
-        var size = extraInfo.size;
-        var trans = extraInfo.trans;
+        //var size = extraInfo.size;
+        //var trans = extraInfo.trans;
+
+        var seq = extraInfo.seq;
 
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == bType.DRAWBOX && data[1].blockType == bType.TRANSLATE) {
+        if (data[0].blockType == bType.DRAWBOX &&
+            data[1].blockType == bType.TRANSLATE &&
+            data[2].blockType == bType.DRAWBOX &&
+            data[3].blockType == bType.IDENTITYMATRIX &&
+            data[4].blockType == bType.TRANSLATE &&
+            data[5].blockType == bType.TRANSLATE &&
+            data[6].blockType == bType.DRAWBOX
+        ) {
 
             var isProperBox = jMath.isEqualFloat([
                 [data[0].data.w, size.w],
