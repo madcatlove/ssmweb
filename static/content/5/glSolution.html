@@ -5,6 +5,15 @@ void Display()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glBegin(GL_POLYGON);
         glVertex3f(-2.0, 2.0, 2.0); // 좌 상단
+        glVertex3f(-2.0, -2.0, 2.0); // 좌 하단
+        glVertex3f(2.0, -2.0, 2.0); // 우 하단
+        glVertex3f(2.0, 2.0, 2.0); // 우 상단
+    glEnd();
+    glBegin(GL_POLYGON);
+        glVertex3f(-2.0, 2.0, -2.0); // 좌 상단
+        glVertex3f(-2.0, -2.0, -2.0); // 좌 하단
+        glVertex3f(2.0, -2.0, -2.0); // 우 하단
+        glVertex3f(2.0, 2.0, -2.0); // 우 상단
     glEnd();
 
     glFlush();

@@ -63,11 +63,17 @@ var service = {
 
                     // 결과값이 있다면 기록.
                     if (messages) {
+
                         tutorialDA.markTutorialSuccess(params.member, params.jid, function (markResult) {
+
                             callback(messages);
+
                         })
+
                     } else {
+
                         callback(messages);
+
                     }
                 });
 
