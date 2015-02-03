@@ -11,7 +11,7 @@
     height: auto;
     display: inline-block;
     /* Box Shape */
-    border: 1px solid #cccccc;
+    border: 0px solid #78c9ff;
     border-radius: 5px;
     background-color: #b9def0;
     box-shadow: 5px 5px 5px black;
@@ -27,9 +27,23 @@
 
 }
 
+/* Block Animation
+hover{
+    animation: blockAnimation;
+    animation-direction: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes blockAnimation {
+    0%{ background-color: #ffffff;}
+    50%{ background-color: #b9def0;}
+}
+*/
+
+
 #stacklist {
     margin: 2px 2px 2px 2px;
-    padding: 5px 5px 50px 5px;
+    padding: 5px 5px 5px 0px;
     height: 95%;
     width: 200px;
 
