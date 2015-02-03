@@ -225,6 +225,46 @@ var judgeChpt3 = {
      */
     perspective : function (  extraInfo, data, callback) {
 
+        var messages = [];
+
+        var obj = extraInfo.objs[0];
+        var pers = extraInfo.pers;
+
+        for (var i = 0 ; i < data.length ; i ++) {
+
+            var cmpVals = [];
+
+            if (data[i].blockType == 6) {
+
+                cmpVals.push([data[i].data.x, obj.x]);
+                cmpVals.push([data[i].data.y, obj.y]);
+                cmpVals.push([data[i].data.z, obj.z]);
+                cmpVals.push([data[i].data.size, obj.size]);
+
+            } else if(data[i].blockType == 13) {
+
+                cmpVals.push([data[i].data.fov, pers.fov]);
+                cmpVals.push([data[i].data.near, pers.near]);
+                cmpVals.push([data[i].data.far, pers.far]);
+
+            } else {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
+                break;
+
+            }
+
+            if (!jMath.isEqualFloat(cmpVals)) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                break;
+
+            }
+
+        }
+
+        callback(messages);
+
     },
 
     /**
@@ -234,6 +274,56 @@ var judgeChpt3 = {
      * @param callback
      */
     orthogonal : function (  extraInfo, data, callback) {
+
+        var messages = [];
+
+        var obj = extraInfo.objs[0];
+        var pers = extraInfo.pers;
+        var ortho = extraInfo.ortho;
+
+        for (var i = 0 ; i < data.length ; i ++) {
+
+            var cmpVals = [];
+
+            if (data[i].blockType == 6) {
+
+                cmpVals.push([data[i].data.x, obj.x]);
+                cmpVals.push([data[i].data.y, obj.y]);
+                cmpVals.push([data[i].data.z, obj.z]);
+                cmpVals.push([data[i].data.size, obj.size]);
+
+            } else if(data[i].blockType == 13) {
+
+                cmpVals.push([data[i].data.fov, pers.fov]);
+                cmpVals.push([data[i].data.near, pers.near]);
+                cmpVals.push([data[i].data.far, pers.far]);
+
+            }  else if(data[i].blockType == 14) {
+
+                cmpVals.push([data[i].data.left, ortho.left]);
+                cmpVals.push([data[i].data.right, ortho.right]);
+                cmpVals.push([data[i].data.top, ortho.top]);
+                cmpVals.push([data[i].data.bottom, ortho.bottom]);
+                cmpVals.push([data[i].data.near, ortho.near]);
+                cmpVals.push([data[i].data.far, ortho.far]);
+
+            } else {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
+                break;
+
+            }
+
+            if (!jMath.isEqualFloat(cmpVals)) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                break;
+
+            }
+
+        }
+
+        callback(messages);
 
     },
 
