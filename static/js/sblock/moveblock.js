@@ -101,7 +101,7 @@ dragDropBlockList.prototype.eventRun = function() {
     //-------------
     // item 에 떨굴수 있게.
     $stack.droppable( {
-        accept: '#stacklist ul div',
+        accept: '#stacklist div div',
         activeClass : 'stackCanDrop',
         drop : function( event, ui ) {
 
@@ -133,7 +133,7 @@ dragDropBlockList.prototype.eventRun = function() {
 
 
     var trashAppend = function(item) {
-        var $handler = ( $('ul', $trash).length ) ? $('ul', $trash) : $("<ul />").css('display','inline').appendTo($trash);
+        var $handler = ( $('ul', $trash).length ) ? $('div', $trash) : $("<div />").css('display','inline').appendTo($trash);
 
         item.appendTo( $handler );
     }

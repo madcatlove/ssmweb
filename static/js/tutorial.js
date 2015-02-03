@@ -21,6 +21,7 @@ function initTutorialInfo(tid) {
             var guide_content = data.guide_content;
             var practice_content = data.practice_content;
             var tutorialTitle = data.chapterName + ' - ' + data.title;
+            var imageUrl = data.image_content;
 
             // OpenGL 코드는 전역으로 관리.
             _glSourceCode = data.glSolution;
@@ -70,6 +71,13 @@ function initTutorialInfo(tid) {
             //----------------------------------------------------------
             // -- 가이드 컨텐츠 조정 끝 --
             //----------------------------------------------------------
+
+            var previewImage = $('<img />').attr( 'src', '/static/content/'+tid+'/'+imageUrl[0]);
+                previewImage.css({
+                    width: '100%',
+                    height: '100%'
+                })
+            $('#spreview').append( previewImage );
 
 
             $('.practiceContent').html( practice_content );

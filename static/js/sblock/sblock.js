@@ -39,6 +39,9 @@ sBlock.prototype.toHTML = function() {
 
     /* 블락 뼈대 */
     var s =  $('<div class="blockitem" data-blockseq="'+ this.blockSeq +'" />');
+    s.css({
+        'display' : 'inline-block'
+    })
     var button = $('<button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-wrench"></span></button>');
 
     var parentWidth = $('#blocklist').width();
