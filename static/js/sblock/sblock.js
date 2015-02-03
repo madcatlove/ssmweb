@@ -118,7 +118,7 @@ var getBlockInfo = (function() {
     blockInfo.push( createBlockInfo( 10, blockNameList[10], 3, ['x','y','z']));
     blockInfo.push( createBlockInfo( 11, blockNameList[11], 4, ['t', 'x','y','z']));
     blockInfo.push( createBlockInfo( 12, blockNameList[12], 3, ['x','y','z']));
-    blockInfo.push( createBlockInfo( 13, blockNameList[13], 4, ['fov', 'aspect', 'near', 'far']));
+    blockInfo.push( createBlockInfo( 13, blockNameList[13], 3, ['fov', 'near', 'far']));
     blockInfo.push( createBlockInfo( 14, blockNameList[14], 6, ['left','right','top','bottom','near','far']));
     blockInfo.push( createBlockInfo( 15, blockNameList[15], 3, ['x','y','z']));
     blockInfo.push( createBlockInfo( 16, blockNameList[16], 2, ['hex','intensity']));
