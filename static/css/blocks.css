@@ -8,19 +8,34 @@
 
 .blockitem {
     width: 150px;
-    height: 70px;
+    height: auto;
     display: inline-block;
+    /* Box Shape */
     border: 1px solid #cccccc;
-    background-color: #269abc;
+    border-radius: 5px;
+    background-color: #b9def0;
     box-shadow: 5px 5px 5px black;
+
+    margin-top: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    /* Box text */
+    text-align: center;
+    text-shadow: 2px 2px 1px white;
+    font-weight: bold;
+
 }
 
 #stacklist {
     margin: 2px 2px 2px 2px;
-    padding: 5px 5px 5px 5px;
+    padding: 5px 5px 50px 5px;
     height: 95%;
     width: 200px;
+
+    /* Stack Shape */
     border: 1px solid #4A4B4D;
+    border-radius: 10px;
     box-shadow: 2px 2px 2px black;
 }
 
