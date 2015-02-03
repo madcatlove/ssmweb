@@ -45,12 +45,19 @@ hover{
     margin: 2px 2px 2px 2px;
     padding: 5px 5px 5px 0px;
     height: 95%;
-    width: 200px;
+    width: 300px;
 
     /* Stack Shape */
     border: 1px solid #4A4B4D;
     border-radius: 10px;
     box-shadow: 2px 2px 2px black;
+
+    border-style: solid;
+    border-width: 26px 27px 27px;
+    -moz-border-image: url(/static/images/old-style-border.svg) 26 27 27 repeat;
+    -webkit-border-image: url(/static/images/old-style-border.svg) 26 27 27 repeat;
+    -o-border-image: url(/static/images/old-style-border.svg) 26 27 27 repeat;
+    border-image: url(/static/images/old-style-border.svg) 26 27 27 fill repeat;
 }
 
 .block_leftside {
