@@ -8,30 +8,54 @@ var app = require('../app');
 var debug = require('debug')('ssmweb:server');
 var http = require('http');
 
+var cluster = require('cluster'),
+    numCluster = 8; // 클러스터 갯수.
+
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * 서비스 클러스터링
  */
+if( cluster.isMaster === true ) {
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    // fork childs.
+    for( var i = 0; i < numCluster; i++) {
+        cluster.fork();
+    }
 
-/**
- * Normalize a port into a number, string, or false.
- */
+    // child 종료시 처리.
+    cluster.on('exit', function( worker , code, signal ) {
+        console.info( worker.id + ' DEAD!! ');
+        cluster.fork();
+    })
+
+}
+else {
+    var server = http.createServer(app);
+    server.listen(port, function() {
+        var message = ' WORKER ' +
+                    cluster.worker.workerID +
+                    ' ( PID : ' + cluster.worker.process.pid + ' ) ' +
+                    ' \u001b[32mONLINE ';
+        console.info( message );
+    });
+    server.on('error', onError);
+
+}
+
+
+
+
+
+
+//-----------------------------------
+// 필요함수 모음
+//-----------------------------------
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
