@@ -33,23 +33,56 @@ sBlock.prototype.toHTML = function() {
     var blockName = this.blockInfo.blockName; // 블럭의 이름.
     var numBlockParam = this.blockInfo.numParam; // 블럭 파라메타 갯수
     var paramName = this.blockInfo.paramName; // 블럭 파라메타의 이름.
+    var blockType = this.blockInfo.blockType;
+
+    var imageInfo = imageMapper( blockType );
 
     /* 블락 뼈대 */
     var s =  $('<div class="blockitem" data-blockseq="'+ this.blockSeq +'" />');
     var button = $('<button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-wrench"></span></button>');
 
+    var parentWidth = $('#blocklist').width();
+    var blockImageRatio = 101.0/359;
+    var blockEditImageRatio = 84 / 101;
 
     /* 블락 내용 추가 */
-    s.append( blockName + "<br />");
+    //s.append( blockName + "<br />");
+    var blockImage = $('<div />').css({
+        position: 'relative',
+        display: 'inline-block',
+        width : parentWidth + 'px',
+        height : ( parentWidth * blockImageRatio) + 'px'
+    });
+
+    blockImage.append( $('<img />').attr('src', imageInfo.image) );
+    s.append( blockImage );
+
+    /* 에디트 이미지 위치 */
+    var editImage = $('<div />').css({
+        position: 'absolute',
+        right : 0,
+        top : 0,
+        height : blockImage.height() +'px',
+        width : (blockImage.height() * blockEditImageRatio) + 'px'
+    })
+    editImage.append( $('<img />').attr({
+        src : imageInfo.edit
+    }));
+
+
+    /* 히든 인풋 추가 */
     for( var i = 0; i < numBlockParam; i++) {
-        s.append( paramName[i] + ',')
-         .append( $('<input type="hidden" class="input" value="0" data-paramname="'+ paramName[i] + '" />') );
+        s.append( $('<input type="hidden" class="input" value="0" data-paramname="'+ paramName[i] + '" />') );
     }
 
     /* 클릭시 모달창 띄움 */
     if( numBlockParam != 0 ) {
-        s.append(button);
-        $('button', s).click(function (e) {
+        blockImage.append( editImage );
+
+        $('img', editImage).hover(function() {
+            $(this).css('cursor','pointer');
+        })
+        $('img', editImage).click(function (e) {
             createModalWindowForBlock(paramName, numBlockParam, s);
         });
     }
@@ -106,27 +139,27 @@ var getBlockInfo = (function() {
     blockInfo.push({});
 
     // 리스트 생성시작 (-_-;;)  ( 블락타입, 블락이름, 파라메터갯수 , 파라메터정보(이름) )
-    blockInfo.push( createBlockInfo( 1, blockNameList[1], 0, []));
-    blockInfo.push( createBlockInfo( 2, blockNameList[2], 0, []));
-    blockInfo.push( createBlockInfo( 3, blockNameList[3], 2, ['x','y']));
-    blockInfo.push( createBlockInfo( 4, blockNameList[4], 3, ['x','y','z']));
-    blockInfo.push( createBlockInfo( 5, blockNameList[5], 3, ['x','y','r']));
-    blockInfo.push( createBlockInfo( 6, blockNameList[6], 4, ['size','x','y','z']));
-    blockInfo.push( createBlockInfo( 7, blockNameList[7], 3, ['R', 'Lo', 'La']));
-    blockInfo.push( createBlockInfo( 8, blockNameList[8], 0, []));
-    blockInfo.push( createBlockInfo( 9, blockNameList[9], 0, []));
-    blockInfo.push( createBlockInfo( 10, blockNameList[10], 3, ['x','y','z']));
-    blockInfo.push( createBlockInfo( 11, blockNameList[11], 4, ['t', 'x','y','z']));
-    blockInfo.push( createBlockInfo( 12, blockNameList[12], 3, ['x','y','z']));
-    blockInfo.push( createBlockInfo( 13, blockNameList[13], 3, ['fov', 'near', 'far']));
-    blockInfo.push( createBlockInfo( 14, blockNameList[14], 6, ['left','right','top','bottom','near','far']));
-    blockInfo.push( createBlockInfo( 15, blockNameList[15], 3, ['x','y','z']));
-    blockInfo.push( createBlockInfo( 16, blockNameList[16], 2, ['hex','intensity']));
-    blockInfo.push( createBlockInfo( 17, blockNameList[17], 4, ['hex','intensity','angle','exp']));
-    blockInfo.push( createBlockInfo( 18, blockNameList[18], 3, ['x','y','z']));
-    blockInfo.push( createBlockInfo( 19, blockNameList[19], 3, ['x','y','z']));
-    blockInfo.push( createBlockInfo( 20, blockNameList[20], 0, []) );
-    blockInfo.push( createBlockInfo( 21, blockNameList[21], 3, ['x','y','z']));
+    blockInfo.push( createBlockInfo( 1, blockNameList[1], 0, [])); // BEGIN
+    blockInfo.push( createBlockInfo( 2, blockNameList[2], 0, [])); // END
+    blockInfo.push( createBlockInfo( 3, blockNameList[3], 2, ['x','y'])); // VERTEX2
+    blockInfo.push( createBlockInfo( 4, blockNameList[4], 3, ['x','y','z'])); // VERTEX3
+    blockInfo.push( createBlockInfo( 5, blockNameList[5], 3, ['x','y','r'])); // DRAWCIRCLE
+    blockInfo.push( createBlockInfo( 6, blockNameList[6], 4, ['size','x','y','z'])); // DRAWBOX
+    blockInfo.push( createBlockInfo( 7, blockNameList[7], 3, ['R', 'Lo', 'La'])); // DRAWSPHERE
+    blockInfo.push( createBlockInfo( 8, blockNameList[8], 0, [])); // PUSH MATRIX
+    blockInfo.push( createBlockInfo( 9, blockNameList[9], 0, [])); // POP MATRIX
+    blockInfo.push( createBlockInfo( 10, blockNameList[10], 3, ['x','y','z'])); // TRANSLATE
+    blockInfo.push( createBlockInfo( 11, blockNameList[11], 4, ['t', 'x','y','z'])); // ROTATE
+    blockInfo.push( createBlockInfo( 12, blockNameList[12], 3, ['x','y','z'])); // SCALE
+    blockInfo.push( createBlockInfo( 13, blockNameList[13], 3, ['fov', 'near', 'far'])); //PERSPECTIVE
+    blockInfo.push( createBlockInfo( 14, blockNameList[14], 6, ['left','right','top','bottom','near','far'])); // ORTHOGRAPHIC
+    blockInfo.push( createBlockInfo( 15, blockNameList[15], 3, ['x','y','z'])); // LOOKAT
+    blockInfo.push( createBlockInfo( 16, blockNameList[16], 2, ['hex','intensity'])); // DIRECTIONAL LIGHT
+    blockInfo.push( createBlockInfo( 17, blockNameList[17], 4, ['hex','intensity','angle','exp'])); // SPOT LIGHT
+    blockInfo.push( createBlockInfo( 18, blockNameList[18], 3, ['x','y','z'])); // CAMERA POSITION
+    blockInfo.push( createBlockInfo( 19, blockNameList[19], 3, ['x','y','z'])); // LIGHT POSITION
+    blockInfo.push( createBlockInfo( 20, blockNameList[20], 0, []) ); // IDENTITY MATRIX
+    blockInfo.push( createBlockInfo( 21, blockNameList[21], 3, ['x','y','z'])); // LIGHT DIRECTION
 
     return function(blockType) {
         for( var i = 1; blockInfo.length; i++) {
@@ -139,6 +172,54 @@ var getBlockInfo = (function() {
         return {};
     }
 })();
+
+
+var imageMapper = (function() {
+    var data = {};
+
+    createImageObj(1, 'begin.png', 'e3.png');
+    createImageObj(2, 'end.png', 'e3.png');
+
+    createImageObj(3, 'v2.png', 'e1.png');
+    createImageObj(4, 'v3.png', 'e1.png');
+
+    createImageObj(5, 'begin.png', 'e3.png'); // 폐기
+
+   createImageObj(6, 'drawbox.png', 'e2.png');
+    createImageObj(7, 'drawsphere.png', 'e2.png');
+
+    createImageObj(8, 'push.png', 'e4.png');
+    createImageObj(9, 'pop.png', 'e4.png');
+
+    createImageObj(10, 'tr.png', 'e5.png');
+    createImageObj(11, 'rt.png', 'e5.png');
+    createImageObj(12, 'sc.png', 'e5.png');
+
+    createImageObj(13, 'pers.png', 'e6.png');
+    createImageObj(14, 'ortho.png', 'e6.png');
+    createImageObj(15, 'la.png', 'e6.png');
+
+    createImageObj(16, 'dl.png', 'e7.png');
+    createImageObj(17, 'sl.png', 'e7.png');
+
+    createImageObj(18, 'cp.png', 'e8.png');
+    createImageObj(19, 'lp.png', 'e8.png');
+    createImageObj(20, 'id.png', 'e4.png');
+    createImageObj(21, 'ld.png', 'e8.png');
+
+    function createImageObj(blockSeq, imageName, editName) {
+        var iUrl = '/static/images/blocks/';
+        data[blockSeq] = {
+            image : iUrl + imageName,
+            edit : iUrl + editName
+        }
+    }
+
+    return function( blockType ) {
+        return data[ blockType ];
+    }
+})();
+
 
 function createBlockInfo( blockType, blockName, numParams, paramName) {
 

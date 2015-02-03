@@ -7,6 +7,8 @@
 }
 
 .blockitem {
+    margin-top : 5px;
+    /*
     width: 150px;
     height: auto;
     display: inline-block;
@@ -23,7 +25,7 @@
 
     text-align: center;
     text-shadow: 2px 2px 1px white;
-    font-weight: bold;
+    font-weight: bold;*/
 
 }
 
@@ -42,12 +44,13 @@ hover{
 
 
 #stacklist {
+    /*
     margin: 2px 2px 2px 2px;
     padding: 5px 5px 5px 0px;
     height: 95%;
     width: 300px;
 
-    /* Stack Shape */
+
     border: 1px solid #4A4B4D;
     border-radius: 10px;
     box-shadow: 2px 2px 2px black;
@@ -57,7 +60,17 @@ hover{
     -moz-border-image: url(/static/images/old-style-border.svg) 26 27 27 repeat;
     -webkit-border-image: url(/static/images/old-style-border.svg) 26 27 27 repeat;
     -o-border-image: url(/static/images/old-style-border.svg) 26 27 27 repeat;
-    border-image: url(/static/images/old-style-border.svg) 26 27 27 fill repeat;
+    border-image: url(/static/images/old-style-border.svg) 26 27 27 fill repeat; */
+
+    width: 100%;
+    height: 95%;
+    background-image: url('/static/images/blocks/stacklist.jpg');
+    background-repeat : no-repeat;
+    background-position: top center;
+    background-size: 80% 100%;
+    padding-top: 25%;
+    text-align : center;
+
 }
 
 .block_leftside {
@@ -65,3 +78,6 @@ hover{
     border-right: 1px solid #cccccc;
 }
 
+.stacklist_top {
+    background : url('/static/images/blocks/top.png');
+}
