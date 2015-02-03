@@ -2,7 +2,10 @@
  * Created by Lee on 2015-01-29.
  */
 
-
+//--------------------------------
+// 전역변수
+//--------------------------------
+var tempPosition;
 
 sGL.prototype.initCamera = function() {
     // 3D용 카메라 세팅
@@ -71,10 +74,6 @@ sGL.prototype.initCamera = function() {
 }
 
 
-//----------------------
-// GLOBAL VARIABLES
-//----------------------
-var _PIVOT , _CTM_PIVOT;
 
 
 sGL.prototype.run = function() {
@@ -115,41 +114,19 @@ sGL.prototype.run = function() {
         //var sphere = new THREE.Mesh(geometry, material);
         //self.scene.add(sphere);
 
-
-        var rotateInfo = {
-            theta : 0,
-            rX : 0,
-            rY : 0,
-            rZ : 0,
-            rotateChecker : false
-        }
-
-        //------- PIVOT , CTM_PIVOT 설정 -------
-        _PIVOT = new THREE.Object3D();
-        var geometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
-        var material = new THREE.MeshBasicMaterial({color: 0xffffff});
-        _CTM_PIVOT = new THREE.Mesh(geometry, material);
-        _PIVOT.add( _CTM_PIVOT );
-        self.scene.add( _PIVOT );
-
-
-
-        //----------- 블럭 조합 시작 ------------------
         for(var i = 0; i < movedlist.length; i++) {
             var item = movedlist[i].toJSON();
 
 
             if( item.blockType == self.DRAWBOX) {
-                drawBox( item, CTM, self.scene, rotateInfo );
+                drawBox( item, CTM, self.scene );
             }
             else if( item.blockType == self.TRANSLATE) {
-                doTranslate(item, CTM, self.scene, rotateInfo );
+                doTranslate(item, CTM, self.scene );
             }
-            else if( item.blockType == self.IDENTITYMATRIX) {
-                idMatrix(CTM, self.scene );
-            }
-            else if( item.blockType == self.ROTATE ) {
-                doRotate( rotateInfo, item );
+
+            else if( item.blockType == self.SCALE ) {
+                doScale( item, CTM );
             }
 
         }
@@ -164,73 +141,59 @@ sGL.prototype.run = function() {
 
 
 
-function drawBox(item, CTM, scene, rotateInfo) {
+function drawBox(item, CTM, scene) {
+    // Pivot (중심점) 생성
+    var pivot = new THREE.Object3D();        // rotate의 중심점
+    pivot.applyMatrix(CTM); // Translate 변환 행렬 곱함  // 중심점은 CTM 적용
 
-    var geometry = new THREE.BoxGeometry( item.data.size,  item.data.size,  item.data.size );
-    var material = new THREE.MeshPhongMaterial( {
-        ambient: 0x333333,
-        color: 0xffffff,
-        emissive : 0xF7FF69,
-        specular: 0xffffff,
-        shininess: 50
-    } );
-    var cube = new THREE.Mesh( geometry, material );
-    var localMatrix = new THREE.Matrix4().makeTranslation( item.data.x, item.data.y, item.data.z); // 지역 변환 행렬 translate
 
-    if( rotateInfo.rotateChecker ) {
-        cube.applyMatrix(localMatrix);
-        _CTM_PIVOT.add(cube);
-    }
-    else {
-        cube.applyMatrix(CTM);
-        cube.applyMatrix(localMatrix);
-        scene.add(cube);
-    }
+    // 지오메트리 생성
+    var geometry = new THREE.BoxGeometry(item.data.size, item.data.size, item.data.size);
+    var material = new THREE.MeshBasicMaterial({color: 0xffff00});
+    var box = new THREE.Mesh(geometry, material);
+
+    var localMatrix = new THREE.Matrix4().makeTranslation(item.data.x, item.data.y, item.data.z); // 지역 변환 행렬 translate
+    box.applyMatrix(localMatrix);
+    pivot.add(box);
+
+    scene.add(pivot);
 }
 
 
 
-function doTranslate(item, CTM, scene, rotateInfo) {
-    var multipleMatrix = new THREE.Matrix4().makeTranslation( item.data.x , item.data.y , item.data.z);
+function doTranslate(item, CTM, scene) {
 
-    //pivot update
-    if( rotateInfo.rotateChecker){
-        _CTM_PIVOT.applyMatrix(multipleMatrix);
-        scene.add( _PIVOT );
-    }
-    else{
-        _PIVOT.applyMatrix(multipleMatrix);
-        scene.add( _PIVOT );
-    }
+    var multipleMatrix = new THREE.Matrix4().makeTranslation(
+        item.data.x,
+        item.data.y,
+        item.data.z);
 
-    // CTM Update
-    CTM.multiply(multipleMatrix);
+    var dummyMatrix = new THREE.Matrix4().makeTranslation(
+        item.data.x * tempPosition.x,
+        item.data.y * tempPosition.y,
+        item.data.z * tempPosition.z);
 
-}
-
-
-
-function idMatrix(CTM, scene){
-    // translate init
-    CTM.identity();
-
+    // CTM 좌표 옮김
     var geometry = new THREE.SphereGeometry(0.1, 100, 100);
     var material = new THREE.MeshBasicMaterial({color: 0xffffff});
     var CTMPivot = new THREE.Mesh(geometry, material);
-    CTMPivot.position.set(0,0,0);
+
+    CTMPivot.applyMatrix(dummyMatrix); // 기존 좌표 행렬 * 이동한 좌표 행렬
 
     scene.add(CTMPivot);
+
+    CTM.multiply(multipleMatrix);       // CTM Update
+
 }
 
-function doRotate(rotateInfo, item) {
 
-    rotateInfo.rotateChecker = true;
-    var theta   = rotateInfo.theta = item.data.t;
-    var rX      = rotateInfo.rX = item.data.x;
-    var rY      = rotateInfo.rY = item.data.y;
-    var rZ      = rotateInfo.rZ = item.data.z;
+function doScale(item, CTM) {
 
-    _PIVOT.rotation.x = -theta*rX*Math.PI/180;
-    _PIVOT.rotation.y = -theta*rY*Math.PI/180;
-    _PIVOT.rotation.z = -theta*rZ*Math.PI/180;
+    tempPosition = {
+        x: item.data.x,
+        y: item.data.y,
+        z: item.data.z
+    }
+
+    CTM.scale(new THREE.Vector3(item.data.x, item.data.y , item.data.z));
 }
