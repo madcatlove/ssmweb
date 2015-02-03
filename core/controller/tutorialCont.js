@@ -108,6 +108,73 @@ var controller = {
 
     },
 
+    /**
+     * 챕터별 진행상황 가공 컨트롤러
+     * @param req
+     * @param res
+     */
+    getTutorialChapterProgressInfo : function(req, res) {
+        var sess = req.session;
+
+        var chapterList = {};
+        var progressList = {};
+
+        async.waterfall([
+            function makeChapterList( _callback) {
+                tutorialService.getTutorialChapterList( function(result) {
+                    chapterList = result;
+
+                    _callback( null );
+                })
+            },
+
+            function makeProgressList( _callback) {
+                tutorialService.getTutorialProgressInfo( sess.member, function(result) {
+                    progressList = result;
+
+                    _callback( null );
+                })
+            },
+
+            function combineChapterList( _callback) {
+                var numericInfo = {};
+
+                // 챕터 조합 시작
+                for( var chapterKey in chapterList ) {
+                    var chapterItem = chapterList[ chapterKey ]
+                    var countDone = 0;
+                    for( var i = 0; i < chapterItem.length; i++) {
+
+                        var eachItem = chapterList[ chapterKey][i];
+
+                        if( progressList.hasOwnProperty( eachItem.seq) && progressList[eachItem.seq] ) {
+                            chapterList[ chapterKey][i].success = true;
+                            countDone++;
+                        }
+                        else {
+                            chapterList[ chapterKey][i].success = false;
+                        }
+                    } /* END INNER LOOP */
+
+                    numericInfo[ chapterKey] = Math.round( (countDone / (chapterItem.length * 1.0) ) * 100 );
+
+                } /* END OUTER LOOP */
+
+
+                _callback( null, numericInfo );
+            }
+        ],
+
+            function finalExec( err, result ) {
+                var data = {
+                    chapterInfo : chapterList,
+                    numericInfo : result
+                }
+
+                res.json(u.result( data) );
+            }
+        );
+    }
 
 }
 

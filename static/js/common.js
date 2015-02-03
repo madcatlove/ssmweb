@@ -27,10 +27,14 @@ var urlReq = (function() {
                 }
             }
 
+            resultCallback(data);
+        })
+        .fail( function( jqXHR ) {
+            var data = {};
             //---------------------------------------
             // HTTP Status Code 에 따른 데이터 덮어쓰기
             //---------------------------------------
-            var statusCode = parseInt( jqXHR, 10);
+            var statusCode = parseInt( jqXHR.status, 10);
             if( statusCode >= 400 && statusCode < 500 ) {
                 data = {
                     error: true,
@@ -44,10 +48,7 @@ var urlReq = (function() {
                 }
             }
 
-            resultCallback(data);
-        })
-        .fail( function() {
-
+            resultCallback( data );
         })
     }
 

@@ -10,6 +10,8 @@
 
 
 <script type="text/javascript">
+
+    /* 캐러셀 시작 */
     $(document).ready(function() {
 
         $("#sCarousel").owlCarousel({
@@ -21,16 +23,41 @@
             autoPlay: true
 
 
-            // "singleItem:true" is a shortcut for:
-            // items : 1,
-            // itemsDesktop : false,
-            // itemsDesktopSmall : false,
-            // itemsTablet: false,
-            // itemsMobile : false
-
         });
 
     });
+
+    /* 진행상황 업데이트 */
+    $(document).ready( function() {
+        urlReq.get('/tutorial/progressInfo', {}, function(result) {
+
+            var progressBar = $('.progress-bar'),
+                data = result.data;
+
+            if( result.error ) {
+                progressBar.each( function() {
+                    var current = $(this);
+                    current.css({ width: '0%' });
+                    current.find('span').html('');
+                })
+
+            }
+            else {
+                progressBar.eq(0).attr('data-chapterName', '2D');
+                progressBar.eq(1).attr('data-chapterName', '3D');
+                progressBar.eq(2).attr('data-chapterName', '3D+');
+
+                progressBar.each( function() {
+                    var current = $(this);
+                    var item = data.numericInfo[ current.attr('data-chaptername' ) ];
+
+                    current.css({ width : item+'%' });
+                    current.find('span').html( item+'%' );
+                })
+
+            }
+        })
+    })
 </script>
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -56,7 +83,7 @@
     </div>
 </div>
 
-<br><br>
+<br /><br />
 
 <div class="container">
     <!-- Example row of columns -->
