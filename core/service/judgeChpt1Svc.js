@@ -7,13 +7,14 @@ var jUtils = require('../jUtils');
 var judgeChpt1 = {
 
     /**
-     * 1) 점 판정
-     * 1. 점은 x, y, z 세 축으로 이룸
+     * 1) 점
+     * 1. 점의 좌표가 일치하는가
+     * @param extraInfo
      * @param data
      * @param callback
      */
     point : function ( extraInfo, data, callback) {
-       // var res = false;
+
         var messages = [];
 
         var block = data[0]; // 포스트를 통하여 넘어온 블럭 데이터들중 가장 처음 블럭
@@ -38,8 +39,11 @@ var judgeChpt1 = {
     },
 
     /**
-     * 2) 선 판정
-     * 1. 2개의 점
+     * 2) 선
+     * 1. BEGIN, END가 제대로 되어있는가
+     * 2. 시작점이 일치하는가
+     * 3. 점과 점 사이의 거리가 데이터베이스에서 설정된 값과 일치하는가
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -83,9 +87,12 @@ var judgeChpt1 = {
     },
 
     /**
-     * 3) 삼각형 판정
-     * 1. 점이 3개 필요
-     * 2. 세개의 점의 패러미터와 위치가 일치
+     * 3) 삼각형
+     * 1. BEGIN, END가 제대로 되어있는가
+     * 2. BEGIN, END가 두 쌍인가
+     * 3. 시작점이 일치하는가
+     * 4. 데이터베이스에 저장된 순서 데이터와 일치하는가
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -129,9 +136,11 @@ var judgeChpt1 = {
     },
 
     /**
-     * 4) 사각형 판정
-     * 1. 점이 4개 필요
-     * 2. 네개의 점의 패러미터와 위치가 일치
+     * 4) 사각형
+     * 1. BEGIN, END가 제대로 되어있는가
+     * 2. 시작점이 일치하는가
+     * 3. 데이터베이스에 저장된 순서 데이터와 일치하는가
+     * @param extraInfo
      * @param data
      * @param callback
      */
