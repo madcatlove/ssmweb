@@ -40,7 +40,6 @@ var judgeChpt3 = {
                 cmpVals.push([seq[i].info.z, data[i].data.z]);
                 cmpVals.push([seq[i].info.size, data[i].data.size]);
 
-
             } else if (data[i].blockType == jUtils.TRANSLATE) {
 
                 cmpVals.push([seq[i].info.x, data[i].data.x]);
@@ -251,7 +250,6 @@ var judgeChpt3 = {
         var objs = extraInfo.objs;
         var cam = extraInfo.cam;
         var lookat = extraInfo.lookat;
-
 
         for (var i = 0 ; i < data.length ; i ++ ){
 

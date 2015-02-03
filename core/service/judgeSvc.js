@@ -14,10 +14,8 @@ var judgeChpt1 = require('./judgeChpt1Svc'),
  */
 var judge = [
     [judgeChpt1.point, judgeChpt1.line, judgeChpt1.triangle, judgeChpt1.quadangle],
-    [judgeChpt2.rect, judgeChpt2.box, judgeChpt2.sphere],
-    [judgeChpt3.translate, judgeChpt3.rotate, judgeChpt3.scale, judgeChpt3.pushPop,
-        judgeChpt3.perspective, judgeChpt3.orthogonal, judgeChpt3.positionLookat,
-        judgeChpt3.dirLight, judgeChpt3.spotLight]
+    [judgeChpt2.rect, judgeChpt2.box, judgeChpt2.sphere, judgeChpt3.translate, judgeChpt3.rotate, judgeChpt3.scale, judgeChpt3.pushPop],
+    [judgeChpt3.perspective, judgeChpt3.orthogonal, judgeChpt3.positionLookat, judgeChpt3.dirLight, judgeChpt3.spotLight]
 ];
 
 var service = {
