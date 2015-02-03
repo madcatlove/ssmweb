@@ -95,3 +95,7 @@ function procMemberLogout() {
     })
 
 }
+
+function moveMemberJoin() {
+    window.location.href = '/member/join';
+}
