@@ -44,6 +44,7 @@ var judgeChpt1 = {
      * @param callback
      */
     line : function ( extraInfo, data, callback) {
+
         var messages = [];
 
         var sPoint = extraInfo.startpoint;
