@@ -68,3 +68,28 @@ $(document).ajaxStart(function() {
 $(document).ajaxStop( function() {
     $('#loading').fadeOut('slow');
 })
+
+
+//--------------------------------------------------------------
+// Navigation menu bar active
+//--------------------------------------------------------------
+$(document).ready( function() {
+    var pathName = document.location.pathname;
+
+    var $navMenu = $('ul.nav > li');
+
+    // 모든 li 메뉴 비활성화.
+    $navMenu.each( function(idx) {
+        if( $(this).hasClass('active') ) {
+            $(this).removeClass('active');
+        }
+    });
+
+
+    if( /tutorial/i.test(pathName) ) {
+        $navMenu.eq(1).addClass('active');
+    }
+    else {
+        $navMenu.eq(0).addClass('active');
+    }
+})

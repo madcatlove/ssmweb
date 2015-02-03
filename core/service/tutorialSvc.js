@@ -175,6 +175,11 @@ var service = {
 
     },
 
+    /**
+     * 튜토리얼 단계별 진행 여부 데이터 가공 서비스
+     * @param member
+     * @param resultCallback
+     */
     getTutorialProgressInfo : function(member, resultCallback) {
         u.assert( member );
         u.assert( member.seq );
@@ -194,6 +199,7 @@ var service = {
 
 
             function getTutorialProgress( _callback) {
+
                 tutorialDA.getTutorialProgressInfo( member, function(result) {
                     for(var i = 0; i < result.length; i++) {
 

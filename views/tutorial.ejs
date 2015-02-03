@@ -1,11 +1,13 @@
 <%- include header.ejs %>
 <link rel="stylesheet" href="/static/css/bootstrap-select.css" />
 
-<script type="text/javascript">
-    SyntaxHighlighter.all();
-</script>
 
 <script type="text/javascript">
+    SyntaxHighlighter.all();
+    var globalParam = {
+        tid : <%=tid%>,
+        nextTid : <%=nextTid%>
+    }
     var vSGL = null;
     $(document).ready( function() {
 
@@ -16,6 +18,8 @@
         vSGL.insertDOM();
         vSGL.renders();
         vSGL.run();
+
+        SyntaxHighlighter.all();
     })
 </script>
 
@@ -45,9 +49,9 @@
                         var item = tutorialChapterList[key][i];
                     %>
                             <% if( tutorialProgressList[ item.seq ] ) { %>
-                                <option data-icon="glyphicon glyphicon-ok-sign" <%=(tid==item.seq) ? 'selected="selected"' : ''%>><%=item.title%></option>
+                                <option data-icon="glyphicon glyphicon-ok-sign" data-tid="<%=item.seq%>" <%=(tid==item.seq) ? 'selected="selected"' : ''%>><%=item.title%></option>
                             <% } else { %>
-                                <option <%=(tid==item.seq) ? 'selected="selected"' : ''%>><%=item.title%></option>
+                                <option data-tid="<%=item.seq%>" <%=(tid==item.seq) ? 'selected="selected"' : ''%>><%=item.title%></option>
                             <% }%>
                     <% } %>
                         </optgroup>

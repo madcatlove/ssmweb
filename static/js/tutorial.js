@@ -100,6 +100,11 @@ $(document).ready( function() {
        show: true
     });
 
+    $('.selectpicker').change( function(e) {
+        var current = $(this).find('option:selected');
+        window.location.href = '/tutorial/' + parseInt( current.attr('data-tid') );
+    })
+
 
 })
 
@@ -176,7 +181,7 @@ function procJudge( blocks_JSON, tid ) {
                         label: ' NEXT STEP ',
                         cssClass: 'btn-info',
                         action: function (dialog) {
-                            dialog.close();
+                            window.location.href = '/tutorial/' + globalParam.nextTid;
                         }
                     },
                 ] /* end button */

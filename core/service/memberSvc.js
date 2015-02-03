@@ -70,7 +70,6 @@ var service = {
 
         if( sess.hasOwnProperty('member') ) {
             delete sess.member;
-            sess.member = null;
         }
     },
 

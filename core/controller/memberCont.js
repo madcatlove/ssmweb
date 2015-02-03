@@ -2,7 +2,9 @@
  * Created by Lee on 2015-01-23.
  */
 var u = require('../Util');
-var memberService = require('../service/memberSvc');
+var memberService = require('../service/memberSvc'),
+    tutorialService = require('../service/tutorialSvc');
+var async = require('async');
 
 var controller = {
 
@@ -47,11 +49,34 @@ var controller = {
      */
     renderJoin : function(req, res) {
 
+        var memberSession = req.session.member;
         var opt = {
-            extraJS : ['member.js'], // 추가 JS 파일 (헤더에 인클루드됨)
+            extraJS : ['member.js'],
+            member : memberSession
         }
 
-        res.render('member_join', opt);
+
+        async.parallel({
+
+                /* 튜토리얼 챕터 리스트 가져옴 */
+                tutorialChapterList: function (_callback) {
+                    tutorialService.getTutorialChapterList(function (result) {
+                        _callback(null, result);
+                    })
+                }
+            },
+
+                /* 최종 콜백 */
+                function finalExec(err, result) {
+
+                    for( var o in result ) {
+                        opt[o] = result[o];
+                    }
+
+                    res.render('member_join', opt);
+                }
+        )
+
 
     },
 
