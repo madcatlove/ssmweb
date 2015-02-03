@@ -38,28 +38,23 @@ var service = {
 
             var extraInfo = JSON.parse(tutorial.extrainfo);
 
-
-            /**
-             * 데이터베이스의 블럭 정보( EX) 1,3,3)
-             * 데이터베이스의 추가 정보(시작점, 시퀀스, 사이즈 등)
-             * 포스트를 통하여 넘어온 데이터 정보
-             * 결과를 반환 해줄 콜백 메서드
-             */
-
             if (params.data.length != blockInfo.length) {
 
                 callback(['블럭의 갯수가 잘못되었습니다']);
 
             } else {
 
+                /**
+                 * 데이터베이스의 추가 정보(시작점, 순서, 사이즈 등)
+                 * 포스트를 통하여 넘어온 데이터 정보
+                 * 결과를 반환 해줄 콜백 메서드
+                 */
                 judge[chptSeq][probSeq](extraInfo, params.data, function (messages) {
 
                     /**
                      * 데이터베이스에 있는 튜토리얼의 블럭 정보의 개수와
                      * 넘어온 데이터의 블럭 개수가 일치하는지 확인한다.
                      */
-
-                    // 결과값이 있다면 기록.
                     if (messages) {
 
                         tutorialDA.markTutorialSuccess(params.member, params.jid, function (markResult) {
