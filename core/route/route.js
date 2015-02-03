@@ -6,7 +6,8 @@ var rMain = require('./main'),
     rTutorial = require('./tutorial'),
     rMember = require('./member'),
     rJudge = require('./judge'),
-    rBoard = require('./board');
+    rBoard = require('./board'),
+    errorController = require('../controller/errorCont');
 
 /**
  * 라우팅 정의 파일. ( 세세한 라우팅은 해당 파일이 가지고있다. )
@@ -20,6 +21,10 @@ var routeMapper = function(app) {
     app.use('/judge', rJudge);
     app.use('/board', rBoard);
 
+
+    // 에러 처리를 위한 미들웨어 & 컨트롤러
+    app.use( errorController.pageNotFoundHandler ); // 404 처리
+    app.use( errorController.errorHandler ); // 모든 에러 처리
 
 }
 

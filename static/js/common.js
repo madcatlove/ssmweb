@@ -14,12 +14,40 @@ var urlReq = (function() {
             cache: false,
             type: method,
             data: data
-        }).done( function(data) {
-            console.log(' final result => ' , data, typeof(data) )
-            if( typeof data === 'string')
-                data = JSON.parse(data);
+        })
+        .done( function(data, statusText, jqXHR ) {
+            console.log(' final result => ' , data, typeof(data) );
+            if( typeof data === 'string') {
+                try {
+                    data = JSON.parse(data);
+                }
+                catch(err) {
+                    data = {};
+                    console.log(' parse fail ');
+                }
+            }
+
+            //---------------------------------------
+            // HTTP Status Code 에 따른 데이터 덮어쓰기
+            //---------------------------------------
+            var statusCode = parseInt( jqXHR, 10);
+            if( statusCode >= 400 && statusCode < 500 ) {
+                data = {
+                    error: true,
+                    data: data.data || '사용권한이 없습니다'
+                }
+            }
+            else if( statusCode >= 500 && statusCode <= 550) {
+                data = {
+                    error : true,
+                    data: data.data || '내부서버 오류 발생'
+                }
+            }
 
             resultCallback(data);
+        })
+        .fail( function() {
+
         })
     }
 

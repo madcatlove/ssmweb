@@ -5,7 +5,7 @@
 var express = require('express'),
     router = express.Router(),
     assert = require('assert'),
-    util = require('../Util');
+    u = require('../Util');
 
 var tutorialController = require('../controller/tutorialCont');
 
@@ -13,13 +13,14 @@ var tutorialController = require('../controller/tutorialCont');
 router.use( function(req, res, next) {
     var sess = req.session;
 
-    console.log( req.originalUrl );
+    // console.log( req.originalUrl );
+    u.assert( sess.member, '사용 권한이 없습니다', 403, true);
 
     next();
 
 });
 router.use('/:tid([0-9]+)', function(req, res, next) {
-    util.assert( req.params.tid > 0 , '잘못된 접근', 403);
+    u.assert( req.params.tid > 0 , '잘못된 접근', 403);
     req.tid = parseInt( req.params.tid );
     next();
 });

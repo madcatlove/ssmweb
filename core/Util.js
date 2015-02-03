@@ -35,13 +35,13 @@ var utility = {
     },
 
 
-    assert : function( condition, message, errorCode ) {
+    assert : function( condition, message, errorCode, isExternal ) {
 
 
         if( !message ) message = 'Critical Error ! ';
 
         if( !condition || "undefined" === typeof condition) {
-            throw new this.error(message, errorCode );
+            throw new this.error(message, errorCode , isExternal );
         }
     },
 

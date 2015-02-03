@@ -53,7 +53,7 @@ app.use( redisConfig.errorHandler );
 
 
 //---------------------------
-// ROUTING ( 미들웨어 / 라우팅 )
+// 에러 도메인 처리
 //---------------------------
 app.use( require('express-domain-middleware') );
 app.use(function(req, res, next) {
@@ -68,54 +68,13 @@ app.use(function(req, res, next) {
         next(e);
     });
 });
+
+//---------------------------
+// 코어 라우팅 시작
+//---------------------------
 coreRoute(app);
 
 
-//---------------------------
-// 에러 핸들 미들웨어
-//---------------------------
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-
-// development error handler
-// will print stacktrace
-console.log( app.get('env') );
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        console.error(' //----- ERROR HANDLER ------// ');
-        console.error( err );
-        console.error( err.stack );
-
-
-        res.status(err.status || 500);
-
-        /* 에러에 eType 가 있고 internal 값을 가지고있으면 JSON 으로 렌더링 */
-        if( err.hasOwnProperty('eType') && err.eType == 'internal' ) {
-            res.json( u.result(err.message, true) );
-        }
-        /* 아니라면 에러 view 페이지로 렌더링 */
-        else {
-            res.render('error', {
-                message: err.message,
-                error: err
-            });
-        }
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
 
 
 module.exports = app;

@@ -17,9 +17,9 @@ var controller = {
                 'sblock/moveblock.js', 'threejs/three.js', 'threejs/OrbitControls.js',
                 'gl/sgl.js', 'tutorial.js',
                 'sblock/sblock.js',
-                'syntax/shCore.js', 'syntax/shAutoloader.js', 'syntax/shBrushCpp.js'],
+                'syntax/shCore.js', 'syntax/shAutoloader.js', 'syntax/shBrushCpp.js', 'metro.min.js'],
             extraCSS : ['blocks.css',
-                        'shCore.css', 'shThemeDefault.css'],
+                        'shCore.css', 'shThemeDefault.css', 'metro-bootstrap.min.css'],
             member : sess.member,
             tid : req.tid
         }
@@ -107,6 +107,7 @@ var controller = {
         })
 
     },
+
 
 }
 

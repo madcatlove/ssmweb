@@ -10,7 +10,7 @@
     width: 150px;
     height: auto;
     display: inline-block;
-    /* Box Shape */
+
     border: 0px solid #78c9ff;
     border-radius: 5px;
     background-color: #b9def0;
@@ -20,7 +20,7 @@
     padding-top: 2px;
     padding-bottom: 2px;
 
-    /* Box text */
+
     text-align: center;
     text-shadow: 2px 2px 1px white;
     font-weight: bold;
