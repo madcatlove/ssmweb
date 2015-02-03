@@ -11,7 +11,10 @@ var tutorialController = require('../controller/tutorialCont');
 
 /* Middleware */
 router.use( function(req, res, next) {
-    console.log( req.params );
+    var sess = req.session;
+
+    console.log( req.originalUrl );
+
     next();
 
 });
