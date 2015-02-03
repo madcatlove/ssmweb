@@ -74,8 +74,6 @@ sBoard.prototype.retriveData = function() {
 sBoard.prototype.refine = function() {
     var s = this.data;
 
-    console.log( 'data' , this.data );
-
 
     for(var i = 0; i < s.length; i++) {
         var item = s[i];
@@ -118,7 +116,7 @@ sBoard.prototype.render = function() {
     }
 
     //-- 모든 작업이 끝나면 아코디언을 닫은 상태로 바꾼다 --
-    $('button[data-seq]').click( function(e) {
+    $('button[data-seq][data-handleMode="newreply"]').click( function(e) {
         var dataSeq = $(this).attr('data-seq');
 
         $('#replyArticleModal h4 span').html('#' + dataSeq );
@@ -129,6 +127,23 @@ sBoard.prototype.render = function() {
            backdrop: 'static',
            show: true,
         });
+    })
+
+    $('button[data-seq][data-handleMode="remove"]').click( function(e) {
+        var current = $(this);
+
+        if( !confirm( current.attr('data-seq') + ' 게시글을 정말로 삭제하시겠습니까? ') ) return false;
+
+        urlReq.delete('/board/' + current.attr('data-seq'), {}, function(result) {
+            if( result.error ) {
+                alert( result.data );
+                return false;
+            }
+            else {
+                alert( current.attr('data-seq') + ' 게시글이 정상적으로 삭제되었습니다.');
+                window.location.reload();
+            }
+        })
     })
 
 }

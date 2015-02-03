@@ -28,9 +28,12 @@
                         </div>
                     </div>
 
-                    <div class="row text-right">
-                        <button data-toggle="collapse" data-target="#collapse${seq}">답변보기</button>
-                        <button data-seq="${seq}"> <span class="glyphicon glyphicon-folder-open"></span> 답변등록 </button>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button data-seq="${seq}" data-handleMode="remove"><span class="glyphicon glyphicon-remove"></span> 삭제</button>
+                            <button data-toggle="collapse" data-target="#collapse${seq}">답변보기</button>
+                            <button data-seq="${seq}" data-handleMode="newreply"> <span class="glyphicon glyphicon-folder-open"></span> 답변등록 </button>
+                        </div>
                     </div>
                 </div>
 
@@ -56,6 +59,12 @@
        <div class="row">
            <div class="col-md-12">
                ${content}
+           </div>
+
+           <div class="row">
+               <div class="col-md-12 text-right">
+                    <button data-seq="${seq}" data-handleMode="remove"><span class="glyphicon glyphicon-remove"></span> 삭제</button>
+               </div>
            </div>
        </div>
    </div>

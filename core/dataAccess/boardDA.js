@@ -115,6 +115,74 @@ var dataAccess = {
         })
     },
 
+    /**
+     * 시퀀스 번호를 통해 게시글을 가져옴.
+     * @param bid
+     * @param resultCallback
+     */
+    getArticleBySeq : function(bid, resultCallback) {
+
+        var queryStatement = 'SELECT * FROM qnaBoard WHERE seq = ?';
+
+        db.getConnection( function(conn) {
+            conn.query( queryStatement, [bid], function(err, result) {
+                if( err ) {
+                    console.error(' boardDA Error (getArticleBySeq)', err);
+                    throw u.error( err.message, 500);
+                }
+
+                resultCallback( result );
+
+                conn.release();
+            })
+        })
+
+    },
+
+    /**
+     * 주어진 시퀀스 번호에 해당하는 게시글 삭제
+     * @param bid
+     * @param resultCallback
+     */
+    removeArticleBySeq : function(bid, resultCallback) {
+        var queryStatement = 'DELETE FROM qnaBoard WHERE seq = ?';
+
+        db.getConnection( function(conn) {
+            conn.query( queryStatement, [bid], function(err, result) {
+                if(err) {
+                    console.error(' boardDA Error (removeArticleBySeq)', err);
+                    throw u.error(err.message, 500);
+                }
+
+                resultCallback(true);
+                conn.release();
+            })
+        })
+
+    },
+
+    /**
+     * 시퀀스 번호에 해당하는 부모글 , 그 부모글을 가지는 차일드 글 모두 삭제 ( 부모글 + 자식글 모두 삭제 )
+     * @param bid
+     * @param resultCallback
+     */
+    removeArticleParentAndChild : function(bid, resultCallback) {
+        var queryStatement = 'DELETE FROM qnaBoard WHERE seq = ? OR parentSeq = ?';
+
+        db.getConnection( function(conn) {
+            conn.query( queryStatement, [bid, bid], function(err, result) {
+                if(err) {
+                    console.error(' boardDA Error (removeArticleParentAndChild)', err);
+                    throw u.error(err.message, 500);
+                }
+                resultCallback(true);
+
+                conn.release();
+            })
+        })
+
+    }
+
 }
 
 

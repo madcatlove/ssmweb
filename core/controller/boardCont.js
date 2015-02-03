@@ -162,6 +162,15 @@ var controller = {
      * @param res
      */
     removeArticle : function(req, res) {
+        var sess = req.session;
+        var bid = req.bid;
+
+        u.assert( sess.member, '사용권한이 없습니다', 403);
+        u.assert( bid, ' 잘못된 접근 ', 403);
+
+        boardService.removeArticle(bid, sess.member, function(result) {
+            res.json( u.result(result) );
+        })
 
     },
 
