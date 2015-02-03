@@ -57,7 +57,10 @@ sBlock.prototype.toHTML = function() {
         height : ( parentWidth * blockImageRatio) + 'px'
     });
 
-    blockImage.append( $('<img />').attr('src', imageInfo.image) );
+    blockImage.append( $('<img />').attr('src', imageInfo.image).css({
+        'max-width' : '100%',
+        'max-height' : '100%'
+    }) );
     s.append( blockImage );
 
     /* 에디트 이미지 위치 */
@@ -70,6 +73,9 @@ sBlock.prototype.toHTML = function() {
     })
     editImage.append( $('<img />').attr({
         src : imageInfo.edit
+    }).css({
+        'max-width' : '100%',
+        'max-height' : '100%'
     }));
 
 
