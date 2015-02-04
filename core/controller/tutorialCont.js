@@ -13,7 +13,6 @@ var controller = {
 
         var opt = {
             extraJS : [
-                'member.js',
                 'sblock/moveblock.js', 'threejs/three.js', 'threejs/OrbitControls.js',
                 'gl/sgl.js', 'tutorial.js',
                 'sblock/sblock.js',

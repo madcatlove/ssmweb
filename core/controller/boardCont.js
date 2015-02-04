@@ -21,7 +21,7 @@ var controller = {
             member : memberSession,
             tid : req.tid,
             page : page,
-            extraJS : ['member.js', 'board.js']
+            extraJS : ['board.js']
         };
 
         async.waterfall([

@@ -51,7 +51,7 @@ var controller = {
 
         var memberSession = req.session.member;
         var opt = {
-            extraJS : ['member.js'],
+            extraJS : [],
             member : memberSession
         }
 
