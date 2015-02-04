@@ -1,19 +1,40 @@
 /******** 15단계 : Directional Light  ********/
+// light info.
+GLfloat diffuse0[]={0.0, 0.0, 1.0, 1.0}; // 마지막 파라미터가 1.0 이면 평행광
+GLfloat ambient0[]={0.0, 0.0, 1.0, 1.0};
+GLfloat specular0[]={0.0, 0.0, 1.0, 1.0};
+GLfloat light0_pos[]={-10.0, -10.0, -10.0, 1.0};
+GLfloat light0_direction[]={1.0,1.0,1.0};
+GLfloat lightConstant = 1.0;
 
 void Display()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glLoadIdentity();
-    glPushMatrix();
-    glTranslatef(3.0,0,0);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient0);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse0);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular0);
+    glLightfv(GL_LIGHT0, GL_CONSTANT_ATTENUNATION, lightConstant);
+    glLightfv(GL_LIGHT0, GL_DIRECTION, light0_direction);
+    glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);
+
+
+    // material
+    GLfloat ambient[] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat diffuse[] = {1.0, 0.8, 0.0, 1.0};
+    GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat shine = 100.0;
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, shine);
+
+    // default
     glutSolidCube(1);
-    glPushMatrix();
-    glTranslatef(3.0,0,0);
-    glutSolidCube(2);
-    glPopMatrix();
-    glTranslatef(0,0,-5);
-    glutSolidCube(5);
-    glPopMatrix();
 
     glFlush();
 }

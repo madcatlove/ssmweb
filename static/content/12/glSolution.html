@@ -2,18 +2,10 @@
 
 void Display()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glPushMatrix();
-    glTranslatef(3.0,0,0);
-    glutSolidCube(1);
-    glPushMatrix();
-    glTranslatef(3.0,0,0);
-    glutSolidCube(2);
-    glPopMatrix();
-    glTranslatef(0,0,-5);
-    glutSolidCube(5);
-    glPopMatrix();
-
-    glFlush();
+    gluPerspective(30,1,8,15);
+    glMatrixMode(GL_MODELVIEW);
+    glEnable(GL_DEPTH_TEST);
 }
+
