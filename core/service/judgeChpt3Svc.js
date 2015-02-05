@@ -8,8 +8,9 @@ var jUtils = require('../jUtils');
 var judgeChpt3 = {
 
     /**
-     * 8) 물체 이동 판정
-     * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
+     * 8) Translate
+     * 1. 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -19,9 +20,6 @@ var judgeChpt3 = {
 
         var seq = extraInfo.seq;
 
-        /**
-         * 입력 패러미터 비교 방식
-         */
         for (var i = 0 ; i < data.length ; i ++) {
 
             if (data[i].blockType != seq[i].bType) {
@@ -62,8 +60,9 @@ var judgeChpt3 = {
     },
 
     /**
-     * 9)  물체 회전 판정
-     * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
+     * 9) Rotate
+     * 1. 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -74,9 +73,6 @@ var judgeChpt3 = {
 
         var seq = extraInfo.seq;
 
-        /**
-         * 입력 패러미터 비교 방식
-         */
         for (var i = 0 ; i < data.length ; i ++) {
 
             if (data[i].blockType != seq[i].bType) {
@@ -128,8 +124,9 @@ var judgeChpt3 = {
     },
 
     /**
-     * 10) 물체 확대 판정
-     * 1. 입력 패러미터 비교 or 매트릭스 계산 후 비교
+     * 10) Scale
+     * 1. 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -182,7 +179,9 @@ var judgeChpt3 = {
     },
 
     /**
-     * 11) 푸시 팝 매트릭스 판정
+     * 11) Push, Pop
+     * 1. 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -239,8 +238,9 @@ var judgeChpt3 = {
     },
 
     /**
-     * 12) 펄스펙티브 카메라 판정
+     * 12) Perspective
      * 1. 입력 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -289,8 +289,9 @@ var judgeChpt3 = {
     },
 
     /**
-     * 13) 오쏘고날 카메라 판정
+     * 13) Orthogonal
      * 1. 입력 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -349,8 +350,9 @@ var judgeChpt3 = {
     },
 
     /**
-     * 14) 카메라 포지션 / 룩엣 판정
+     * 14) CamPos & LookAt
      * 1. 입력 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -426,8 +428,8 @@ var judgeChpt3 = {
     },
 
     /**
-     * 15) 디렉셔널 라이트
-     * @param blockInfo
+     * 15) Directional Light
+     * 1. 입력 패러미터 비교
      * @param extraInfo
      * @param data
      * @param callback
@@ -484,8 +486,8 @@ var judgeChpt3 = {
     },
 
     /**
-     * 16) 스팟 라이트
-     * @param blockInfo
+     * 15) Spot Light
+     * 1. 입력 패러미터 비교
      * @param extraInfo
      * @param data
      * @param callback

@@ -216,7 +216,7 @@ FBlock.TYPE.PERSPECTIVE = createFBlockInfo('Perspective', 10,'fov,aspect,near,fa
 FBlock.TYPE.ORTHOGRAPHIC = createFBlockInfo('Orthographic', 11, 'left,right,bottom,top,near,far', 'float,float,float,float,float,float', null);
 FBlock.TYPE.LOOKAT = createFBlockInfo('LookAt', 12, 'eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ', 'float,float,float,float,float,float,float,float,float', null);
 FBlock.TYPE.DIRECTIONALLIGHT = createFBlockInfo('DirectionalLight', 13, 'RGB,intensity,nx,ny,nz', 'hex,float,float,float,float', null);
-FBlock.TYPE.SPOTLIGHT = createFBlockInfo('SpotLight', 14, 'RGB,intensity,nx,ny,nz,angle,exponent', 'hex,float,float,float,float,float,float', null);
+FBlock.TYPE.SPOTLIGHT = createFBlockInfo('SpotLight', 14, 'RGB,intensity,x,y,z,nx,ny,nz,angle,exponent', 'hex,float,float,float,float,float,float', null);
 FBlock.TYPE.COLOR = createFBlockInfo('Color', 15, 'RGB', 'hex,', null);
 
 /**
@@ -254,11 +254,54 @@ var processingMapper = function( item ) {
     var data = item.data;
     switch( item.blockType ) {
         case 1 :
-            str = sFormat('line(?,?,?,?,?,?);', [data.x1, data.y1, data.z1, data.x2, data.y2, data.z2]);
+            str = sFormat('line(?,?,?,?,?,?);', [data.x1, -data.y1, data.z1, data.x2, -data.y2, data.z2]);
             break;
         case 2 :
+            str = sFormat('box(?,?,?);', [data.width, data.height, data.depth]);
             break;
-
+        case 3 :
+            str = sFormat('sphere(?);', [data.radius]);
+            str += sFormat('sphereDetail(?,?);', [data.ures, data.vres]);
+            break;
+        case 4 :
+            str = sFormat('pushMatrix();');
+            break;
+        case 5 :
+            str = sFormat('popMatrix();');
+            break;
+        case 6 :
+            str = sFormat('resetMatrix();');
+            break;
+        case 7 :
+            str = sFormat('translate(?,?,?);', [data.x, -data.y, data.z]);
+            break;
+        case 8 :
+           str = sFormat('rotate(?,?,?);', [data.theta, data.x, -data.y, data.z]);
+            break;
+        case 9 :
+            str = sFormat('scale(?,?,?);', [data.x, -data.y, data.z]);
+            break;
+        case 10 :
+            str = sFormat('perspective(?,?,?,?);', [data.fov, data.aspect, data.near, data.far]);
+            break;
+        case 11 :
+            str = sFormat('ortho(?,?,?,?,?,?);',[data.left, data.right, data.bottom, data.top, data.near, data.far]);
+            break;
+        case 12 :
+            str = sFormat('cameara(?,?,?,?,?,?,?,?,?);', [data.eyeX, -data.eyeY, data.eyeZ,
+                data.centerX, -data.centerY, data.centerZ, data.upX, -data.upY, data.upZ]);
+            break;
+        case 13 :
+            str = sFormat('directionalLight(?,?,?,?,?,?);', [(data.RGB & 0xFF0000) >> 4 , (data.RGB & 0x00FF00) >> 2,
+            data.RGB & 0x0000FF, data.nx, -data.ny, data.nz]);
+            break;
+        case 14 :
+            str = sFormat('spotLight(?,?,?,?,?,?,?,?,?,?,?);', [ (data.RGB & 0xFF0000) >> 4 , (data.RGB & 0x00FF00) >> 2,
+                data.RGB & 0x0000FF , data.x, -data.y, data.z, data.nx, -data.ny, data.nz, data.angle, data.exponent]);
+            break;
+        case 15 :
+            str = sFormat('color(?,?,?);',[(data.RGB & 0xFF0000) >> 4 , (data.RGB & 0x00FF00) >> 2, data.RGB & 0x0000FF]);
+            break;
     }
 
 

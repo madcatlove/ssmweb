@@ -62,8 +62,9 @@ var judgeChpt2 = {
     },
 
     /**
-     * 6) 직육면체 High 판정
-     * 1. 입력 패러미터 비교
+     * 6) 직육면체 High
+     * 1. 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
@@ -88,10 +89,10 @@ var judgeChpt2 = {
 
     },
 
-
     /**
-     * 7) 구 판정
-     * 1. 입력 패러미터 비교
+     * 7) 구 High
+     * 1. 패러미터 비교
+     * @param extraInfo
      * @param data
      * @param callback
      */
