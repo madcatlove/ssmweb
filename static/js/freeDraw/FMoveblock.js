@@ -33,8 +33,6 @@ function initMoveBlock( blockList, stackList ) {
             appendItemToStack( nBlockQuery  );
             enableStackItemDraggable( nBlockQuery );
 
-            //--- movedBlock 이벤트 날림 ----
-            $(document).trigger('movedBlock', {data : stackList} );
         }
     })
 
@@ -81,5 +79,20 @@ function initMoveBlock( blockList, stackList ) {
             } */
         })
     }
+
+
+    //---------------
+    // 이벤트 처리 ---
+    //---------------
+    $(document).on('blockModified', function(e) {
+        $(document).trigger('movedBlock', {data : stackList});
+    });
+
+    $(window).load( function() {
+        $(document).trigger('movedBlock', {data : []}); // 빈 이벤트
+    })
+
+
+
 
 }

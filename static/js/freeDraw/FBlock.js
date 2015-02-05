@@ -23,26 +23,82 @@ function FBlock( bType, seqNum ) {
 FBlock.prototype.toHTML = function() {
     var $blockDiv = $('<div />')
         .attr('data-blockSeq', this.seqNum)
-        .addClass('blockitem');
+        .addClass('blockitem')
+        .css('display', 'inline-block');
     this.blockQuery = $blockDiv;
 
 
+
+    // 이미지 추가
+    var parent = $('#blocklist').parent();
+    var parentWidth = parent.width() * 0.9,
+        parentHeight = parent.height();
+    var imageRatio = 153.0 / 549.0;
+    var editImageRatio = 128.0 / 153.0;
+
+    $blockDiv.css({
+        width: parentWidth+'px'
+    })
+    var imageInfo = this.blockExtraInfo.image;
+    var blockImageWrapper = $('<div />')
+        .css({
+            'position' : 'relative',
+            'display' : 'inline-block',
+            'z-index' : 2,
+            'width' : parentWidth + 'px',
+            'height' : (parentWidth * imageRatio) + 'px'
+        });
+
+    var blockImage = $('<img />')
+        .attr('src', '/static/images/freeblocks/' + imageInfo.image)
+        .attr('alt', this.blockName)
+        .css({
+            'max-width' : '100%',
+            'max-height' : '100%'
+        });
+
+    blockImageWrapper.append( blockImage );
+
+    $blockDiv.append( blockImageWrapper );
+
+
+    // 에디트 이미지가 존재한다면
+    var editImage;
+    if( imageInfo.edit ) {
+        var editImageWrapper = $('<div />').css({
+            'position' : 'absolute',
+            right : 0,
+            top : 0,
+            'z-index' : 3,
+            'height' : blockImageWrapper.height() + 'px',
+            'width' : (blockImageWrapper.height() * editImageRatio) + 'px'
+        });
+        editImage = $('<img />')
+            .attr('src', '/static/images/freeblocks/' + imageInfo.edit)
+            .attr('alt', this.blockName + 'edit')
+            .css({
+                'max-width' : '100%',
+                'max-height' : '100%'
+            });
+        editImageWrapper.append(editImage);
+        $blockDiv.append( editImageWrapper );
+    }
+
+
     // 파라메타 추가
-    $blockDiv.append( this.blockName );
     for( var i = 0; i < this.blockParam.length; i++) {
         var hiInput = $('<input />')
             .attr('type','hidden')
-            .attr('data-paramname', this.blockParam[i]);
+            .attr('data-paramname', this.blockParam[i])
+            .val('0');
         $blockDiv.append( hiInput );
     }
 
-    var btn = $('<button />')
-        .attr('data-blockbutton', true)
-        .html('Edit');
-    $blockDiv.append(btn);
-
-
-    this.buttonEvent(btn);
+    // 버튼 이벤트 추가.
+    if( imageInfo.edit ) {
+        editImage.attr('data-blockbutton',true);
+        this.buttonEvent( editImage );
+    }
 
     return this.blockQuery;
 }
@@ -113,7 +169,14 @@ FBlock.prototype.updateHiddenForm = function( container ) {
  * @param b( boolean )
  */
 FBlock.prototype.setButtonListen = function( b ) {
-    this.blockQuery.find('button').eq(0).attr('data-blockbutton', b);
+    var button = this.blockQuery.find('img[data-blockbutton]').eq(0).attr('data-blockbutton', b);
+    if( b ) {
+        button.hover(function() {
+            $(this).css({
+                'cursor' : 'pointer'
+            })
+        })
+    }
 }
 
 /**
@@ -175,7 +238,7 @@ FBlock.prototype.buttonEvent = function($btn, execFunc) {
                     cssClass: 'btn-warning',
                     action: function (dialog) {
                         self.updateHiddenForm(container);
-                        self.getProcessingCode();
+                        $(document).trigger('blockModified');
                         dialog.close();
                     }
                 }
@@ -189,9 +252,9 @@ FBlock.prototype.buttonEvent = function($btn, execFunc) {
  * 현재 블락의 정보를 프로세싱 코드로 리턴.
  */
 FBlock.prototype.getProcessingCode = function() {
-
-    console.log( this.toJSON() );
-
+    var t = processingMapper( this.toJSON() );
+    console.log( ' getProcessingCode ' , t );
+    return t;
 }
 
 
@@ -202,22 +265,128 @@ FBlock.prototype.getProcessingCode = function() {
 //--------------------------------------------
 //-------------- 블럭 타입 정의 ---------------
 //--------------------------------------------
+var extraInfo = {};
 FBlock.TYPE = {};
-FBlock.TYPE.DRAWLINE = createFBlockInfo('DrawLine', 1, 'x1,y1,z1,x2,y2,z2', 'float,float,float,float,float,float', null);
-FBlock.TYPE.DRAWBOX = createFBlockInfo('DrawBox', 2, 'width,height,depth', 'float,float,float', null);
-FBlock.TYPE.DRAWSPHERE = createFBlockInfo('DrawSphere', 3, 'radius,ures,vres','float,int,int', null);
-FBlock.TYPE.PUSHMATRIX = createFBlockInfo('PushMatrix', 4, [], [], null);
-FBlock.TYPE.POPMATRIX = createFBlockInfo('PopMatrix', 5, [], [], null);
-FBlock.TYPE.IDENTITYMATRIX = createFBlockInfo('IdentityMatrix', 6, [], [], null);
-FBlock.TYPE.TRANSLATE = createFBlockInfo('Translate', 7, 'x,y,z', 'float,float,float', null);
-FBlock.TYPE.ROTATE = createFBlockInfo('Rotate', 8, 'theta,x,y,z', 'float,float,float,float', null);
-FBlock.TYPE.SCALE = createFBlockInfo('Scale', 9, 'x,y,z', 'float,float,float', null);
-FBlock.TYPE.PERSPECTIVE = createFBlockInfo('Perspective', 10,'fov,aspect,near,far', 'float,float,float,float', null);
-FBlock.TYPE.ORTHOGRAPHIC = createFBlockInfo('Orthographic', 11, 'left,right,bottom,top,near,far', 'float,float,float,float,float,float', null);
-FBlock.TYPE.LOOKAT = createFBlockInfo('LookAt', 12, 'eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ', 'float,float,float,float,float,float,float,float,float', null);
-FBlock.TYPE.DIRECTIONALLIGHT = createFBlockInfo('DirectionalLight', 13, 'RGB,intensity,nx,ny,nz', 'hex,float,float,float,float', null);
-FBlock.TYPE.SPOTLIGHT = createFBlockInfo('SpotLight', 14, 'RGB,intensity,x,y,z,nx,ny,nz,angle,exponent', 'hex,float,float,float,float,float,float', null);
-FBlock.TYPE.COLOR = createFBlockInfo('Color', 15, 'RGB', 'hex,', null);
+
+extraInfo = {
+    image : {
+        image : 'draw/drawLine.png',
+        edit : 'draw/edit.png'
+    }
+}
+FBlock.TYPE.DRAWLINE = createFBlockInfo('DrawLine', 1, 'x1,y1,z1,x2,y2,z2', 'float,float,float,float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'draw/drawBox.png',
+        edit : 'draw/edit.png'
+    }
+}
+FBlock.TYPE.DRAWBOX = createFBlockInfo('DrawBox', 2, 'width,height,depth', 'float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'draw/drawSphere.png',
+        edit : 'draw/edit.png'
+    }
+}
+FBlock.TYPE.DRAWSPHERE = createFBlockInfo('DrawSphere', 3, 'radius,ures,vres','float,int,int', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'matrix/pushMatrix.png',
+        edit : null
+    }
+}
+FBlock.TYPE.PUSHMATRIX = createFBlockInfo('PushMatrix', 4, [], [], extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'matrix/popMatrix.png',
+        edit : null
+    }
+}
+FBlock.TYPE.POPMATRIX = createFBlockInfo('PopMatrix', 5, [], [], extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'matrix/identityMatrix.png',
+        edit : null
+    }
+}
+FBlock.TYPE.IDENTITYMATRIX = createFBlockInfo('IdentityMatrix', 6, [], [], extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'trans/translate.png',
+        edit : 'trans/edit.png'
+    }
+}
+FBlock.TYPE.TRANSLATE = createFBlockInfo('Translate', 7, 'x,y,z', 'float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'trans/rotate.png',
+        edit : 'trans/edit.png'
+    }
+}
+FBlock.TYPE.ROTATE = createFBlockInfo('Rotate', 8, 'theta,x,y,z', 'float,float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'trans/scale.png',
+        edit : 'trans/edit.png'
+    }
+}
+FBlock.TYPE.SCALE = createFBlockInfo('Scale', 9, 'x,y,z', 'float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'camera/perspective.png',
+        edit : 'camera/edit.png'
+    }
+}
+FBlock.TYPE.PERSPECTIVE = createFBlockInfo('Perspective', 10,'fov,aspect,near,far', 'float,float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'camera/orthogonal.png',
+        edit : 'camera/edit.png'
+    }
+}
+FBlock.TYPE.ORTHOGRAPHIC = createFBlockInfo('Orthographic', 11, 'left,right,bottom,top,near,far', 'float,float,float,float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'camera/lookAt.png',
+        edit : 'camera/edit.png'
+    }
+}
+FBlock.TYPE.LOOKAT = createFBlockInfo('LookAt', 12, 'eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ', 'float,float,float,float,float,float,float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'light/directionalLight.png',
+        edit : 'light/edit.png'
+    }
+}
+FBlock.TYPE.DIRECTIONALLIGHT = createFBlockInfo('DirectionalLight', 13, 'RGB,intensity,nx,ny,nz', 'hex,float,float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'light/spotLight.png',
+        edit : 'light/edit.png'
+    }
+}
+FBlock.TYPE.SPOTLIGHT = createFBlockInfo('SpotLight', 14, 'RGB,intensity,x,y,z,nx,ny,nz,angle,exponent', 'hex,float,float,float,float,float,float', extraInfo);
+
+extraInfo = {
+    image : {
+        image : 'color/color.png',
+        edit : 'color/edit.png'
+    }
+}
+FBlock.TYPE.COLOR = createFBlockInfo('Color', 15, 'RGB', 'hex,', extraInfo);
 
 /**
  * 블락 요소들을 객체로 리턴.
@@ -248,6 +417,10 @@ function createFBlockInfo( blockName, blockType , paramName, paramVariableType, 
 }
 
 
+
+//-----------------------------------
+// PROCESSING 함수와 매핑
+//-----------------------------------
 var processingMapper = function( item ) {
 
     var str = '';
@@ -292,21 +465,23 @@ var processingMapper = function( item ) {
                 data.centerX, -data.centerY, data.centerZ, data.upX, -data.upY, data.upZ]);
             break;
         case 13 :
-            str = sFormat('directionalLight(?,?,?,?,?,?);', [(data.RGB & 0xFF0000) >> 4 , (data.RGB & 0x00FF00) >> 2,
-            data.RGB & 0x0000FF, data.nx, -data.ny, data.nz]);
+            str = sFormat('directionalLight(?,?,?,?,?,?);', [(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
+            data.rgb & 0x0000FF, data.nx, -data.ny, data.nz]);
             break;
         case 14 :
-            str = sFormat('spotLight(?,?,?,?,?,?,?,?,?,?,?);', [ (data.RGB & 0xFF0000) >> 4 , (data.RGB & 0x00FF00) >> 2,
-                data.RGB & 0x0000FF , data.x, -data.y, data.z, data.nx, -data.ny, data.nz, data.angle, data.exponent]);
+            str = sFormat('spotLight(?,?,?,?,?,?,?,?,?,?,?);', [ (data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
+                data.rgb & 0x0000FF , data.x, -data.y, data.z, data.nx, -data.ny, data.nz, data.angle, data.exponent]);
             break;
         case 15 :
-            str = sFormat('color(?,?,?);',[(data.RGB & 0xFF0000) >> 4 , (data.RGB & 0x00FF00) >> 2, data.RGB & 0x0000FF]);
+            str = sFormat('color(?,?,?);',[(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8, data.rgb & 0x0000FF]);
             break;
     }
 
 
     /* 스트링 변환 */
     function sFormat(_str, dataArr) {
+        if( !dataArr ) return _str;
+
         for(var i = 0; i < dataArr.length; i++) {
             _str = _str.replace('?', dataArr[i]);
         }
