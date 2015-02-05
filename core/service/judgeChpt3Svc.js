@@ -69,40 +69,61 @@ var judgeChpt3 = {
      */
     rotate : function (  extraInfo, data, callback) {
 
-        var res = true;
 
-        var size = extraInfo.size;
-        var rotate = extraInfo.rotate;
+        var messages = [];
+
+        var seq = extraInfo.seq;
 
         /**
          * 입력 패러미터 비교 방식
          */
-        if (data[0].blockType == jUtils.DRAWBOX && data[1].blockType == jUtils.ROTATE) {
+        for (var i = 0 ; i < data.length ; i ++) {
 
-            var isProperBox = jMath.isEqualFloat([
-                [data[0].data.w, size.w],
-                [data[0].data.h, size.h],
-                [data[0].data.d, size.d]]);
+            if (data[i].blockType != seq[i].bType) {
 
-            var isProperRotate =  jMath.isEqualFloat([
-                [data[1].data.t, rotate.t],
-                [data[1].data.x, rotate.x],
-                [data[1].data.y, rotate.y],
-                [data[1].data.z, rotate.z]]);
-
-            if (!isProperBox || !isProperRotate) {
-
-                res = false;
+                messages.push(jUtils.MSG_WRONG_BLOCK_SEQ);
+                break;
 
             }
 
-        } else {
+            var cmpVals = [];
 
-            res = false;
+            if (data[i].blockType == jUtils.DRAWBOX) {
+
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+                cmpVals.push([seq[i].info.size, data[i].data.size]);
+
+            } else if (data[i].blockType == jUtils.TRANSLATE) {
+
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+
+            } else if (data[i].blockType == jUtils.ROTATE) {
+
+                cmpVals.push([seq[i].info.t, data[i].data.t]);
+                cmpVals.push([seq[i].info.x, data[i].data.x]);
+                cmpVals.push([seq[i].info.y, data[i].data.y]);
+                cmpVals.push([seq[i].info.z, data[i].data.z]);
+
+            } else if (data[i].blockType == jUtils.IDENTITYMATRIX) {
+
+                continue
+
+            }
+
+            if (!jMath.isEqualFloat(cmpVals)) {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                break;
+
+            }
 
         }
 
-        callback(res);
+        callback(messages);
 
     },
 
