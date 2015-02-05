@@ -134,7 +134,6 @@ dragDropBlockList.prototype.eventRun = function() {
 
     var trashAppend = function(item) {
         var $handler = ( $('ul', $trash).length ) ? $('div', $trash) : $("<div />").css('display','inline').appendTo($trash);
-
         item.appendTo( $handler );
     }
 
