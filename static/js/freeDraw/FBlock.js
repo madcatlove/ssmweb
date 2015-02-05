@@ -276,7 +276,7 @@ var processingMapper = function( item ) {
             str = sFormat('translate(?,?,?);', [data.x, -data.y, data.z]);
             break;
         case 8 :
-           str = sFormat('rotate(?,?,?);', [data.theta, data.x, -data.y, data.z]);
+           str = sFormat('rotate(?,?,?,?);', [data.theta, data.x, -data.y, data.z]);
             break;
         case 9 :
             str = sFormat('scale(?,?,?);', [data.x, -data.y, data.z]);
