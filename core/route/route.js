@@ -7,6 +7,7 @@ var rMain = require('./main'),
     rMember = require('./member'),
     rJudge = require('./judge'),
     rBoard = require('./board'),
+    rFreedraw = require('./freedraw'),
     errorController = require('../controller/errorCont');
 
 /**
@@ -20,6 +21,7 @@ var routeMapper = function(app) {
     app.use('/member', rMember);
     app.use('/judge', rJudge);
     app.use('/board', rBoard);
+    app.use('/freedraw', rFreedraw);
 
 
     // 에러 처리를 위한 미들웨어 & 컨트롤러

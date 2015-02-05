@@ -1,0 +1,279 @@
+import processing.opengl.*;
+
+Camera myCam;
+
+void setup() {
+  size(#_WIDTH_#, #_HEIGHT_#, OPENGL);
+  myCam = new Camera(1000, true);
+  myCam.setTarget( width/2, height/2, 100 );
+  noStroke();
+}
+
+
+
+/********************************************* Camera Start *********************************************/
+// the camera movement is combined here with mouse action
+void mouseDragged()
+{
+  if (mouseButton == LEFT)
+  {
+    myCam.mouseOrbit();
+  } else if (mouseButton == RIGHT)
+  {
+    myCam.mousePan();
+  } else if (mouseButton == CENTER)
+  {
+    myCam.mouseZoom();
+  }
+}
+
+void mouseScrolled(MouseEvent evt) {
+  //float e = evt.getCount();
+  //console.log( e );
+  //println(e);
+  //console.log(mouseScroll);
+  myCam.mouseZoom( mouseScroll * 7 );
+}
+
+class Camera
+{
+  float rotationSpeed = 0.01; // speed of rotation
+
+  float angleX, angleY, angleZ;
+  float currAngleX, currAngleY, currAngleZ;
+
+  float distance;
+  float currDistance;
+
+  float transX, transY, transZ;
+  float currTransX, currTransY, currTransZ;
+
+  boolean smoothOrbit = false;
+
+
+  // CONSTRUCTORS
+  Camera(float distance)
+  {
+    setDistance(distance);
+  }
+
+  Camera(float distance, boolean smoothMovement)
+  {
+    this(distance);
+    smooth();
+  }
+
+  //METHODS
+  void mouseOrbit()
+  {
+    float dx = mouseX -pmouseX;
+    float dy = mouseY -pmouseY;
+    orbit(dx, dy);
+  }
+
+  void mouseZoom()
+  {
+    float dy = mouseY -pmouseY;
+    this.setDistance(this.distance -dy);
+  }
+
+  void mouseZoom(float event)
+  {
+    float dy = -event*10;
+    this.setDistance(this.distance -dy);
+  }
+
+  void mousePan()
+  {
+    float dx = mouseX -pmouseX;
+    float dy = mouseY -pmouseY;
+    pan(dx, dy);
+  }
+
+  void pan(float dx, float dy)
+  {
+    this.transX += dx *cos(currAngleZ) ;//+dx*sin(currAngleX);
+    this.transY += -dx*sin(currAngleZ)  +dy * cos(currAngleX);
+    this.transZ += -dy *sin(currAngleX) ;
+  }
+
+  void orbit(float dx, float dy)
+  {
+    this.rotCamZ(-dx *rotationSpeed);
+    this.rotCamX(-dy *rotationSpeed);
+  }
+
+  void setTarget(float x, float y, float z)
+  {
+    transX = -x;
+    transY = -y;
+    transZ = -z;
+  }
+
+  void smooth()
+  {
+    smoothOrbit = true;
+  }
+
+  void noSmooth()
+  {
+    smoothOrbit = false;
+  }
+
+
+  void setDistance(float distance)
+  {
+    this.distance = distance;
+  }
+
+  void rotCamX(float angle)
+  {
+    angleX += angle;
+  }
+
+  void rotCamY(float angle)
+  {
+    angleY += angle;
+  }
+
+  void rotCamZ(float angle)
+  {
+    angleZ += angle;
+  }
+
+  /**
+   * applies the current camera settings
+   * call it in your draw method before any paint job
+   **/
+  void useCam()
+  {
+    if (smoothOrbit)
+    {
+      if (abs(currAngleX-angleX) > 0.01)
+        currAngleX += (angleX -currAngleX) /10.0 ;
+      if (abs(currAngleY-angleY) > 0.01)
+        currAngleY += (angleY -currAngleY) /10.0 ;
+      if (abs(currAngleZ-angleZ) > 0.01)
+        currAngleZ += (angleZ -currAngleZ) /10.0 ;
+
+      if (abs(currTransX-transX) > 0.01)
+        currTransX += (transX -currTransX) /10.0 ;
+      if (abs(currTransY-transY) > 0.01)
+        currTransY += (transY -currTransY) /10.0 ;
+      if (abs(currTransZ-transZ) > 0.01)
+        currTransZ += (transZ -currTransZ) /10.0 ;
+
+      if (abs(currDistance-distance) > 0.01)
+        currDistance += (distance -currDistance) /10.0 ;
+    } else
+    {
+      currAngleX = angleX;
+      currAngleY = angleY;
+      currAngleZ = angleZ;
+
+      currTransX = transX;
+      currTransY = transY;
+      currTransZ = transZ;
+
+      currDistance = distance;
+    }
+
+    camera(  0, 0, this.currDistance,
+    0, 0, 0,
+    0, 1, 0
+      );
+
+    rotateX(currAngleX);
+    rotateY(currAngleY);
+    rotateZ(currAngleZ);
+
+    translate(currTransX, currTransY, currTransZ);
+  }
+
+  float getAngleX()
+  {
+    return currAngleX;
+  }
+
+  float getAngleY()
+  {
+    return currAngleY;
+  }
+
+  float getAngleZ()
+  {
+    return currAngleZ;
+  }
+}
+/********************************************* Camera End *********************************************/
+void setupAxis() {
+  // X
+  stroke(255, 0, 0);
+  line(0, 0, 0, 100000, 0, 0);
+  stroke(50, 0, 0);
+  line(0, 0, 0, -100000, 0, 0);
+  // Y
+  stroke(0, 255, 0);
+  line(0, 0, 0, 0, -100000, 0);
+  stroke(0, 50, 0);
+  line(0, 0, 0, 0, 100000, 0);
+  // Z
+  stroke(0, 0, 255);
+  line(0, 0, 0, 0, 0, 100000);
+  stroke(0, 0, 100);
+  line(0, 0, 0, 0, 0, -100000);
+}
+
+
+
+
+void draw() {
+  //set up
+  myCam.useCam();
+  background(0);
+  translate(width/2, height/2);
+  setupAxis();
+  // Y coordinate *(-1)
+
+  //
+  //  // sphere
+  //  sphere(50);
+  //  sphereDetail(32,32);
+  //
+  //  // rotate
+  //  float  theta = 45.0;
+  //  float X = 0;
+  //  float Y = 1;
+  //  float Z = 0;
+  //  rotate(theta,X,-Y,Z);
+
+  //    // Directional Light
+  //    float r=0;
+  //    float g=0;
+  //    float b=255;
+  //    float nx=-1;
+  //    float ny=-1;
+  //    float nz=-1;
+  //    float intensity = 1.0;
+  //    directionalLight(r,g,b,nx,-ny,nz);
+  //    lightFalloff(intensity,0,0);
+  //    box(100);
+
+//  //Spot Light
+//  float r=0;
+//  float g=0;
+//  float b=255;
+//  float x =0;
+//  float y =0;
+//  float z =0;
+//  float nx=-1;
+//  float ny=-1;
+//  float nz=-1;
+//  float angle = 45.0;
+//  float concentration = 10.0;
+//  spotLight(r, g, b, x, -y, z,nx,-ny,nz, angle, concentration);
+//  box(100);
+
+  fill(255,0,255);
+  box(100);
+}

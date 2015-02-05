@@ -74,8 +74,7 @@ dragDropBlockList.prototype.eventRun = function() {
     //------------
     // item 움직일수 있게.
     $( 'div.blockitem' , $stack ).draggable({
-        //cancel: "a.ui-icon", // clicking an icon won't initiate dragging
-        revert: "invalid", // when not dropped, the item will revert back to its initial position
+        revert: "invalid",
         containment: "document",
         helper: "clone",
         cursor: "move"
