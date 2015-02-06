@@ -2490,13 +2490,13 @@ module.exports = function(options, undef) {
 module.exports = function(options, undef) {
 
   // FIXME: hack
-  var p = options.p;
+      var p = options.p;
 
-  /**
-   * PMatrix3D is a 4x4  matrix implementation. The constructor accepts another PMatrix3D or a list of six or sixteen float elements.
-   * If no parameters are provided the matrix is set to the identity matrix.
-   */
-  var PMatrix3D = function() {
+      /**
+       * PMatrix3D is a 4x4  matrix implementation. The constructor accepts another PMatrix3D or a list of six or sixteen float elements.
+       * If no parameters are provided the matrix is set to the identity matrix.
+       */
+      var PMatrix3D = function() {
     // When a matrix is created, it is set to an identity matrix
     this.reset();
   };

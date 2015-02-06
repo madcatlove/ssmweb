@@ -4,7 +4,7 @@ Camera myCam;
 boolean autoCamera = true;
 
 void setup() {
-  size(#_WIDTH_#, #_HEIGHT_#, OPENGL);
+  size(#_WIDTH_#, #_HEIGHT_#, WEBGL);
   myCam = new Camera(1000, true);
   myCam.setTarget( width/2, height/2, 100 );
   noStroke();
