@@ -89,10 +89,40 @@ function initMoveBlock( blockList, stackList ) {
     });
 
     $(window).load( function() {
-        $(document).trigger('movedBlock', {data : []}); // 빈 이벤트
+
+        // 슬롯 데이터 복구
+        if( slotData ) {
+            for(var i = 0; i < slotData.length; i++) {
+                var blockItem = recoverBlockdata( slotData[i], i );
+                if(!blockItem) continue;
+
+                var html = blockItem.toHTML();
+                blockItem.setButtonListen(true);
+                blockItem.injectData( slotData[i].data );
+
+                arrStackList.push( blockItem );
+                appendItemToStack( html );
+                enableStackItemDraggable( html );
+            }
+        }
+        $(document).trigger('movedBlock', {data : arrStackList}); // 빈 이벤트
     })
 
 
 
 
+}
+
+function recoverBlockdata( blockData , seq ) {
+    var typeList = FBlock.TYPE;
+
+    for( var key in typeList ) {
+        var s = typeList[key];
+
+        if(s.blockType == blockData.blockType ) {
+            return new FBlock(s, seq);
+        }
+    }
+
+    return null;
 }

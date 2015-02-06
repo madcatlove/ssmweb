@@ -257,6 +257,24 @@ FBlock.prototype.getProcessingCode = function() {
     return t;
 }
 
+FBlock.prototype.injectData = function( data ) {
+    var hiddenInput = $('input[type=hidden]', this.blockQuery);
+    var inputObjectManager = {};
+
+    for( var i = 0; i < hiddenInput.length; i++) {
+        var input = hiddenInput.eq(i);
+        inputObjectManager[ input.attr('data-paramname') ] = input;
+    }
+
+    // 데이터 주입 시작.
+    for( var dataKey in data ) {
+        var input = inputObjectManager[ dataKey ];
+        input.val( data[dataKey] );
+    }
+
+    return this;
+}
+
 
 
 

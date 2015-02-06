@@ -1,13 +1,11 @@
 
+//---- 블락 객체 담고있는 리스트 -----
+var arrBlockList = [];
+var arrStackList = [];
 
 $(document).ready( function() {
 
     var $blockList = $('#blocklist');
-
-    //---- 블락 객체 담고있는 리스트 -----
-    var arrBlockList = [];
-    var arrStackList = [];
-
 
     //----------- 블락 생성 -----------------
     var blockTypeList = Object.keys( FBlock.TYPE );
