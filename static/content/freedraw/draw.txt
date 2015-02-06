@@ -1,16 +1,12 @@
   //------- DEFAULT SETUP -----------
     // camera change setup
+    camera(width/2.0, height/2.0, (height/2.0) / tan(PI*60.0 / 360.0), width/2.0, height/2.0, 0, 0, 1, 0);
     if (autoCamera) {
       myCam.useCam();
     }
-    else {
-      beginCamera();
-      perspective();
-      camera();
-      endCamera();
-    }
   smooth();
   background(0);
+
   translate(width/2, height/2);
   pushMatrix();
   setupAxis();
