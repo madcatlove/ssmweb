@@ -1,6 +1,7 @@
 import processing.opengl.*;
 
 Camera myCam;
+boolean autoCamera = true;
 
 void setup() {
   size(#_WIDTH_#, #_HEIGHT_#, OPENGL);
@@ -33,6 +34,16 @@ void mouseScrolled(MouseEvent evt) {
   //println(e);
   //console.log(mouseScroll);
   myCam.mouseZoom( mouseScroll * 7 );
+}
+
+// Camera Change
+void keyPressed() {
+  if (key == 'C' || key == 'c') {
+    if (autoCamera)
+      autoCamera = false;
+    else
+      autoCamera = true;
+  }
 }
 
 class Camera
@@ -208,10 +219,13 @@ class Camera
 /********************************************* Camera End *********************************************/
 void setupAxis() {
   // X
-  stroke(255, 0, 0);
-  line(0, 0, 0, 100000, 0, 0);
-  stroke(50, 0, 0);
-  line(0, 0, 0, -100000, 0, 0);
+  stroke(255,0,0);
+  beginShape(LINES);
+  vertex(0,0,0);
+  vertex(10000,0,0);
+  endShape();
+  stroke(50,0,0);
+  line(0,0,0,-100000,0,0);
   // Y
   stroke(0, 255, 0);
   line(0, 0, 0, 0, -100000, 0);
