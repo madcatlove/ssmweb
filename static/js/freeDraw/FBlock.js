@@ -38,7 +38,7 @@ FBlock.prototype.toHTML = function() {
 
     $blockDiv.css({
         width: parentWidth+'px'
-    })
+    });
     var imageInfo = this.blockExtraInfo.image;
     var blockImageWrapper = $('<div />')
         .css({
@@ -101,7 +101,7 @@ FBlock.prototype.toHTML = function() {
     }
 
     return this.blockQuery;
-}
+};
 
 
 /**
@@ -110,7 +110,7 @@ FBlock.prototype.toHTML = function() {
  */
 FBlock.prototype.appendHTML = function( $jqTarget ) {
     $jqTarget.append( this.toHTML() );
-}
+};
 
 
 /**
@@ -124,7 +124,7 @@ FBlock.prototype.toJSON = function() {
     // 데이터 긁어옴.
     $('input', this.blockQuery).each( function(idx) {
         valueList.push( $(this).val() );
-    })
+    });
 
     // 매핑.
     for(var i = 0; i < this.blockParam.length; i++) {
@@ -138,7 +138,7 @@ FBlock.prototype.toJSON = function() {
         blockParam : this.blockParam,
         data : data
     }
-}
+};
 
 /**
  * 모달창에서 받은 값을 히든폼에 업데이트.
@@ -153,7 +153,7 @@ FBlock.prototype.updateHiddenForm = function( container ) {
     hiddenInput.each( function() {
         var currentInput = $(this);
         hiddenInputObj[ currentInput.attr('data-paramname') ] = currentInput;
-    })
+    });
 
     // 컨테이너 인풋값으로 업데이트.
     input.each( function() {
@@ -162,7 +162,7 @@ FBlock.prototype.updateHiddenForm = function( container ) {
         hInput.val( currentInput.val() );
     })
 
-}
+};
 
 /**
  * 에딧 버튼 작동 여부 설정
@@ -177,7 +177,7 @@ FBlock.prototype.setButtonListen = function( b ) {
             })
         })
     }
-}
+};
 
 /**
  * 버튼 이벤트 리스너 등록
@@ -476,22 +476,27 @@ var processingMapper = function( item ) {
             str = sFormat('scale(?,?,?);', [data.x, -data.y, data.z]);
             break;
         case 10 :
-            str = sFormat('perspective(?,?,?,?);', [data.fov, data.aspect, data.near, data.far]);
+            str = sFormat('perspective(?,width/height,?,?);', [data.fov, data.aspect, data.near, data.far]);
+            //  perspective(PI/3.0, width/height, cameraZ/10.0, cameraZ*10.0) where cameraZ is ((height/2.0) / tan(PI*60.0/360.0));.
             break;
         case 11 :
             str = sFormat('ortho(?,?,?,?,?,?);',[data.left, data.right, data.bottom, data.top, data.near, data.far]);
+            // ortho(0, width, 0, height, -10, 10).
             break;
         case 12 :
-            str = sFormat('camera(?,?,?,?,?,?,?,?,?);', [data.eyex, -data.eyey, data.eyez,
-                data.centerx, -data.centery, data.centerz, data.upx, -data.upy, data.upz]);
+            str = sFormat('camera(?,?,?,width/2,height/2,?,?,?,?);', [data.eyex, -data.eyey, data.eyez,
+                 data.centerz, data.upx, -data.upy, data.upz]);
+            // camera(width/2.0, height/2.0, (height/2.0) / tan(PI*60.0 / 360.0), width/2.0, height/2.0, 0, 0, 1, 0);
             break;
         case 13 :
             str = sFormat('directionalLight(?,?,?,?,?,?);', [(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
             data.rgb & 0x0000FF, data.nx, -data.ny, data.nz]);
+            str += sFormat('lightFalloff(?, 0.0, 0.0);', [data.intensity]);
             break;
         case 14 :
             str = sFormat('spotLight(?,?,?,?,?,?,?,?,?,?,?);', [ (data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
                 data.rgb & 0x0000FF , data.x, -data.y, data.z, data.nx, -data.ny, data.nz, data.angle, data.exponent]);
+            str += sFormat('lightFalloff(?, 0.0, 0.0);', [data.intensity]);
             break;
         case 15 :
             str = sFormat('fill(?,?,?);',[(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8, data.rgb & 0x0000FF]);

@@ -1,19 +1,23 @@
 import processing.opengl.*;
 
 Camera myCam;
-boolean autoCamera = true;
+boolean autoCamera = false;
+float VIEW_WIDTH;
+float VIEW_HEIGHT;
 
 void setup() {
-  size(#_WIDTH_#, #_HEIGHT_#, P3D);
-
-  myCam = new Camera(200, true);
-  myCam.setTarget( width/2, height/2, 100 );
+  VIEW_WIDTH = #_WIDTH_#;
+  VIEW_HEIGHT = #_HEIGHT_#;
+  size(VIEW_WIDTH, VIEW_HEIGHT, P3D);
+  myCam = new Camera(50, true);
+  myCam.setTarget( VIEW_WIDTH/2, VIEW_HEIGHT/2-150, 300 );
 }
 
 
 
 /********************************************* Camera Start *********************************************/
 // the camera movement is combined here with mouse action
+
 void mouseDragged()
 {
   if (mouseButton == LEFT)
@@ -29,20 +33,18 @@ void mouseDragged()
 }
 
 void mouseScrolled(MouseEvent evt) {
-  //float e = evt.getCount();
-  //console.log( e );
-  //println(e);
-  //console.log(mouseScroll);
   myCam.mouseZoom( mouseScroll * 7 );
 }
 
-// Camera Change
+// Camera change
 void keyPressed() {
   if (key == 'C' || key == 'c') {
-    if (autoCamera)
+    if (autoCamera){
       autoCamera = false;
-    else
+      }
+    else{
       autoCamera = true;
+     }
   }
 }
 
@@ -219,26 +221,26 @@ class Camera
 }
 /********************************************* Camera End *********************************************/
 void setupAxis() {
-noStroke();
+  noStroke();
   fill(255,0,0);
-  box(10000,1,1);
+  box(10000,0.5,0.5);
   fill(200,0,0);
   pushMatrix();
-  translate(50,0,0);
+  translate(25,0,0);
   box(10);
   popMatrix();
 
   fill(0,255,0);
-  box(1,10000,1);
+  box(0.5,10000,0.5);
   pushMatrix();
-  translate(0,-50,0);
+  translate(0,-25,0);
   box(10);
   popMatrix();
 
   fill(0,0,255);
-  box(1,1,10000);
+  box(0.5,0.5,10000);
   pushMatrix();
-  translate(0,0,-50);
+  translate(0,0,25);
   box(10);
   popMatrix();
   fill(255);
