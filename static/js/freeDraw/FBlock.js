@@ -473,10 +473,12 @@ var processingMapper = function( item ) {
         case 13 :
             str = sFormat('directionalLight(?,?,?,?,?,?);', [(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
             data.rgb & 0x0000FF, data.nx, -data.ny, data.nz]);
+            str += sFormat('lightFalloff(?, 0.0, 0.0', [data.intensity]);
             break;
         case 14 :
             str = sFormat('spotLight(?,?,?,?,?,?,?,?,?,?,?);', [ (data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
                 data.rgb & 0x0000FF , data.x, -data.y, data.z, data.nx, -data.ny, data.nz, data.angle, data.exponent]);
+            str += sFormat('lightFalloff(?, 0.0, 0.0', [data.intensity]);
             break;
         case 15 :
             str = sFormat('fill(?,?,?);',[(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8, data.rgb & 0x0000FF]);
