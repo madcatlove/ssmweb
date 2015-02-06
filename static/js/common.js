@@ -118,6 +118,12 @@ $(document).ready( function() {
     if( /tutorial/i.test(pathName) ) {
         $navMenu.eq(1).addClass('active');
     }
+    else if( /freedraw/i.test(pathName) ) {
+        $navMenu.eq(2).addClass('active');
+    }
+    else if( /gallery/i.test(pathName) ) {
+        $navMenu.eq(3).addClass('active');
+    }
     else {
         $navMenu.eq(0).addClass('active');
     }
