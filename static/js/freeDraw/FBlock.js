@@ -464,8 +464,8 @@ var processingMapper = function( item ) {
             str = sFormat('ortho(?,?,?,?,?,?);',[data.left, data.right, data.bottom, data.top, data.near, data.far]);
             break;
         case 12 :
-            str = sFormat('cameara(?,?,?,?,?,?,?,?,?);', [data.eyeX, -data.eyeY, data.eyeZ,
-                data.centerX, -data.centerY, data.centerZ, data.upX, -data.upY, data.upZ]);
+            str = sFormat('camera(?,?,?,?,?,?,?,?,?);', [data.eyex, -data.eyey, data.eyez,
+                data.centerx, -data.centery, data.centerz, data.upx, -data.upy, data.upz]);
             break;
         case 13 :
             str = sFormat('directionalLight(?,?,?,?,?,?);', [(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
