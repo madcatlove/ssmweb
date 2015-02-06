@@ -15864,6 +15864,7 @@ module.exports = function setupParser(Processing, options) {
     DrawingShared.prototype.stroke = function() {
       var color = p.color.apply(this, arguments);
       if(color === currentStrokeColor && doStroke) {
+        //console.log(' 여기 진입 ');
         return;
       }
       doStroke = true;
@@ -15876,8 +15877,11 @@ module.exports = function setupParser(Processing, options) {
     };
 
     Drawing3D.prototype.stroke = function() {
+      //console.log(' 색 색 ');
       DrawingShared.prototype.stroke.apply(this, arguments);
+      //console.log( currentStrokeColor , '뭔색');
       strokeStyle = p.color.toGLArray(currentStrokeColor);
+
     };
 
     function executeContextStroke() {

@@ -219,11 +219,13 @@ class Camera
 /********************************************* Camera End *********************************************/
 void setupAxis() {
   // X
-  stroke(255,0,0);
+    colorMode(HSB);
+  stroke(255, 0,0);
   beginShape(LINES);
   vertex(0,0,0);
   vertex(10000,0,0);
   endShape();
+
   stroke(50,0,0);
   line(0,0,0,-100000,0,0);
   // Y
