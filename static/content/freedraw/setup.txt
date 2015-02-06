@@ -16,7 +16,6 @@ void setup() {
 // the camera movement is combined here with mouse action
 void mouseDragged()
 {
-
   if (mouseButton == LEFT)
   {
     myCam.mouseOrbit();
@@ -28,7 +27,6 @@ void mouseDragged()
     myCam.mouseZoom();
   }
 }
-
 
 void mouseScrolled(MouseEvent evt) {
   //float e = evt.getCount();
@@ -87,7 +85,6 @@ class Camera
 
   void mouseZoom()
   {
-    console.log( mouseY, pmouseY);
     float dy = mouseY -pmouseY;
     this.setDistance(this.distance -dy);
   }
@@ -244,9 +241,6 @@ noStroke();
   translate(0,0,-50);
   box(10);
   popMatrix();
+  fill(255);
 }
 
-/****************************** touch ************************************************/
-void touchStart(TouchEvent touchEvent) {
-    box(100);
-}
