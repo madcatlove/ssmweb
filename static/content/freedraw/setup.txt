@@ -2,7 +2,7 @@ import processing.opengl.*;
 
 Camera myCam;
 boolean autoCamera = false;
-float VIEW_WIDHT;
+float VIEW_WIDTH;
 float VIEW_HEIGHT;
 
 void setup() {
@@ -10,7 +10,7 @@ void setup() {
   VIEW_HEIGHT = #_HEIGHT_#;
   size(VIEW_WIDTH, VIEW_HEIGHT, P3D);
   myCam = new Camera(50, true);
-  myCam.setTarget( VIEW_WIDTH/2, VIEW_HEIGHT/2, 250 );
+  myCam.setTarget( VIEW_WIDTH/2, VIEW_HEIGHT/2-150, 300 );
 }
 
 
