@@ -84,21 +84,23 @@ var doRender = function(stackList) {
 
 
     /* 셋업 파일 불러옴 */
-    $.get('/static/content/freedraw/setup.txt').done( function( setupData ) {
+    $.get('/static/content/freedraw/setup.txt', {data: Math.random()} ).done( function( setupData ) {
 
         /* 드로우 함수 내부 구현 불러옴 */
-        $.get('/static/content/freedraw/draw.txt').done( function( drawData) {
+        $.get('/static/content/freedraw/draw.txt', {data: Math.random()}).done( function( drawData) {
 
             // 셋업 데이터 치환
-            setupData = setupData.replace('#_WIDTH_#', $renderParent.width() );
-            setupData = setupData.replace('#_HEIGHT_#', $renderParent.height() );
-            executableCode += setupData;
+            setupData = setupData.replace( /#_WIDTH_#/gi, $renderParent.width() );
+            setupData = setupData.replace( /#_HEIGHT_#/gi, $renderParent.height() );
+            executableCode = setupData;
 
             // 드로우 시작.
             executableCode += 'void draw() { ';
             executableCode += drawData; // 초기설정 데이터.
             executableCode += drawListCode; // 사용자 리스트
             executableCode += '}';
+
+            //console.log( executableCode );
 
             //console.log( executableCode );
 

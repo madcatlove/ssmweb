@@ -2490,13 +2490,13 @@ module.exports = function(options, undef) {
 module.exports = function(options, undef) {
 
   // FIXME: hack
-      var p = options.p;
+  var p = options.p;
 
-      /**
-       * PMatrix3D is a 4x4  matrix implementation. The constructor accepts another PMatrix3D or a list of six or sixteen float elements.
-       * If no parameters are provided the matrix is set to the identity matrix.
-       */
-      var PMatrix3D = function() {
+  /**
+   * PMatrix3D is a 4x4  matrix implementation. The constructor accepts another PMatrix3D or a list of six or sixteen float elements.
+   * If no parameters are provided the matrix is set to the identity matrix.
+   */
+  var PMatrix3D = function() {
     // When a matrix is created, it is set to an identity matrix
     this.reset();
   };
@@ -7639,12 +7639,8 @@ module.exports = function withTouch(p, curElement, attachEventHandler, document,
   };
 
   // Support Gecko and non-Gecko scroll events
-  //attachEventHandler(document, 'DOMMouseScroll', mouseWheelHandler);
-  //attachEventHandler(document, 'mousewheel', mouseWheelHandler);
-
-    var viewPort = document.getElementById('canvasRender');
-   attachEventHandler(viewPort, 'DOMMouseScroll', mouseWheelHandler);
-   attachEventHandler(viewPort, 'mousewheel', mouseWheelHandler);
+  attachEventHandler(document, 'DOMMouseScroll', mouseWheelHandler);
+  attachEventHandler(document, 'mousewheel', mouseWheelHandler);
 
 };
 
@@ -9814,7 +9810,7 @@ module.exports = function setupParser(Processing, options) {
         lastPressedKeyCode = null,
         codedKeys = [ PConstants.SHIFT, PConstants.CONTROL, PConstants.ALT, PConstants.CAPSLK, PConstants.PGUP, PConstants.PGDN,
                       PConstants.END, PConstants.HOME, PConstants.LEFT, PConstants.UP, PConstants.RIGHT, PConstants.DOWN, PConstants.NUMLK,
-                      PConstants.INSERT, PConstants.F1, PConstants.F2, PConstants.F3, PConstants.F4, /*PConstants.F5,*/ PConstants.F6, PConstants.F7,
+                      PConstants.INSERT, PConstants.F1, PConstants.F2, PConstants.F3, PConstants.F4, PConstants.F5, PConstants.F6, PConstants.F7,
                       PConstants.F8, PConstants.F9, PConstants.F10, PConstants.F11, PConstants.F12, PConstants.META ];
 
     // User can only have MAX_LIGHTS lights
@@ -15864,7 +15860,6 @@ module.exports = function setupParser(Processing, options) {
     DrawingShared.prototype.stroke = function() {
       var color = p.color.apply(this, arguments);
       if(color === currentStrokeColor && doStroke) {
-        //console.log(' 여기 진입 ');
         return;
       }
       doStroke = true;
@@ -15877,10 +15872,9 @@ module.exports = function setupParser(Processing, options) {
     };
 
     Drawing3D.prototype.stroke = function() {
-      //console.log(' 색 색 ');
       DrawingShared.prototype.stroke.apply(this, arguments);
-      //console.log( currentStrokeColor , '뭔색');
       strokeStyle = p.color.toGLArray(currentStrokeColor);
+        console.log( ' stroke style ' , strokeStyle );
 
     };
 
@@ -15901,8 +15895,8 @@ module.exports = function setupParser(Processing, options) {
      * @see #stroke()
      */
     p.noStroke = function() {
-      doStroke = false;
-    };
+          doStroke = false;
+      };
 
     /**
      * The strokeWeight() function sets the width of the stroke used for lines, points, and the border around shapes.
