@@ -473,7 +473,7 @@ var processingMapper = function( item ) {
                 data.rgb & 0x0000FF , data.x, -data.y, data.z, data.nx, -data.ny, data.nz, data.angle, data.exponent]);
             break;
         case 15 :
-            str = sFormat('color(?,?,?);',[(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8, data.rgb & 0x0000FF]);
+            str = sFormat('fill(?,?,?);',[(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8, data.rgb & 0x0000FF]);
             break;
     }
 
