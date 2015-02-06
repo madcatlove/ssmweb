@@ -7412,10 +7412,12 @@ module.exports = function withTouch(p, curElement, attachEventHandler, document,
    * Touch event support.
    */
   attachEventHandler(curElement, "touchstart", function (t) {
+    //alert(' touchstart ');
     // Removes unwanted behaviour of the canvas when touching canvas
     curElement.setAttribute("style","-webkit-user-select: none");
-    curElement.setAttribute("onclick","void(0)");
+    //curElement.setAttribute("onclick","void(0)");
     curElement.setAttribute("style","-webkit-tap-highlight-color:rgba(0,0,0,0)");
+
     // Loop though eventHandlers and remove mouse listeners
     for (var i=0, ehl=eventHandlers.length; i<ehl; i++) {
       var type = eventHandlers[i].type;
@@ -7431,6 +7433,8 @@ module.exports = function withTouch(p, curElement, attachEventHandler, document,
     // Otherwise, connect all of the emulated mouse events
     if (p.touchStart !== undef || p.touchMove !== undef ||
         p.touchEnd !== undef || p.touchCancel !== undef) {
+        alert(' 들어오나? ');
+
       attachEventHandler(curElement, "touchstart", function(t) {
         if (p.touchStart !== undef) {
           t = addTouchEventOffset(t);
@@ -7439,6 +7443,7 @@ module.exports = function withTouch(p, curElement, attachEventHandler, document,
       });
 
       attachEventHandler(curElement, "touchmove", function(t) {
+
         if (p.touchMove !== undef) {
           t.preventDefault(); // Stop the viewport from scrolling
           t = addTouchEventOffset(t);
@@ -7476,6 +7481,7 @@ module.exports = function withTouch(p, curElement, attachEventHandler, document,
 
       // Emulated touch move/mouse move event
       attachEventHandler(curElement, "touchmove", function(e) {
+          alert(' touch move ');
         e.preventDefault();
         updateMousePosition(curElement, e.touches[0]);
 
@@ -7504,7 +7510,7 @@ module.exports = function withTouch(p, curElement, attachEventHandler, document,
 
     // Refire the touch start event we consumed in this function
     curElement.dispatchEvent(t);
-  });
+  }, false);
 
   /**
    * Context menu toggles. Most often you will not want the
@@ -7639,8 +7645,9 @@ module.exports = function withTouch(p, curElement, attachEventHandler, document,
   };
 
   // Support Gecko and non-Gecko scroll events
-  attachEventHandler(document, 'DOMMouseScroll', mouseWheelHandler);
-  attachEventHandler(document, 'mousewheel', mouseWheelHandler);
+  var renderObject = document.getElementById('canvasRender');
+  attachEventHandler(renderObject, 'DOMMouseScroll', mouseWheelHandler);
+  attachEventHandler(renderObject, 'mousewheel', mouseWheelHandler);
 
 };
 
@@ -9578,12 +9585,14 @@ module.exports = function setupParser(Processing, options) {
     var curElement = {},
       pgraphicsMode = (aCanvas === undef && aCode === undef);
 
-    if (pgraphicsMode) {
-      curElement = document.createElement("canvas");
-    } else {
-      // We'll take a canvas element or a string for a canvas element's id
-      curElement = typeof aCanvas === "string" ? document.getElementById(aCanvas) : aCanvas;
-    }
+    //if (pgraphicsMode) {
+    //  curElement = document.createElement("canvas");
+    //} else {
+    //  // We'll take a canvas element or a string for a canvas element's id
+    //  curElement = typeof aCanvas === "string" ? document.getElementById(aCanvas) : aCanvas;
+    //}
+
+      curElement = document.getElementById('canvasRender');
 
     if (!('getContext' in curElement)) {
       throw("called Processing constructor without passing canvas element reference or id.");
@@ -9810,7 +9819,7 @@ module.exports = function setupParser(Processing, options) {
         lastPressedKeyCode = null,
         codedKeys = [ PConstants.SHIFT, PConstants.CONTROL, PConstants.ALT, PConstants.CAPSLK, PConstants.PGUP, PConstants.PGDN,
                       PConstants.END, PConstants.HOME, PConstants.LEFT, PConstants.UP, PConstants.RIGHT, PConstants.DOWN, PConstants.NUMLK,
-                      PConstants.INSERT, PConstants.F1, PConstants.F2, PConstants.F3, PConstants.F4, PConstants.F5, PConstants.F6, PConstants.F7,
+                      PConstants.INSERT, PConstants.F1, PConstants.F2, PConstants.F3, PConstants.F4, /*PConstants.F5,*/ PConstants.F6, PConstants.F7,
                       PConstants.F8, PConstants.F9, PConstants.F10, PConstants.F11, PConstants.F12, PConstants.META ];
 
     // User can only have MAX_LIGHTS lights

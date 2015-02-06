@@ -16,6 +16,7 @@ void setup() {
 // the camera movement is combined here with mouse action
 void mouseDragged()
 {
+
   if (mouseButton == LEFT)
   {
     myCam.mouseOrbit();
@@ -27,6 +28,7 @@ void mouseDragged()
     myCam.mouseZoom();
   }
 }
+
 
 void mouseScrolled(MouseEvent evt) {
   //float e = evt.getCount();
@@ -85,6 +87,7 @@ class Camera
 
   void mouseZoom()
   {
+    console.log( mouseY, pmouseY);
     float dy = mouseY -pmouseY;
     this.setDistance(this.distance -dy);
   }
@@ -244,17 +247,6 @@ noStroke();
 }
 
 /****************************** touch ************************************************/
-void touchMove(TouchEvent touchEvent) {
-  // empty the canvas
-  noStroke();
-  fill(255);
-  rect(0, 0, 400, 300);
-
-  // draw circles at where fingers touch
-  fill(180, 180, 100);
-  for (int i = 0; i < touchEvent.touches.length; i++) {
-    int x = touchEvent.touches[i].offsetX;
-    int y = touchEvent.touches[i].offsetY;
-    ellipse(x, y, 50, 50);
-  }
+void touchStart(TouchEvent touchEvent) {
+    box(100);
 }

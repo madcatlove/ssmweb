@@ -36,23 +36,6 @@ $(document).ready( function() {
     })
 
 
-    $('#canvasRender').bind('mousewheel DOMMouseScroll', function(e) {
-        var scrollTo = null;
-
-        if (e.type == 'mousewheel') {
-            scrollTo = (e.originalEvent.wheelDelta * -1);
-        }
-        else if (e.type == 'DOMMouseScroll') {
-            scrollTo = 40 * e.originalEvent.detail;
-        }
-
-        if (scrollTo) {
-            e.preventDefault();
-            $(this).scrollTop(scrollTo + $(this).scrollTop());
-        }
-    });
-
-
 });
 
 
@@ -108,8 +91,22 @@ var doRender = function(stackList) {
             if( isCanvas.length ) {
                 isCanvas.remove();
             }
+
+
+            /**
+             * ontouchstart="touchStart(event);"
+             ontouchmove="touchMove(event);"
+             ontouchend="touchEnd(event);"
+             ontouchcancel="touchCancel(event);"
+             * @type {*|jQuery}
+             */
             var sCanvas = $('<canvas />').attr('id', 'canvasRender');
+                sCanvas.attr('ontouchstart', 'touchStart(event);')
+                    .attr('ontouchmove', 'touchMove(event);')
+                    .attr('ontouchend', 'touchEnd(event);')
+                    .attr('ontouchcancel', 'touchCancel(event);');
             $('#srender').append( sCanvas );
+            wheelEventLocker();
 
             var p = new Processing( sCanvas.get(0), executableCode );
 
@@ -121,3 +118,34 @@ var doRender = function(stackList) {
 
     })
 }
+
+
+var wheelEventLocker = function() {
+    $('#canvasRender').bind('mousewheel DOMMouseScroll', function (e) {
+        var scrollTo = null;
+
+        if (e.type == 'mousewheel') {
+            scrollTo = (e.originalEvent.wheelDelta * -1);
+        }
+        else if (e.type == 'DOMMouseScroll') {
+            scrollTo = 40 * e.originalEvent.detail;
+        }
+
+        if (scrollTo) {
+            e.preventDefault();
+            $(this).scrollTop(scrollTo + $(this).scrollTop());
+        }
+    });
+
+    /*$('#canvasRender').bind('touchstart touchmove', function(e) {
+        alert( $(this) );
+    })*/
+
+
+}
+
+
+
+
+//----------------------------------
+// PROCESSING EVENT
