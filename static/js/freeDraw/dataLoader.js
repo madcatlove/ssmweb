@@ -105,6 +105,17 @@ function blockDataSaver() {
                     for(var i = 0; i < blockData.length; i++) {
                         var item = blockData[i];
 
+                        //---- 아이템 이름 긁어옴 ------
+                        var blockNameList = [];
+                        var dataParse = JSON.parse(item.data);
+                        for(var j = 0; dataParse && j < dataParse.length; j++) {
+                            var eachItem = dataParse[j];
+                            blockNameList.push( eachItem.blockName );
+                        }
+                        item.blockInfoStr = blockNameList.join(', ');
+                        if( item.blockInfoStr.length > 20 ) item.blockInfoStr = item.blockInfoStr.substring(0, 20) + ' ... ';
+                        //---- //아이템 이름 긁어옴 ------
+
                         var rowData = $tableBody.tmpl( item );
 
                         rowData.appendTo( contentBody );
@@ -138,9 +149,12 @@ function blockDataSaver() {
 
                         var slotSeq = selectedInput.val();
                         var strData = JSON.stringify( arrStackList );
+                        var galleryData = $('#canvasRender').get(0).toDataURL();
+
                         var sParam = {
                             slotSeq : slotSeq,
-                            data : strData
+                            data : strData,
+                            galleryData : galleryData
                         }
 
                         // 저장 시작.

@@ -1,6 +1,8 @@
 
 var u = require('../Util');
-var freedrawService = require('../service/freedrawSvc');
+var freedrawService = require('../service/freedrawSvc'),
+    galleryService = require('../service/gallerySvc');
+
 var async = require('async');
 
 var controller = {
@@ -61,14 +63,21 @@ var controller = {
     },
 
     /**
-     * Freedraw 데이터 저장 컨트롤러
+     * Freedraw 데이터 저장 컨트롤러 ( 갤러리 이미지도 저장 )
      * @param req
      * @param res
      */
     saveData : function(req, res) {
         var sess = req.session;
         var slotData = req.body.data;
+        var galleryData = req.body.galleryData;
         var slotSeq = req.slotid;
+
+        u.assert( sess, ' 잘못된 접근입니다. ', 403);
+        u.assert( sess.member , ' 잘못된 접근입니다. ', 403);
+        u.assert( slotData, ' 슬롯 데이터가 없습니다. ', 500);
+        u.assert( galleryData , ' 이미지 데이터가 없습니다. ', 500);
+
 
         var sParam = {
             member : sess.member,
@@ -76,9 +85,33 @@ var controller = {
             slotSeq : slotSeq
         }
 
-        freedrawService.updateSlotData(sParam, function(result) {
-            res.json(u.result(result));
-        })
+        var galleryParam = {
+            member : sess.member,
+            galleryData : galleryData,
+            extraInfo : slotData
+        }
+
+        async.series([
+            /* 슬롯 업데이트 */
+            function updateSlot(_callback) {
+                freedrawService.updateSlotData(sParam, function(result) {
+                    _callback(null);
+                })
+            },
+
+            /* 갤러리 저장 */
+            function saveGallery(_callback) {
+                galleryService.saveGallery(galleryParam, function(result) {
+                    _callback(null);
+                })
+            }
+        ],
+            /* 최종 실행 콜백 */
+            function finalExec(err, result) {
+                res.json(u.result(result));
+            }
+        );
+
     },
 
     /**
