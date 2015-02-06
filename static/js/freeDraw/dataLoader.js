@@ -29,11 +29,24 @@ function blockDataLoader() {
                     for(var i = 0; i < blockData.length; i++) {
                         var item = blockData[i];
 
+                        //---- 아이템 이름 긁어옴 ------
+                        var blockNameList = [];
+                        var dataParse = JSON.parse(item.data);
+                        for(var j = 0; dataParse && j < dataParse.length; j++) {
+                            var eachItem = dataParse[j];
+                            blockNameList.push( eachItem.blockName );
+                        }
+                        item.blockInfoStr = blockNameList.join(', ');
+                        if( item.blockInfoStr.length > 20 ) item.blockInfoStr = item.blockInfoStr.substring(0, 20) + ' ... ';
+                        //---- //아이템 이름 긁어옴 ------
+
+
                         var rowData = $tableBody.tmpl( item );
+                        console.log( rowData );
 
                         // 데이터가 없다면 수정.
                         if( !item.data ) {
-                            rowData.find('td:eq(1)').attr('colspan', 2).html(' 데이터가 없습니다. ');
+                            rowData.find('td:eq(1)').attr('colspan', 2).html(' <span class="text-danger"><b>데이터가 없습니다.</b></span> ');
                             rowData.find('td:eq(2)').remove();
                             rowData.find('input').attr('disabled','disabled');
                         }

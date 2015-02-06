@@ -65,7 +65,7 @@
             <th>#Slot</th>
             <th>블락 정보</th>
             <th>저장일시</th>
-            <th>로드</th>
+            <th>선택</th>
         </tr>
     </thead>
 
@@ -78,7 +78,7 @@
 <script id="dataLoaderBody" type="text/x-jquery-tmpl">
     <tr>
             <td>Slot #${slotSeq} </td>
-            <td>~~~~~</td>
+            <td>${blockInfoStr}</td>
             <td>${regdate}</td>
             <td>
                 <input type="radio" id="slotSeq" name="slotSeq" value="${slotSeq}" />
