@@ -12,6 +12,7 @@
   smooth();
   background(0);
   translate(width/2, height/2);
+  pushMatrix();
   setupAxis();
 
 

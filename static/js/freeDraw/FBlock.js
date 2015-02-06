@@ -443,7 +443,10 @@ var processingMapper = function( item ) {
             str = sFormat('popMatrix();');
             break;
         case 6 :
-            str = sFormat('resetMatrix();');
+            //str = sFormat('resetMatrix();');
+            //str += sFormat('translate(width/2, height/2, 0);');
+            str = sFormat('popMatrix();');
+            str += sFormat('pushMatrix();');
             break;
         case 7 :
             str = sFormat('translate(?,?,?);', [data.x, -data.y, data.z]);
