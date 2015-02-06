@@ -1,19 +1,17 @@
   //------- DEFAULT SETUP -----------
-  myCam.useCam();
+    // camera change setup
+    if (autoCamera) {
+      myCam.useCam();
+    }
+    else {
+      beginCamera();
+      perspective();
+      camera();
+      endCamera();
+    }
   background(0);
   translate(width/2, height/2);
   setupAxis();
-
-  // camera change setup
-  if (autoCamera) {
-    myCam.useCam();
-  }
-  else {
-    beginCamera();
-    perspective();
-    camera();
-    endCamera();
-  }
 
   //-------// DEFAULT SETUP -----------
   // Y coordinate *(-1)
