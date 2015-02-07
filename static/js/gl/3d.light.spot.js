@@ -59,7 +59,7 @@ sGL.prototype.initCamera = function() {
     // 빛 추가
     //-----------------------------
     this.light = new THREE.SpotLight(0xffffff,0.5);
-    this.light.position.set(100, 100, 100 );
+    this.light.position.set(-100, 100, 100 );
     this.light.castShadow = true;
     this.light.shadowDarkness = 0.5;
     this.light.shadowCameraVisible = true;
