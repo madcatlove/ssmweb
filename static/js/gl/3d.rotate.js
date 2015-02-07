@@ -75,7 +75,8 @@ sGL.prototype.initCamera = function() {
 // GLOBAL VARIABLES
 //----------------------
 var _PIVOT , _CTM_PIVOT;
-
+var _COLOR = new Array();
+var _INDEX = 0;
 
 sGL.prototype.run = function() {
 
@@ -123,11 +124,16 @@ sGL.prototype.run = function() {
             rZ : 0,
             rotateChecker : false
         }
+        _COLOR.push(new THREE.Color(0xffffff));
+        _COLOR.push(new THREE.Color(0xff0000));
+        _COLOR.push(new THREE.Color(0x00ff00));
+        _COLOR.push(new THREE.Color(0x00ffff));
 
         //------- PIVOT , CTM_PIVOT 설정 -------
         _PIVOT = new THREE.Object3D();
-        var geometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+        var geometry = new THREE.SphereGeometry(0.1,100,100);
         var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+       // material.color = _COLOR[_INDEX++];
         _CTM_PIVOT = new THREE.Mesh(geometry, material);
         _PIVOT.add( _CTM_PIVOT );
         self.scene.add( _PIVOT );
@@ -146,7 +152,7 @@ sGL.prototype.run = function() {
                 doTranslate(item, CTM, self.scene, rotateInfo );
             }
             else if( item.blockType == self.IDENTITYMATRIX) {
-                idMatrix(CTM, self.scene );
+                idMatrix(CTM, self.scene, rotateInfo );
             }
             else if( item.blockType == self.ROTATE ) {
                 doRotate( rotateInfo, item );
@@ -174,6 +180,7 @@ function drawBox(item, CTM, scene, rotateInfo) {
         specular: 0xffffff,
         shininess: 50
     } );
+
     var cube = new THREE.Mesh( geometry, material );
     var localMatrix = new THREE.Matrix4().makeTranslation( item.data.x, item.data.y, item.data.z); // 지역 변환 행렬 translate
 
@@ -210,16 +217,30 @@ function doTranslate(item, CTM, scene, rotateInfo) {
 
 
 
-function idMatrix(CTM, scene){
+function idMatrix(CTM, scene, rotateInfo) {
     // translate init
     CTM.identity();
 
-    var geometry = new THREE.SphereGeometry(0.1, 100, 100);
+    //rotate init
+    rotateInfo.rotateChecker = false;
+    rotateInfo.theta = 0;
+    rotateInfo.rX = 0;
+    rotateInfo.rY = 0;
+    rotateInfo.rZ = 0;
+    //_PIVOT.removeChildAtIndex(0);
+    //var geometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+    //var material = new THREE.MeshBasicMaterial({color: 0xff0000});
+    //_CTM_PIVOT = new THREE.Mesh(geometry, material);
+    //_PIVOT.add(_CTM_PIVOT);
+    //_PIVOT.position.set(0, 0, 0);
+    //------- PIVOT , CTM_PIVOT 설정 -------
+    _PIVOT = new THREE.Object3D();
+    var geometry = new THREE.SphereGeometry(0.1,100,100);
     var material = new THREE.MeshBasicMaterial({color: 0xffffff});
-    var CTMPivot = new THREE.Mesh(geometry, material);
-    CTMPivot.position.set(0,0,0);
-
-    scene.add(CTMPivot);
+ //   material.color = _COLOR[_INDEX++];
+    _CTM_PIVOT = new THREE.Mesh(geometry, material);
+    _PIVOT.add( _CTM_PIVOT );
+    scene.add( _PIVOT );
 }
 
 function doRotate(rotateInfo, item) {

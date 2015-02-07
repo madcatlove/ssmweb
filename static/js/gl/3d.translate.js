@@ -2,8 +2,15 @@
  * Created by Lee on 2015-01-29.
  */
 
-
-
+var CTMPivot;
+var colorStack = new Array();
+var index = 0;
+colorStack.push(new THREE.Color(0xffffff));
+colorStack.push(new THREE.Color(0xff0000));
+colorStack.push(new THREE.Color(0x00ff00));
+colorStack.push(new THREE.Color(0x00ffff));
+colorStack.push(new THREE.Color(0xAA00ff));
+colorStack.push(new THREE.Color(0xAA00AA));
 sGL.prototype.initCamera = function() {
     // 3D용 카메라 세팅
     var ratio = this.targetView.width() / this.targetView.height();
@@ -21,7 +28,6 @@ sGL.prototype.initCamera = function() {
     // Orbit
     var controls = new THREE.OrbitControls(this.camera, this.targetView.get(0) ); // jQuery 객체를 일반 DOM 객체로 변환
     controls.damping = 0.2;
-
 
     //-------------------------------------
     // X, Y ,Z 좌표축 설정
@@ -103,6 +109,13 @@ sGL.prototype.run = function() {
         // Current Transformaion Matrix
         var CTM = new THREE.Matrix4();          // 현재 변환 행렬
 
+        var geometry = new THREE.SphereGeometry(0.1, 100, 100);
+        var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+        index = 0;
+        material.color = colorStack[index++];
+        CTMPivot = new THREE.Mesh(geometry, material);
+        self.scene.add(CTMPivot);
+
         //-----------------------------
         // 현재 CTM 좌표 출력
         //-----------------------------
@@ -127,6 +140,7 @@ sGL.prototype.run = function() {
 
         }
 
+
     })
     /* END OF EVENT */
 
@@ -145,7 +159,13 @@ function drawBox(item, CTM, scene) {
 
     // 지오메트리 생성
     var geometry = new THREE.BoxGeometry(item.data.size, item.data.size, item.data.size);
-    var material = new THREE.MeshBasicMaterial({color: 0xffff00});
+    var material = new THREE.MeshPhongMaterial( {
+        ambient: 0x333333,
+        color: 0xffffff,
+        emissive : 0xF7FF69,
+        specular: 0xffffff,
+        shininess: 50
+    } );
     var box = new THREE.Mesh(geometry, material);
 
     var localMatrix = new THREE.Matrix4().makeTranslation(item.data.x, item.data.y, item.data.z); // 지역 변환 행렬 translate
@@ -162,13 +182,14 @@ function doTranslate(item, CTM, scene) {
     var multipleMatrix = new THREE.Matrix4().makeTranslation(item.data.x, item.data.y, item.data.z);
 
     // CTM 좌표 옮김
-
-
     var geometry = new THREE.SphereGeometry(0.1, 100, 100);
     var material = new THREE.MeshBasicMaterial({color: 0xffffff});
-    var CTMPivot = new THREE.Mesh(geometry, material);
+    material.color = colorStack[index++];
+    CTMPivot = new THREE.Mesh(geometry, material);
+    CTMPivot.applyMatrix(CTM);
     CTMPivot.applyMatrix(multipleMatrix); // 기존 좌표 행렬 * 이동한 좌표 행렬
     scene.add(CTMPivot);
+
 
     CTM.multiply(multipleMatrix);       // CTM Update
 
@@ -180,10 +201,6 @@ function doTranslate(item, CTM, scene) {
 function idMatrix(CTM, scene){
     // translate init
     CTM.identity();
-
-    var geometry = new THREE.SphereGeometry(0.1, 100, 100);
-    var material = new THREE.MeshBasicMaterial({color: 0xffffff});
-    var CTMPivot = new THREE.Mesh(geometry, material);
     CTMPivot.position.set(0,0,0);
 
     scene.add(CTMPivot);
