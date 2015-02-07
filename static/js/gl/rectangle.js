@@ -91,7 +91,7 @@ sGL.prototype.run = function() {
 }
 
 var getNewLine = function( item1, item2 ) {
-    var material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+    var material = new THREE.LineBasicMaterial({ color: 0xffff00 });
     var geometry = new THREE.Geometry();
     geometry.vertices.push(
         new THREE.Vector3( item1.data.x,0, item1.data.y),
