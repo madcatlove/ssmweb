@@ -5,9 +5,10 @@
 <hr>
 <p><b>예시</b></p>
 <ol>
-    <li>Translate(3,0,0) <br/>// 원점의 좌표를 (3,0,0) 이동시킵니다. - > 원점의 좌표(3,0,0)</li>
-    <li>PushMatrix(); <br/>// 행렬 스택에 현재 원점의 좌표를 저장합니다. -> 행렬 스택 Top(3,0,0)</li>
-    <li>Translate(3,0,0) <br/>// 원점의 좌표를 (3,0,0) 이동시킵니다. - > 원점의 좌표(6,0,0)</li>
-    <li>Translate(0,5,0) <br/>// 원점의 좌표를 (0,5,0) 이동시킵니다. - > 원점의 좌표(6,5,0)</li>
-    <li>PopMatrix(); <br/>// 행렬 스택에서 이전 원점의 좌표를 pop하여 복원시킵니다 -> 원점의 좌표(3,0,0)</li>
+    <li>Translate(3,0,0) <span style="color:green"><br/>// 원점의 좌표를 (3,0,0) 이동시킵니다.</span> <br/> - ><span style="color:blue"> 원점의 좌표(3,0,0)</span></li>
+    <li>PushMatrix(); <span style="color:green"><br/>// 행렬 스택에 현재 원점의 좌표를 저장합니다.</span><br/> -><span style="color:purple"> <b>행렬 스택 Top에 (3,0,0) 저장</b></span></li>
+    <li>Translate(3,0,0)<span style="color:green"> <br/>// 원점의 좌표를 (3,0,0) 이동시킵니다. </span><br/> - > <span style="color:blue">원점의 좌표(6,0,0)</span></li>
+    <li>Translate(0,5,0)<span style="color:green"> <br/>// 원점의 좌표를 (0,5,0) 이동시킵니다. </span><br/ >- ><span style="color:blue"> 원점의 좌표(6,5,0)</span></li>
+    <li>PopMatrix();<span style="color:green"> <br/>// 행렬 스택에서 이전 원점의 좌표를 pop하여 복원시킵니다.</span><br/> -><span style="color:purple"> <b>원점의 좌표(3,0,0)</b></span></li>
 </ol>
+<br>
