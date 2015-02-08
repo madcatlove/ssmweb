@@ -52,8 +52,8 @@ var controller = {
         var sess = req.session;
         var opt = {
             extraJS : [
-                'freedraw/processing.js', 'freedraw/FBlock.js', 'freedraw/FMoveblock.js', 'freedraw/freedraw.js',
-                'freedraw/processing_touchevent.js', 'freedraw/dataLoader.js'
+                'freeDraw/processing.js', 'freeDraw/FBlock.js', 'freeDraw/FMoveblock.js', 'freeDraw/freedraw.js',
+                'freeDraw/processing_touchevent.js', 'freeDraw/dataLoader.js'
             ],
             extraCSS : ['freedraw.css'],
             member : sess.member
