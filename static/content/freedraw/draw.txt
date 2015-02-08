@@ -3,7 +3,8 @@
    // autoCamera = false;
   //  perspective(70,width/height,1,1000);
    // camera(width/2.0+500, height/2.0+500, 300, width/2.0, height/2.0, 0, 0, 1, 0);
-  // ortho(-200, 200, -200, 200, -500, 500);
+    //  ortho(-500, 500, -500, 500, -1500, 1500);
+//   ortho(width/-2.0, width/2.0, height/-2.0, height/2.0, -1500, 1500);
   /*************** camera 추가되는 영역  끝 ******************/
     if (autoCamera) {
       myCam.useCam();

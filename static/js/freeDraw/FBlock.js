@@ -482,14 +482,13 @@ var processingMapper = function( item ) {
             break;
         case 11 :
             str  = 'autoCamera = false;';
-            str += sFormat('ortho(?,?,?,?,?,?);',[data.left, data.right, data.bottom, data.top, data.near, data.far]);
+            str += sFormat('ortho(?,?,?,?,-1000 + ?,1000 + ?);',[data.left, data.right, data.bottom, data.top, data.near, data.far]);
             // ortho(0, width, 0, height, -10, 10).
             break;
         case 12 :
             str  = 'autoCamera = false;';
-            //str += sFormat('camera(width/2.0 + ?, height/2.0 + ?, ?, width/2.0 + ?, height/2.0 + ?,?,?,?,?);', [data.eyex, data.eyey, data.eyez, data.centerx, data.centery,
-            //     data.centerz, data.upx, data.upy, data.upz]);
-            str += sFormat('camera(width/2.0+500, height/2.0+500, 300, width/2.0, height/2.0, 0, 0, 1, 0);');
+            str += sFormat('camera(width/2.0 + ?, height/2.0 + ?,?, width/2.0 + ?, height/2.0 + ?,?,?,?,?);', [-data.eyex, data.eyey, -data.eyez, data.centerx, data.centery,data.centerz, data.upx, data.upy, data.upz]);
+            //  str += sFormat('camera(width/2.0+500, height/2.0+500, 300, width/2.0, height/2.0, 0, 0, 1, 0);');
             // /camera(width/2.0, height/2.0, (height/2.0) / tan(PI*60.0 / 360.0), width/2.0, height/2.0, 0, 0, 1, 0);
             break;
         case 13 :
