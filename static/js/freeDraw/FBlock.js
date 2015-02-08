@@ -262,7 +262,7 @@ FBlock.prototype.buttonEvent = function($btn, execFunc) {
 
             var formGroup = $('<div class="form-group" />');
             formGroup.append('<label> Parameter For ' + parameterName + ' </label>');
-            var formInput = $('<input />').addClass('form-control').attr('data-paramname', this.blockParam[i] );
+            var formInput = $('<input />').addClass('form-control').attr('data-paramname', this.blockParam[i]);
             formInput.val( hiddenFormValue[  this.blockParam[i] ] );
             formGroup.append( formInput );
             container.append( formGroup );
@@ -306,11 +306,13 @@ FBlock.prototype.getProcessingCode = function() {
 
 FBlock.prototype.injectData = function( data ) {
     var hiddenInput = $('input[type=hidden]', this.blockQuery);
+    console.log('injectdata', hiddenInput);
+
     var inputObjectManager = {};
 
     for( var i = 0; i < hiddenInput.length; i++) {
         var input = hiddenInput.eq(i);
-        inputObjectManager[ input.attr('data-paramname').toLowerCase() ] = input;
+        inputObjectManager[ input.attr('data-paramname') ] = input;
     }
 
     // 데이터 주입 시작.
@@ -470,19 +472,6 @@ function createFBlockInfo( blockName, blockType , paramName, paramVariableType, 
 
     if( 'string' === typeof paramVariableType ) {
         paramVariableType = paramVariableType.split(',');
-    }
-
-    // 소문자로 전환.
-    for(var i = 0; i < paramName.length; i++) {
-        if( typeof paramName[i] === 'string') {
-            paramName[i] = paramName[i].toLowerCase();
-        }
-    }
-
-    for(var i = 0; i < paramVariableType.length; i++) {
-        if( typeof paramVariableType[i] === 'string') {
-            paramVariableType[i] = paramVariableType[i].toLowerCase();
-        }
     }
 
     return {
