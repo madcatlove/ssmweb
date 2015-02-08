@@ -15,7 +15,7 @@ var controller = {
 
 
         var opt = {
-            extraJS : ['jquery.lighter.js'],
+            extraJS : ['jquery.lighter.js', 'gallery.js'],
             extraCSS : ['jquery.lighter.css'],
             member : sess.member
         };
@@ -24,6 +24,16 @@ var controller = {
     },
 
     galleryList : function(req, res) {
+        var page = parseInt(req.query.page || 1);
+
+        var sParam = {
+            page : page,
+            countOffset : 0
+        }
+
+        galleryService.getGallery( sParam, function(result) {
+            res.json(u.result( result ) );
+        })
 
     }
 }

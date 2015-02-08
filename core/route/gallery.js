@@ -24,6 +24,7 @@ router.use( function(req, res, next) {
 // ROUTING start with '/'
 //------------------------
 router.get('/', galleryController.view); // 갤러리 리스트 뷰.
+router.get('/info', galleryController.galleryList); // LIST JSON
 
 
 
