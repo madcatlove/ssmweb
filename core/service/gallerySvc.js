@@ -65,7 +65,9 @@ var service = {
 
 
     getGallery : function(sParam, resultCallback) {
-        //galleryDA.getGalleryInfo();
+        galleryDA.getGalleryInfo(null, function(result){
+            resultCallback(result);
+        });
     }
 
 }
