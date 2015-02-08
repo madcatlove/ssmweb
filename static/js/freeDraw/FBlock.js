@@ -14,6 +14,7 @@ function FBlock( bType, seqNum ) {
     this.seqNum = seqNum;
     this.blockQuery = null; // 블락이 생성된 jquery 객체.
     this.bType = bType;
+    this.isShortMode = false; // 그냥 렌더링용인지
 }
 
 /**
@@ -102,6 +103,52 @@ FBlock.prototype.toHTML = function() {
 
     return this.blockQuery;
 };
+
+
+/**
+ * 뷰어용 HTML 파일 생성.
+ */
+FBlock.prototype.toShortHTML = function() {
+    var $blockDiv = $('<div />')
+        .attr('data-blockSeq', this.seqNum)
+        .addClass('blockitem')
+        .css('display', 'inline-block');
+    this.blockQuery = $blockDiv;
+
+    var parent = $('#stacklist'),
+        parentWidth = parent.width();
+    var imageInfo = this.blockExtraInfo.image;
+    var blockImageWrapper = $('<div />')
+        .css({
+            'position' : 'relative',
+            'display' : 'inline-block',
+            'z-index' : 2,
+            'width' : parentWidth + 'px',
+            // 'height' : (parentWidth * imageRatio) + 'px'
+        });
+
+    var blockImage = $('<img />')
+        .attr('src', '/static/images/freeblocks/short/' + imageInfo.image)
+        .attr('alt', this.blockName)
+        .css({
+            'max-width' : '100%',
+            'max-height' : '100%'
+        });
+
+    blockImageWrapper.append( blockImage );
+    $blockDiv.append( blockImageWrapper );
+
+    // 파라메타 추가
+    for( var i = 0; i < this.blockParam.length; i++) {
+        var hiInput = $('<input />')
+            .attr('type','hidden')
+            .attr('data-paramname', this.blockParam[i])
+            .val('0');
+        $blockDiv.append( hiInput );
+    }
+
+    return this.blockQuery;
+}
 
 
 /**
@@ -259,6 +306,8 @@ FBlock.prototype.getProcessingCode = function() {
 
 FBlock.prototype.injectData = function( data ) {
     var hiddenInput = $('input[type=hidden]', this.blockQuery);
+    console.log('injectdata', hiddenInput);
+
     var inputObjectManager = {};
 
     for( var i = 0; i < hiddenInput.length; i++) {

@@ -57,7 +57,7 @@ var dataAccess = {
 
 
     getGalleryInfo : function(sParam, resultCallback) {
-        var queryStatement = ' SELECT GI.seq, GI.fileInfo, GI.fileName, GI.regdate, MI.userid FROM galleryInfo GI' +
+        var queryStatement = ' SELECT GI.seq, GI.fileInfo, GI.fileName, GI.regdate, GI.extraInfo, MI.userid FROM galleryInfo GI' +
                              ' LEFT OUTER JOIN memberInfo MI' +
                              ' ON GI.memberSeq = MI.seq' +
                              ' ORDER BY regdate DESC';

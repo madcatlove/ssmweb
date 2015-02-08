@@ -2589,7 +2589,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function stageFramePosition (indexes) {
-    eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
+      eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
       var normalizedIndex = normalizeIndex(index),
@@ -2970,6 +2970,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     var silent = _activeFrame === activeFrame && !options.user;
 
+      console.log(' 클릭했당? ');
     //setTimeout(function () {
     ////console.time('unloadVideo');
     unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
@@ -2984,6 +2985,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     updateTouchTails('go', true);
     ////console.timeEnd('updateTouchTails');
     ////console.time('triggerEvent');
+
+      //updateBlockRender( $(this ) );
+
 
     silent || triggerEvent('show', {
       user: options.user,

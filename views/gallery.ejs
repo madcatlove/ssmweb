@@ -1,45 +1,36 @@
 <%- include header.ejs %>
 
+<div class="row" style="padding-top: 60px; position: relative; width:100%; height:100%">
 <!-- 점보트론 -->
-<div class="jumbotron">
-    <div class="container">
-        <h1> Gallery </h1>
-        <p> 모든 회원들의 FreeDraw 저장 순간을 기록하였습니다. </p>
-        <p> 다른 회원분들의 모델링을 참고해보세요. </p>
-    </div>
-</div>
+<!--<div class="jumbotron">-->
+    <!--<div class="container">-->
+        <!--<h1> Gallery </h1>-->
+        <!--<p> 모든 회원들의 FreeDraw 저장 순간을 기록하였습니다. </p>-->
+        <!--<p> 다른 회원분들의 모델링을 참고해보세요. </p>-->
+    <!--</div>-->
+<!--</div>-->
 
 <!-- 갤러리  -->
+<div class="col-md-12" style="height: 100%;">
 
-<div class="fotorama" data-nav="thumbs"  data-ratio="800/600" data-minwidth="100%" data-maxwidth="100%" data-minheight="100%" data-maxheight="100%">
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/><img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/><img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
-    <img src="http://s.fotorama.io/okonechnikov/1-lo.jpg" width="64px" height="64px"/>
+    <div class="row" style="height: 100%;">
+        <div class="col-md-8" style="background: black; height:90%;">
+            <div id="srender" class="text-center" style="width:100%; height:100%;"></div>
+        </div>
+
+        <div class="col-md-4" style="height:90%;">
+            <div id="stacklist" class="text-center" style="width:100%; height:100%;"></div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="fotorama" id="fotorama" data-auto="false" data-nav="thumbs" data-nav-width="90%" data-width="100%" data-maxwidth="100%" data-height="0"data-maxheight="0">
+
+            </div>
+        </div>
+    </div>
 
 
 </div>
 
+</div>
 <%- include footer.ejs %>
