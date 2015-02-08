@@ -94,8 +94,8 @@ var getNewLine = function( item1, item2 ) {
     var material = new THREE.LineBasicMaterial({ color: 0xffff00 });
     var geometry = new THREE.Geometry();
     geometry.vertices.push(
-        new THREE.Vector3( item1.data.x,0, item1.data.y),
-        new THREE.Vector3( item2.data.x,0, item2.data.y)
+        new THREE.Vector3( item1.data.x,-5, item1.data.y),
+        new THREE.Vector3( item2.data.x,-5, item2.data.y)
     );
     var line = new THREE.Line( geometry, material );
 
