@@ -53,6 +53,27 @@ var dataAccess = {
                 conn.release();
             })
         })
+    },
+
+
+    getGalleryInfo : function(sParam, resultCallback) {
+        var queryStatement = ' SELECT GI.seq, GI.fileInfo, GI.fileName, GI.regdate, MI.userid FROM galleryInfo GI' +
+                             ' LEFT OUTER JOIN memberInfo MI' +
+                             ' ON GI.memberSeq = MI.seq' +
+                             ' ORDER BY regdate DESC';
+
+        db.getConnection( function(conn) {
+            conn.query( queryStatement, function(err, result) {
+                if( err ) {
+                    console.error(' galleryDA Error ( getGalleryInfo ) ', err);
+                    throw u.error( err.message, 500 );
+                }
+
+                resultCallback( result );
+
+                conn.release();
+            })
+        })
     }
 
 }

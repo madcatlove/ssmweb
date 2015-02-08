@@ -55,26 +55,29 @@ var doRender = function(stackList) {
     var $renderParent = $('#srender');
 
 
-    if( stackList ) {
-        for(var i = 0; i < stackList.length; i++) {
-            var item = stackList[i];
-            if( item.blockType == FBlock.TYPE.PERSPECTIVE.blockType  ||
-                item.blockType == FBlock.TYPE.ORTHOGRAPHIC.blockType ||
-                item.blockType == FBlock.TYPE.LOOKAT.blockType ) {
-                drawListCode = item.getProcessingCode() + drawListCode;
-            } else {
-                drawListCode += item.getProcessingCode();
-            }
-        }
-    }
-
-
 
     /* 셋업 파일 불러옴 */
     $.get('/static/content/freedraw/setup.txt', {data: Math.random()} ).done( function( setupData ) {
 
         /* 드로우 함수 내부 구현 불러옴 */
         $.get('/static/content/freedraw/draw.txt', {data: Math.random()}).done( function( drawData) {
+
+            // 사용자 데이터 작성
+            if( stackList ) {
+                drawListCode += drawData;
+                for(var i = 0; i < stackList.length; i++) {
+                    var item = stackList[i];
+                    if( item.blockType == FBlock.TYPE.PERSPECTIVE.blockType  ||
+                        item.blockType == FBlock.TYPE.ORTHOGRAPHIC.blockType ||
+                        item.blockType == FBlock.TYPE.LOOKAT.blockType ) {
+                        drawListCode = item.getProcessingCode() + drawListCode;
+                    } else {
+                        drawListCode += item.getProcessingCode();
+                    }
+                }
+            }
+
+
 
             // 셋업 데이터 치환
             setupData = setupData.replace( /#_WIDTH_#/gi, $renderParent.width() );
@@ -83,13 +86,12 @@ var doRender = function(stackList) {
 
             // 드로우 시작.
             executableCode += 'void draw() { ';
-            executableCode += drawData; // 초기설정 데이터.
             executableCode += drawListCode; // 사용자 리스트
             executableCode += '}';
 
-            //console.log( executableCode );
-
-            //console.log( executableCode );
+            console.log(' ----- EXEC CODE --------');
+            console.log( executableCode );
+            console.log(' ----- //EXEC CODE --------');
 
             var isCanvas = $('#srender canvas');
             if( isCanvas.length ) {
@@ -113,6 +115,7 @@ var doRender = function(stackList) {
             wheelEventLocker();
 
             var p = new Processing( sCanvas.get(0), executableCode );
+            console.log(p);
 
         })
 

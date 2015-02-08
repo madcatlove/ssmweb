@@ -15,12 +15,16 @@ var controller = {
 
 
         var opt = {
-            extraJS : [],
-            extraCSS : [],
+            extraJS : ['jquery.lighter.js'],
+            extraCSS : ['jquery.lighter.css'],
             member : sess.member
         };
 
         res.render('gallery', opt);
+    },
+
+    galleryList : function(req, res) {
+
     }
 }
 

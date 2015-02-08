@@ -61,6 +61,11 @@ var service = {
                 resultCallback(result);
             }
         )
+    },
+
+
+    getGallery : function(sParam, resultCallback) {
+        //galleryDA.getGalleryInfo();
     }
 
 }
