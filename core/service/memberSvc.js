@@ -2,8 +2,10 @@
  * Created by Lee on 2015-01-23.
  */
 var u = require('../Util');
-var memberDA = require('../dataAccess/memberDA');
+var memberDA = require('../dataAccess/memberDA'),
+    freedrawDA = require('../dataAccess/freedrawDA');
 var crypto = require('crypto');
+var async = require('async');
 
 var service = {
 
@@ -25,9 +27,47 @@ var service = {
             userpwd : crypto.createHash('sha512').update( member.userpwd).digest('hex')
         };
 
-        memberDA.insertMember( sMember, function(result) {
-            resultCallback(result);
-        })
+        async.waterfall([
+
+            /* 회원 생성 */
+            function createMember( _callback) {
+                memberDA.insertMember( sMember, function(result) {
+                    _callback(null, result);
+                })
+            },
+
+            /* 슬롯 생성 */
+            function initMemberSlot( insertid, _callback) {
+
+                var nextCallback = (function() {
+                    var count = 0;
+                    return function() {
+                        count++;
+                        if( count == 5) {
+                            _callback(null, insertid);
+                        }
+                    }
+                });
+
+                for(var i = 1; i <= 5; i++) {
+                    (function( slotid) {
+                        freedrawDA.initMemberSlot(insertid, slotid, function(result) {
+                            nextCallback();
+                        })
+                    })(i);
+                }
+            }
+
+        ],
+            /* 최종 콜백 실행 */
+            function finalExec(err, result) {
+                resultCallback( result );
+            }
+
+        )
+
+
+
     },
 
     /* 멤버 로그인 서비스 */

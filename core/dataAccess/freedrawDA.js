@@ -75,6 +75,30 @@ var dataAccess = {
                 conn.release();
             })
         })
+    },
+
+    /**
+     * 회원 슬롯 할당.
+     * @param member
+     * @param slotid
+     * @param resultCallback
+     */
+    initMemberSlot : function(memberSeq, slotid,  resultCallback) {
+        var queryStatement  = ' INSERT IGNORE INTO freeBlock (memberSeq, data, regdate, slotSeq) VALUES ';
+            queryStatement += ' (?, ?, ?, ?); ';
+
+        db.getConnection( function(conn) {
+            conn.query(queryStatement, [memberSeq, 'N', '0000-00-00', slotid], function(err, result) {
+                if( err ) {
+                    console.error(' freedrawDA Error ( initMemberSlot )  ', err );
+                    throw u.error( err.message , 500 );
+                }
+
+                resultCallback( conn.insertId );
+
+                conn.release();
+            })
+        })
     }
 
 }
