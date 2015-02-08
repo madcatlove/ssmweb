@@ -4,6 +4,10 @@
 
 var galleryBlockData = [];
 
+/**
+ * 갤러리 로더.
+ * @param page
+ */
 function galleryLoader(page) {
     urlReq.get('/gallery/info', {page : page || 1}, function(result) {
         if( result.error ) {
@@ -40,6 +44,10 @@ function galleryLoader(page) {
     })
 }
 
+/**
+ * 블락을 복구 / 실제 데이터 주입 / 랜더링 함수 호출
+ * @param blockSeq
+ */
 function updateBlockRender( blockSeq ) {
 
     var blockTempItem = galleryBlockData[blockSeq];
@@ -67,7 +75,12 @@ function updateBlockRender( blockSeq ) {
 
 }
 
-
+/**
+ * 블락 껍데기 복구시작. ( blockData 에 blockType 가 포함되어있어야 껍데기복구가능 )
+ * @param blockData
+ * @param seq
+ * @returns {*}
+ */
 function recoverBlockdata( blockData , seq ) {
     var typeList = FBlock.TYPE;
 
@@ -83,6 +96,10 @@ function recoverBlockdata( blockData , seq ) {
 }
 
 
+/**
+ * 랜더링 시작. ( 블락 스택 리스트 필요 )
+ * @param stackList
+ */
 var doRender = function(stackList) {
 
     var executableCode = '';
@@ -122,9 +139,9 @@ var doRender = function(stackList) {
             executableCode += drawListCode; // 사용자 리스트
             executableCode += '}';
 
-            console.log(' ----- EXEC CODE --------');
-            console.log( executableCode );
-            console.log(' ----- //EXEC CODE --------');
+            //console.log(' ----- EXEC CODE --------');
+            //console.log( executableCode );
+            //console.log(' ----- //EXEC CODE --------');
 
             var isCanvas = $('#srender canvas');
             if( isCanvas.length ) {
@@ -147,15 +164,15 @@ var doRender = function(stackList) {
             $('#srender').append( sCanvas );
 
             var p = new Processing( sCanvas.get(0), executableCode );
-            console.log(p);
-
         })
 
     })
 }
 
 
-
+/**
+ * --------- 시작 --------
+ */
 $(document).ready( function() {
 
     galleryLoader();
