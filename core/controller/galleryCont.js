@@ -15,8 +15,9 @@ var controller = {
 
 
         var opt = {
-            extraJS : ['jquery.lighter.js', 'gallery.js'],
-            extraCSS : ['jquery.lighter.css'],
+
+            extraJS : ['jquery.lighter.js', 'gallery.js', 'fotorama.js'],
+            extraCSS : ['jquery.lighter.css', 'fotorama.css'],
             member : sess.member
         };
 
