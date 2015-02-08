@@ -9,8 +9,9 @@ void setup() {
   VIEW_WIDTH = #_WIDTH_#;
   VIEW_HEIGHT = #_HEIGHT_#;
   size(VIEW_WIDTH, VIEW_HEIGHT, P3D);
-  myCam = new Camera(50, true);
+  myCam = new Camera(200, true);
   myCam.setTarget( VIEW_WIDTH/2, VIEW_HEIGHT/2-150, 300 );
+  hint(ENABLE_OPENGL_4X_SMOOTH);
 }
 
 
@@ -38,7 +39,7 @@ void mouseScrolled(MouseEvent evt) {
 
 // Camera change
 void keyPressed() {
-  if (key == 'C' || key == 'c') {
+  if (key == 'R' || key == 'r') {
     if (autoCamera){
       autoCamera = false;
       }
@@ -46,11 +47,31 @@ void keyPressed() {
       autoCamera = true;
      }
   }
+
+        if (key == CODED)
+        {
+                if      (keyCode == UP)    myCam.pan(  0,  30);
+                else if (keyCode == DOWN)  myCam.pan(  0, -30);
+                else if (keyCode == LEFT)  myCam.pan( 30,   0);
+                else if (keyCode == RIGHT) myCam.pan(-30,   0);
+        }
+        else
+        {
+                if (key == 'a')  myCam.pan( 30,   0);
+                else if (key == 'd'|| key =='D')  myCam.pan(-30,   0);
+                else if (key == 'w'|| key =='W')  myCam.pan(  0,  30);
+                else if (key == 's'|| key =='S')  myCam.pan(  0, -30);
+                else if (key == 'q'|| key =='Q')  myCam.orbit( 30,  0 );
+                else if (key == 'e'|| key =='E')  myCam.orbit(-30,  0 );
+                else if (key == 'z'|| key =='Z')  myCam.orbit(  0, 30 );
+                else if (key == 'c'|| key =='C')  myCam.orbit(  0,-30 );
+        }
+
 }
 
 class Camera
 {
-  float rotationSpeed = 0.01; // speed of rotation
+  float rotationSpeed = 0.005; // speed of rotation
 
   float angleX, angleY, angleZ;
   float currAngleX, currAngleY, currAngleZ;
@@ -222,9 +243,10 @@ class Camera
 /********************************************* Camera End *********************************************/
 void setupAxis() {
   noStroke();
+  smooth();
   // X축
   fill(255,0,0);
-  box(10000,0.5,0.5);
+  box(10000,1,1);
   fill(200,0,0);
   pushMatrix();
   translate(25,0,0);
@@ -233,7 +255,7 @@ void setupAxis() {
 
   // Y축
   fill(0,255,0);
-  box(0.5,10000,0.5);
+  box(1,10000,1);
   pushMatrix();
   translate(0,-25,0);
   box(10);
@@ -241,7 +263,7 @@ void setupAxis() {
 
   // Z축
   fill(0,0,255);
-  box(0.5,0.5,10000);
+  box(1,1,10000);
   pushMatrix();
   translate(0,0,25);
   box(10);
