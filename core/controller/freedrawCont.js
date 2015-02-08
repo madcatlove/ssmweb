@@ -1,7 +1,8 @@
 
 var u = require('../Util');
 var freedrawService = require('../service/freedrawSvc'),
-    galleryService = require('../service/gallerySvc');
+    galleryService = require('../service/gallerySvc'),
+    tutorialService = require('../service/tutorialSvc');
 
 var async = require('async');
 
@@ -16,13 +17,30 @@ var controller = {
         var sess = req.session;
         var opt = {
             extraJS : [
-                'freedraw/processing.js', 'freedraw/FBlock.js', 'freedraw/FMoveblock.js', 'freedraw/freedraw.js',
-                'freedraw/processing_touchevent.js', 'freedraw/dataLoader.js'
+                'freeDraw/processing.js', 'freeDraw/FBlock.js', 'freeDraw/FMoveblock.js', 'freeDraw/freedraw.js',
+                'freeDraw/processing_touchevent.js', 'freeDraw/dataLoader.js'
             ],
             extraCSS : ['freedraw.css'],
             member : sess.member
         };
-        res.render('freedraw', opt);
+
+        async.waterfall([
+            /* 튜토리얼 챕터별 리스트 생성 */
+            function makeChapterList( _callback) {
+                tutorialService.getTutorialChapterList( function(result) {
+                    opt.tutorialChapterList = result;
+                    _callback( null );
+                })
+            },
+
+
+        ],
+            /* 최종 실행 콜백 */
+            function finalExec(err, result) {
+                res.render('freedraw', opt);
+            }
+        );
+
     },
 
     /**
@@ -42,6 +60,15 @@ var controller = {
         };
 
         async.waterfall([
+            /* 튜토리얼 챕터별 리스트 생성 */
+            function makeChapterList( _callback) {
+                tutorialService.getTutorialChapterList( function(result) {
+                    opt.tutorialChapterList = result;
+                    _callback( null );
+                })
+            },
+
+            /* 슬롯 데이터 가져옴 */
             function getSlotData( _callback) {
                 var sParam = {
                     member : sess.member,
@@ -58,7 +85,7 @@ var controller = {
             function finalExec(err, result) {
                 res.render('freedraw', opt);
             }
-        )
+        );
 
     },
 

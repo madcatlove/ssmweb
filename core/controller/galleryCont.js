@@ -3,7 +3,8 @@
  */
 
 var u = require('../Util');
-var galleryService = require('../service/gallerySvc');
+var galleryService = require('../service/gallerySvc'),
+    tutorialService = require('../service/tutorialSvc');
 
 var async = require('async');
 
@@ -21,7 +22,24 @@ var controller = {
             member : sess.member
         };
 
-        res.render('gallery', opt);
+        async.waterfall([
+            /* 튜토리얼 챕터별 리스트 생성 */
+            function makeChapterList( _callback) {
+                tutorialService.getTutorialChapterList( function(result) {
+                    opt.tutorialChapterList = result;
+                    _callback( null );
+                })
+            },
+
+
+        ],
+            /* 최종 실행 콜백 */
+            function finalExec(err ,result ) {
+                res.render('gallery', opt);
+            }
+        );
+
+
     },
 
     galleryList : function(req, res) {
