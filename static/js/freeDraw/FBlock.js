@@ -312,7 +312,7 @@ FBlock.prototype.injectData = function( data ) {
 
     for( var i = 0; i < hiddenInput.length; i++) {
         var input = hiddenInput.eq(i);
-        inputObjectManager[ input.attr('data-paramname') ] = input;
+        inputObjectManager[ input.attr('data-paramname').toLowerCase() ] = input;
     }
 
     // 데이터 주입 시작.
@@ -473,6 +473,21 @@ function createFBlockInfo( blockName, blockType , paramName, paramVariableType, 
     if( 'string' === typeof paramVariableType ) {
         paramVariableType = paramVariableType.split(',');
     }
+
+    // 소문자로 전환.
+    for(var i = 0; i < paramName.length; i++) {
+        if( typeof paramName[i] === 'string') {
+            paramName[i] = paramName[i].toLowerCase();
+        }
+    }
+
+    for(var i = 0; i < paramVariableType.length; i++) {
+        if( typeof paramVariableType[i] === 'string') {
+            paramVariableType[i] = paramVariableType[i].toLowerCase();
+        }
+    }
+
+
 
     return {
         blockName : blockName, // 블락 이름 ( 뷰에 보여짐 )
