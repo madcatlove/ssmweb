@@ -58,7 +58,13 @@ var doRender = function(stackList) {
     if( stackList ) {
         for(var i = 0; i < stackList.length; i++) {
             var item = stackList[i];
-            drawListCode += item.getProcessingCode();
+            if( item.blockType == FBlock.TYPE.PERSPECTIVE.blockType  ||
+                item.blockType == FBlock.TYPE.ORTHOGRAPHIC.blockType ||
+                item.blockType == FBlock.TYPE.LOOKAT.blockType ) {
+                drawListCode = item.getProcessingCode() + drawListCode;
+            } else {
+                drawListCode += item.getProcessingCode();
+            }
         }
     }
 
@@ -109,10 +115,6 @@ var doRender = function(stackList) {
             var p = new Processing( sCanvas.get(0), executableCode );
 
         })
-
-
-        //console.log( $renderParent.width(), $renderParent.height() );
-        //  console.log( Processing.compile(plainData).sourceCode   );
 
     })
 }

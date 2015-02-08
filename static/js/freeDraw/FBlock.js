@@ -364,7 +364,7 @@ extraInfo = {
         edit : 'camera/edit.png'
     }
 }
-FBlock.TYPE.PERSPECTIVE = createFBlockInfo('Perspective', 10,'fov,aspect,near,far', 'float,float,float,float', extraInfo);
+FBlock.TYPE.PERSPECTIVE = createFBlockInfo('Perspective', 10,'fov,near,far', 'float,float,float', extraInfo);
 
 extraInfo = {
     image : {
@@ -476,15 +476,18 @@ var processingMapper = function( item ) {
             str = sFormat('scale(?,?,?);', [data.x, -data.y, data.z]);
             break;
         case 10 :
-            str = sFormat('perspective(?,width/height,?,?);', [data.fov, data.aspect, data.near, data.far]);
+            str  = 'autoCamera = false;';
+            str += sFormat('perspective(?,width/height,?,?);', [data.fov, data.near, data.far]);
             //  perspective(PI/3.0, width/height, cameraZ/10.0, cameraZ*10.0) where cameraZ is ((height/2.0) / tan(PI*60.0/360.0));.
             break;
         case 11 :
-            str = sFormat('ortho(?,?,?,?,?,?);',[data.left, data.right, data.bottom, data.top, data.near, data.far]);
+            str  = 'autoCamera = false;';
+            str += sFormat('ortho(?,?,?,?,?,?);',[data.left, data.right, data.bottom, data.top, data.near, data.far]);
             // ortho(0, width, 0, height, -10, 10).
             break;
         case 12 :
-            str = sFormat('camera(?,?,?,width/2,height/2,?,?,?,?);', [data.eyex, -data.eyey, data.eyez,
+            str  = 'autoCamera = false;';
+            str += sFormat('camera(?,?,?,width/2,height/2,?,?,?,?);', [data.eyex, -data.eyey, data.eyez,
                  data.centerz, data.upx, -data.upy, data.upz]);
             // camera(width/2.0, height/2.0, (height/2.0) / tan(PI*60.0 / 360.0), width/2.0, height/2.0, 0, 0, 1, 0);
             break;
