@@ -271,18 +271,14 @@ void setupAxis() {
   fill(255);
 }
 
-void drawLine(float x1, float y1, float z1, float x2, float y2, float z2) {
-  pushMatrix();
-  float angle = mag(x2,y2,z2);
-  rotate(angle,x2,y2,-z2);
+void dLine(float length, float weight) {
+    if(weight == 1){
+        box(length, 1, 1);
+    }
+    else{
+        float revision = log(weight);
+        box(length, revision, revision);
+    }
 
-  // translate
-  //translate((x2-x1),0,0);
-
-  // draw box
-  float d = dist(x1,y1,z1,x2,y2,z2);
-  fill(255);
-  box(d, 1, 1);
-  popMatrix();
 }
 
