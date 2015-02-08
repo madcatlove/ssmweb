@@ -32,42 +32,59 @@ function initTutorialInfo(tid) {
             //----------------------------------------------------------
             // -- 가이드 컨텐츠 조정 시작 --
             //----------------------------------------------------------
-            var $guideContent = $('.guideContent div').eq(0),
+            var $guideContent = $('.panel-body.guideContent div'),
                 sminHeight = 200;
+
             $guideContent.html( guide_content );
 
-            var guideContentOuterHeight = $guideContent.outerHeight(true);
-            sminHeight = (sminHeight > guideContentOuterHeight ) ? guideContentOuterHeight : sminHeight;
-
-            $guideContent.attr('box_height',  guideContentOuterHeight ); // 원래 높이 기억.
-            $guideContent.attr('box_shrink', true);
-
-            /* 강제조정 */
-            $guideContent.css({
-                height : sminHeight + 'px',
-                'overflow-y' : 'hidden'
-            });
+            // 이미지가 로딩이 다 되면.
+            if( $('img', $guideContent).length ) {
+                $guideContent.find('img').load( guideEventHandler );
+            }
+            else {
+                guideEventHandler();
+            }
 
 
-            $guideContent.hover(function(){
-                    $(this).css('cursor', 'pointer');
-            });
 
-            $guideContent.click(function() {
-                var current = $(this);
+            function guideEventHandler() {
+                    var guideContentOuterHeight = $guideContent.outerHeight() + 5;
+                    sminHeight = (sminHeight > guideContentOuterHeight ) ? guideContentOuterHeight : sminHeight;
 
-                if( current.attr('box_shrink') == 'true' ) {
-                    /* 축소된 상태이니 늘려줌 */
-                    var theight = current.attr('box_height') + 'px';
-                    current.animate({ height : theight }, { 'duration' : 'slow'});
-                    current.attr('box_shrink', false);
-                }
-                else {
-                    /* 증가된 상태이니 축소 */
-                    current.animate({ height : sminHeight+'px' }, { 'duration' : 'slow'});
-                    current.attr('box_shrink', true);
-                }
-            });
+                    $guideContent.attr('box_height',  guideContentOuterHeight ); // 원래 높이 기억.
+                    $guideContent.attr('box_shrink', true);
+
+                    /* 강제조정 */
+                    $guideContent.css({
+                        height : sminHeight + 'px',
+                        'overflow-y' : 'hidden'
+                    });
+
+
+
+
+                    $guideContent.hover(function(){
+                        $(this).css('cursor', 'pointer');
+                    });
+
+                    $guideContent.click(function() {
+                        var current = $(this);
+
+                        if( current.attr('box_shrink') == 'true' ) {
+                            /* 축소된 상태이니 늘려줌 */
+                            var theight = current.attr('box_height') + 'px';
+                            current.animate({ height : theight }, { 'duration' : 'slow'});
+                            current.attr('box_shrink', false);
+                        }
+                        else {
+                            /* 증가된 상태이니 축소 */
+                            current.animate({ height : sminHeight+'px' }, { 'duration' : 'slow'});
+                            current.attr('box_shrink', true);
+                        }
+                    });
+            }
+
+
             //----------------------------------------------------------
             // -- 가이드 컨텐츠 조정 끝 --
             //----------------------------------------------------------

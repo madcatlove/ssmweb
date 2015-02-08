@@ -263,6 +263,15 @@ FBlock.prototype.buttonEvent = function($btn, execFunc) {
             var formGroup = $('<div class="form-group" />');
             formGroup.append('<label> Parameter For ' + parameterName + ' </label>');
             var formInput = $('<input />').addClass('form-control').attr('data-paramname', this.blockParam[i]);
+
+            // 파라메터 종류가 RGB 이면 칼라피커 추가.
+            if( this.blockParam[i] === 'rgb' ) {
+                formInput.colorpicker({
+                    format : 'hex'
+                });
+                formInput.prop('readonly','readonly');
+            }
+
             formInput.val( hiddenFormValue[  this.blockParam[i] ] );
             formGroup.append( formInput );
             container.append( formGroup );

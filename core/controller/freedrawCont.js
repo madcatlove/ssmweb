@@ -18,9 +18,9 @@ var controller = {
         var opt = {
             extraJS : [
                 'freeDraw/processing.js', 'freeDraw/FBlock.js', 'freeDraw/FMoveblock.js', 'freeDraw/freedraw.js',
-                'freeDraw/processing_touchevent.js', 'freeDraw/dataLoader.js'
+                'freeDraw/processing_touchevent.js', 'freeDraw/dataLoader.js', 'bootstrap-colorpicker.js'
             ],
-            extraCSS : ['freedraw.css'],
+            extraCSS : ['freedraw.css', 'bootstrap-colorpicker.css'],
             member : sess.member
         };
 
@@ -53,9 +53,9 @@ var controller = {
         var opt = {
             extraJS : [
                 'freeDraw/processing.js', 'freeDraw/FBlock.js', 'freeDraw/FMoveblock.js', 'freeDraw/freedraw.js',
-                'freeDraw/processing_touchevent.js', 'freeDraw/dataLoader.js'
+                'freeDraw/processing_touchevent.js', 'freeDraw/dataLoader.js', 'bootstrap-colorpicker.js'
             ],
-            extraCSS : ['freedraw.css'],
+            extraCSS : ['freedraw.css', 'bootstrap-colorpicker.css'],
             member : sess.member
         };
 

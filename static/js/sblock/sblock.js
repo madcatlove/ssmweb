@@ -268,6 +268,15 @@ function createModalWindowForBlock( param, paramSize, $blockObj ) {
             formGroup.append('<label> Parameter For ' + parameterName + ' </label>');
         var formInput = $('<input />').addClass('form-control').attr('data-paramname', param[i]);
             formInput.val( hiddenFormValue[ param[i] ] );
+
+        // 칼라피커 활성화.
+        if( param[i].toLowerCase() === 'hex') {
+            formInput.colorpicker({
+                format : 'hex'
+            });
+            formInput.prop('readonly','readonly');
+        }
+
         formGroup.append( formInput );
 
         container.append( formGroup );

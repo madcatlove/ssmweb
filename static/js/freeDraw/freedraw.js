@@ -47,6 +47,7 @@ var removedBlockListener = function(event, stacklist) {
     doRender(stacklist.data);
 }
 
+
 var doRender = function(stackList) {
 
     var executableCode = '';
@@ -89,33 +90,26 @@ var doRender = function(stackList) {
             executableCode += drawListCode; // 사용자 리스트
             executableCode += '}';
 
-            console.log(' ----- EXEC CODE --------');
-            console.log( executableCode );
-            console.log(' ----- //EXEC CODE --------');
+            //console.log(' ----- EXEC CODE --------');
+            //console.log( executableCode );
+            //console.log(' ----- //EXEC CODE --------');
 
             var isCanvas = $('#srender canvas');
+
+
             if( isCanvas.length ) {
                 isCanvas.remove();
             }
 
-
-            /**
-             * ontouchstart="touchStart(event);"
-             ontouchmove="touchMove(event);"
-             ontouchend="touchEnd(event);"
-             ontouchcancel="touchCancel(event);"
-             * @type {*|jQuery}
-             */
+            wheelEventLocker();
             var sCanvas = $('<canvas />').attr('id', 'canvasRender');
                 sCanvas.attr('ontouchstart', 'touchStart(event);')
-                    .attr('ontouchmove', 'touchMove(event);')
-                    .attr('ontouchend', 'touchEnd(event);')
-                    .attr('ontouchcancel', 'touchCancel(event);');
+                .attr('ontouchmove', 'touchMove(event);')
+                .attr('ontouchend', 'touchEnd(event);')
+                .attr('ontouchcancel', 'touchCancel(event);');
             $('#srender').append( sCanvas );
-            wheelEventLocker();
 
             var p = new Processing( sCanvas.get(0), executableCode );
-            console.log(p);
 
         })
 
