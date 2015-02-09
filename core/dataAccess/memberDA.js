@@ -19,7 +19,8 @@ var dataAccess = {
         db.getConnection( function(conn) {
             conn.query( queryStatement, [userid], function(err, result) {
                 if( err ) {
-                    throw u.error(err.message, 500);
+                    console.error( ' memberDA Error (getMemberById) :  ', err);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback( result[0] );
                 conn.release();
@@ -38,8 +39,8 @@ var dataAccess = {
         db.getConnection( function(conn) {
             conn.query( queryStatement, [ member.userid, member.userpwd ], function(err, result) {
                 if( err ) {
-                    console.log( ' err ' , err );
-                    throw u.error( err.message, 500);
+                    console.error( ' memberDA Error (insertMember) :  ', err);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback( result.insertId );
                 conn.release();

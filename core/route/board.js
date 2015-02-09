@@ -17,7 +17,7 @@ router.use( function(req, res, next) {
 router.use( function(req, res, next) {
     var sess = req.session;
     if( !sess.member || !sess.hasOwnProperty('member') ) {
-        throw u.error(' 권한이 없습니다 ', 403, true);
+        throw u.error(u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode , true);
     }
 
     next();

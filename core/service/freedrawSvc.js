@@ -41,12 +41,12 @@ var service =  {
      * @param resultCallback
      */
     slotDataBySlotid : function(sParam, resultCallback) {
-        u.assert( sParam.member , ' 잘못된 접근입니다. ', 403);
-        u.assert( sParam.slotid , ' 잘못된 접근입니다. ', 403);
+        u.assert( sParam.member , u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( sParam.slotid , u.ETYPE.FORBID.message + ' 슬롯번호 누락 ', u.ETYPE.FORBID.errorCode);
 
         freedrawDA.getSlotInfoBySlotid( sParam, function(result) {
             if( result.length == 0 ) {
-                throw u.error(' 데이터가 없습니다 ', 500);
+                throw u.error(u.ETYPE.CRITICAL.message + ' :  데이터 누락 ', u.ETYPE.CRITICAL.errorCode);
             }
 
             var item = result[0];
@@ -64,9 +64,9 @@ var service =  {
      * @param resultCallback
      */
     updateSlotData : function(sParam, resultCallback) {
-        u.assert( sParam.member , ' 잘못된 접근입니다. ', 403);
-        u.assert( sParam.slotSeq , ' 잘못된 접근입니다. ', 403);
-        u.assert( sParam.data , ' 잘못된 접근입니다. ', 403);
+        u.assert( sParam.member , u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( sParam.slotSeq , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
+        u.assert( sParam.data , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
 
 
         freedrawDA.updateSlotData( sParam, resultCallback );

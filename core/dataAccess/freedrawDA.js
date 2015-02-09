@@ -19,7 +19,7 @@ var dataAccess = {
             conn.query( queryStatement, [member.seq], function(err, result) {
                 if( err) {
                     console.error(' freedrawDA Error ( getSlotInfoByMember )  ', err );
-                    throw u.error( err.message , 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback( result );
 
@@ -44,7 +44,7 @@ var dataAccess = {
             conn.query( queryStatement, [member.seq, slotid], function(err, result) {
                 if( err ) {
                     console.error(' freedrawDA Error ( getSlotInfoBySlotid )  ', err );
-                    throw u.error( err.message , 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback(result);
@@ -67,7 +67,7 @@ var dataAccess = {
             conn.query( queryStatement, [sParam.data, member.seq, sParam.slotSeq], function(err, result) {
                 if( err ) {
                     console.error(' freedrawDA Error ( updateSlotData )  ', err );
-                    throw u.error( err.message , 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( conn.affectedRows );
@@ -91,7 +91,7 @@ var dataAccess = {
             conn.query(queryStatement, [memberSeq, 'N', '0000-00-00', slotid], function(err, result) {
                 if( err ) {
                     console.error(' freedrawDA Error ( initMemberSlot )  ', err );
-                    throw u.error( err.message , 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( conn.insertId );

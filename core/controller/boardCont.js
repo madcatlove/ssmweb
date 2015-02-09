@@ -79,11 +79,12 @@ var controller = {
         else parentSeq = parseInt(parentSeq);
 
         async.waterfall([
+
                 /* tid 가 유효한지 확인 */
                 function validTutorialSequence( _callback) {
                     tutorialService.getTutorialInfo(req.tid, function(result) {
                         if( !result ) {
-                            throw u.error(' Invalid Tutorial ID ', 500);
+                            throw u.error(u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
                         }
                     })
                     _callback(null, true);
@@ -102,7 +103,7 @@ var controller = {
                         if( insertId > 0 ) {
                             _callback( null, insertId );
                         } else {
-                            throw u.error(' FAIL TO POST ARTICLE ');
+                            throw u.error(u.ETYPE.CRITICAL.message, u.ETYPE.CRITICAL.errorCode);
                         }
                     })
 
@@ -129,7 +130,7 @@ var controller = {
             function validTutorialSequence( _callback) {
                 tutorialService.getTutorialInfo(req.tid, function(result) {
                     if( !result ) {
-                        throw u.error(' Invalid Tutorial ID ', 500);
+                        throw u.error(u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
                     }
                     _callback(null, true);
                 })
@@ -165,8 +166,8 @@ var controller = {
         var sess = req.session;
         var bid = req.bid;
 
-        u.assert( sess.member, '사용권한이 없습니다', 403);
-        u.assert( bid, ' 잘못된 접근 ', 403);
+        u.assert( sess.member, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( bid, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
 
         boardService.removeArticle(bid, sess.member, function(result) {
             res.json( u.result(result) );
@@ -180,7 +181,7 @@ var controller = {
      * @param res
      */
     modifyArticle : function(req, res) {
-
+        /* 폐기 */
     },
 
 }

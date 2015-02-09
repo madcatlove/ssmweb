@@ -15,7 +15,7 @@ var service = {
      */
     getTutorialInfo : function(tid, resultCallback) {
         if(!tid) {
-            throw u.error('Invalid TID ', 500);
+            throw u.error(u.ETYPE.FORBID.message + ' : 튜토리얼 아이디 누락 ', u.ETYPE.FORBID.errorCode);
         }
         tid = parseInt( tid );
 
@@ -86,9 +86,9 @@ var service = {
      * @param resultCallback
      */
     markTutorialSuccess : function(memberSession, tid, resultCallback) {
-        u.assert( tid , 'Invalid TID', 500);
-        u.assert( memberSession, 'Invalid Member', 403 );
-        u.assert( memberSession.seq, 'Invalid Member', 403);
+        u.assert( tid , u.ETYPE.FORBID.message + ' : 튜토리얼 아이디 누락 ', u.ETYPE.FORBID.errorCode);
+        u.assert( memberSession, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode );
+        u.assert( memberSession.seq, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode );
 
         tutorialDA.markTutorialSuccess( memberSession, tid, function(result) {
             if( result > 0 ) {
@@ -181,8 +181,8 @@ var service = {
      * @param resultCallback
      */
     getTutorialProgressInfo : function(member, resultCallback) {
-        u.assert( member );
-        u.assert( member.seq );
+        u.assert( member, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode );
+        u.assert( member.seq, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode );
 
         var progressList = {};
 

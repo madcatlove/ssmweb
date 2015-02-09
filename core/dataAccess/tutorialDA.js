@@ -44,7 +44,7 @@ var dataAccess = {
             conn.query( queryStatement, [tid], function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error (getTutorialInfo) ', err);
-                    throw u.error( err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback( result );
                 conn.release();
@@ -64,7 +64,7 @@ var dataAccess = {
             conn.query( queryStatement, function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error (getTutorialList) ', err);
-                    throw u.error( err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( result );
@@ -89,7 +89,7 @@ var dataAccess = {
             conn.query( queryStatement, [tid, member.seq], function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error (markTutorialSuccess) ', err);
-                    throw u.error( err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( conn.insertId );
@@ -109,7 +109,7 @@ var dataAccess = {
             conn.query( queryStatement , function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error ( getChapterCount ) ', err );
-                    throw u.error( err.message, 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( result );
@@ -134,7 +134,7 @@ var dataAccess = {
             conn.query(queryStatement, [member.seq], function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error ( getMemberChapterCount ) ', err );
-                    throw u.error( err.message, 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback(result);
 
@@ -156,7 +156,7 @@ var dataAccess = {
             conn.query( queryStatement, [tid], function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error ( getTutorialResultCount ) ', err );
-                    throw u.error( err.message, 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback( result );
 
@@ -179,7 +179,7 @@ var dataAccess = {
             conn.query( queryStatement, function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error ( getTutorialChapterList ) ', err );
-                    throw u.error( err.message, 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback(result);
 
@@ -300,7 +300,7 @@ var dataAccess = {
             conn.query( queryStatement, [member.seq], function(err, result) {
                 if( err ) {
                     console.error(' tutorialDA Error ( getTutorialProgressInfo ) ', err );
-                    throw u.error( err.message, 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback(result);

@@ -35,18 +35,23 @@ var urlReq = (function() {
             // HTTP Status Code 에 따른 데이터 덮어쓰기
             //---------------------------------------
             var statusCode = parseInt( jqXHR.status, 10);
-            if( statusCode >= 400 && statusCode < 500 ) {
-                data = {
-                    error: true,
-                    data: data.data || '사용권한이 없습니다'
-                }
+            switch( statusCode ) {
+                case 401:
+                    data.data = ' 사용 권한이 없습니다. ';
+                    break;
+                case 403:
+                    data.data = ' 잘못된 접근입니다. ';
+                    break;
+                case 500:
+                    data.data = ' 내부 서버 오류 (관리자에게 문의하세요.) ';
+                    break;
+                case 404:
+                    data.data = ' 페이지가 없습니다. ';
+                    break;
+                default:
+                    data.data = ' 알 수 없는 오류 입니다. ';
             }
-            else if( statusCode >= 500 && statusCode <= 550) {
-                data = {
-                    error : true,
-                    data: data.data || '내부서버 오류 발생'
-                }
-            }
+            data.error = true;
 
             resultCallback( data );
         })

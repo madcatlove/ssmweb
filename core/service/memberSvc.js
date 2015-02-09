@@ -11,16 +11,16 @@ var service = {
 
     /* 아이디를 통해 해당 유저 정보 가져옴 */
     getMemberById : function( userid, resultCallback) {
-        u.assert( userid );
-        u.assert( userid.length > 0 );
+        u.assert( userid, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode );
+        u.assert( userid.length > 0, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode );
 
         memberDA.getMemberById( userid, resultCallback);
     },
 
     /* 멤버 추가 */
     insertMember : function( member, resultCallback) {
-        u.assert( member.userid || member.userpwd );
-        u.assert( member.userid.length > 0 || member.userpwd.length > 0 );
+        u.assert( member.userid || member.userpwd, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode  );
+        u.assert( member.userid.length > 0 || member.userpwd.length > 0 , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode );
 
         var sMember = {
             userid : member.userid,
@@ -72,8 +72,8 @@ var service = {
 
     /* 멤버 로그인 서비스 */
     procMemberLogin : function( member, resultCallback) {
-        u.assert( member.userid || member.userpwd );
-        u.assert( member.userid.length > 0 || member.userpwd.length > 0 );
+        u.assert( member.userid || member.userpwd, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode );
+        u.assert( member.userid.length > 0 || member.userpwd.length > 0, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode );
 
         var sMember = {
             userid : member.userid,

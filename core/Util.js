@@ -46,9 +46,22 @@ var utility = {
     },
 
 
+    ETYPE : {
+        UNAUTH : genErrorCode(401, ' 접근 권한이 없습니다. '),
+        FORBID : genErrorCode(403, ' 잘못된 접근입니다. '),
+        CRITICAL : genErrorCode(500, ' 내부 서버 오류 발생 ')
+    }
+
 
 }
 
+
+function genErrorCode( errorCode, message ) {
+    return {
+        errorCode : errorCode,
+        message : message
+    }
+}
 
 /* EXPORT */
 module.exports = utility;

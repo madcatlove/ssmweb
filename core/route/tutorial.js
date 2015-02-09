@@ -14,13 +14,13 @@ router.use( function(req, res, next) {
     var sess = req.session;
 
     // console.log( req.originalUrl );
-    u.assert( sess.member, '사용 권한이 없습니다', 403, true);
+    u.assert( sess.member, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode, true);
 
     next();
 
 });
 router.use('/:tid([0-9]+)', function(req, res, next) {
-    u.assert( req.params.tid > 0 , '잘못된 접근', 403);
+    u.assert( req.params.tid > 0 , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
     req.tid = parseInt( req.params.tid );
     next();
 });

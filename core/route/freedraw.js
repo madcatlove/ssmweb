@@ -12,7 +12,7 @@ router.use( function(req, res, next) {
     var sess = req.session;
 
     if( !sess.member || !sess.hasOwnProperty('member') ) {
-        throw u.error(' 사용 권한이 없습니다. ', 403, true);
+        throw u.error(u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode , true);
     }
 
     next();
@@ -21,10 +21,10 @@ router.use( function(req, res, next) {
 router.param('slotid', function(req, res, next, slotid) {
     var n = Number(slotid);
     if( isNaN(n) ) {
-        throw u.error('잘못된 접근입니다.', 403, true);
+        throw u.error(u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode, true);
     }
     else if( !( n >= 1 && n <= 5) ) {
-        throw u.error('잘못된 슬롯 접근입니다.', 403, true);
+        throw u.error(u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode, true);
     }
     else {
         req.slotid = n;

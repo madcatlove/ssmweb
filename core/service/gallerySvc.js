@@ -17,9 +17,9 @@ var service = {
         var member = sParam.member;
         var galleryData = sParam.galleryData;
 
-        u.assert( member );
-        u.assert( galleryData );
-        u.assert( sParam.extraInfo );
+        u.assert( member,  u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( galleryData , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
+        u.assert( sParam.extraInfo, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode );
 
 
         async.waterfall([

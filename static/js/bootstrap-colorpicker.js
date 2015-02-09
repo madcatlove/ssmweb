@@ -411,7 +411,7 @@
             // from John Resig color plugin
             // https://github.com/jquery/jquery-color/
             stringParsers: [{
-                re: /#?([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
+                re: /0x?([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
                 format: 'hex',
                 parse: function(execResult) {
                     return [
@@ -422,7 +422,7 @@
                     ];
                 }
             }, {
-                re: /#?([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
+                re: /0x?([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
                 format: 'hex',
                 parse: function(execResult) {
                     return [

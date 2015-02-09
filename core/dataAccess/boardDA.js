@@ -28,7 +28,7 @@ var dataAccess = {
 
                 if( err ) {
                     console.error(' boardDA Error (postArticle)', err);
-                    throw u.error( err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( result.insertId);
@@ -48,7 +48,7 @@ var dataAccess = {
             conn.query( queryStatement, [articleId, articleId], function(err, result) {
                 if( err ) {
                     console.error(' boardDA Error (updateParentSeq)', err);
-                    throw u.error( err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback( result.affectedRows );
                 conn.release();
@@ -85,7 +85,7 @@ var dataAccess = {
             conn.query( queryStatement, [sParam.tid, sParam.tid, sParam.tid], function(err, result) {
                 if( err ) {
                     console.error(' boardDA Error (getArticleList)', err);
-                    throw u.error( err.message , 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback( result );
                 conn.release();
@@ -105,7 +105,7 @@ var dataAccess = {
 
                 if( err ) {
                     console.error(' boardDA Error (getParentArticleCount)', err);
-                    throw u.error( err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback( result );
 
@@ -128,7 +128,7 @@ var dataAccess = {
             conn.query( queryStatement, [bid], function(err, result) {
                 if( err ) {
                     console.error(' boardDA Error (getArticleBySeq)', err);
-                    throw u.error( err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( result );
@@ -151,7 +151,7 @@ var dataAccess = {
             conn.query( queryStatement, [bid], function(err, result) {
                 if(err) {
                     console.error(' boardDA Error (removeArticleBySeq)', err);
-                    throw u.error(err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback(true);
@@ -173,7 +173,7 @@ var dataAccess = {
             conn.query( queryStatement, [bid, bid], function(err, result) {
                 if(err) {
                     console.error(' boardDA Error (removeArticleParentAndChild)', err);
-                    throw u.error(err.message, 500);
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
                 resultCallback(true);
 

@@ -23,7 +23,7 @@ var dataAccess = {
         fs.writeFile( savePath + '/' + filename, galleryData, function(err) {
             if( err ) {
                 console.error(' galleryDA Error (saveGalleryFile) ', err);
-                throw u.error(err.message, 500);
+                throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
             }
 
             resultCallback( true );
@@ -45,7 +45,7 @@ var dataAccess = {
             conn.query( queryStatement, [member.seq, 'N', sParam.filename, sParam.extraInfo], function(err, result) {
                 if( err ) {
                     console.error(' galleryDA Error ( insertGallery ) ', err);
-                    throw u.error( err.message, 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( conn.insertId );
@@ -66,7 +66,7 @@ var dataAccess = {
             conn.query( queryStatement, function(err, result) {
                 if( err ) {
                     console.error(' galleryDA Error ( getGalleryInfo ) ', err);
-                    throw u.error( err.message, 500 );
+                    throw u.error(u.ETYPE.CRITICAL.message + ' : ' + err.message , u.ETYPE.CRITICAL.errorCode);
                 }
 
                 resultCallback( result );

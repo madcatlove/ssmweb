@@ -75,8 +75,8 @@ var service = {
      */
         removeArticle : function( bid, member, resultCallback) {
 
-            u.assert( bid , '잘못된 접근입니다. ', 500);
-            u.assert( member , '사용 권한이 없습니다.', 403);
+            u.assert( bid , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
+            u.assert( member , u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
 
             async.waterfall([
 
@@ -92,7 +92,7 @@ var service = {
                 /* 해당글을 삭제할수있는 유저인지 확인 */
                 function isValidUser( article, _callback) {
                     if( article.memberSeq != member.seq ) {
-                        throw u.error(' 사용 권한이 없습니다.', 403 );
+                        throw u.error(u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode );
                     }
 
                     _callback( null, article );

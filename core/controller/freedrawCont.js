@@ -100,10 +100,10 @@ var controller = {
         var galleryData = req.body.galleryData;
         var slotSeq = req.slotid;
 
-        u.assert( sess, ' 잘못된 접근입니다. ', 403);
-        u.assert( sess.member , ' 잘못된 접근입니다. ', 403);
-        u.assert( slotData, ' 슬롯 데이터가 없습니다. ', 500);
-        u.assert( galleryData , ' 이미지 데이터가 없습니다. ', 500);
+        u.assert( sess, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( sess.member , u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( slotData, u.ETYPE.FORBID.message + ' 슬롯 데이터 누락 ', u.ETYPE.FORBID.errorCode);
+        u.assert( galleryData , u.ETYPE.FORBID.message + ' 갤러리 데이터 누락 ', u.ETYPE.FORBID.errorCode);
 
 
         var sParam = {
@@ -148,8 +148,8 @@ var controller = {
      */
     getAllSlotInfo : function(req, res) {
         var sess = req.session;
-        u.assert( sess, ' 잘못된 접근입니다. ', 403);
-        u.assert( sess.member , ' 잘못된 접근입니다. ', 403);
+        u.assert( sess, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( sess.member , u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
 
         freedrawService.slotDataByMember( sess.member, function(result) {
             res.json(u.result( result ) );
@@ -166,9 +166,9 @@ var controller = {
         var sess = req.session;
         var slotid = parseInt(req.slotid);
 
-        u.assert( sess, ' 잘못된 접근입니다. ', 403);
-        u.assert( sess.member , ' 잘못된 접근입니다. ', 403);
-        u.assert( slotid > 0, ' 잘못된 접근입니다. ', 403);
+        u.assert( sess, u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( sess.member , u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( slotid > 0, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
 
         var sParam = {
             member : sess.member,
