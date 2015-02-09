@@ -103,6 +103,7 @@ sBoard.prototype.render = function() {
 
         // -- append parent --
         this.parentArticle[key].regdate = dateNormalize(this.parentArticle[key].regdate);
+
         $('#parentList').tmpl( this.parentArticle[key] ).appendTo( $('.panel-group'));
 
 
