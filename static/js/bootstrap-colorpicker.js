@@ -270,7 +270,7 @@
             toHex: function(h, s, b, a) {
                 var rgb = this.toRGB(h, s, b, a);
                 //return '#' + ((1 << 24) | (parseInt(rgb.r) << 16) | (parseInt(rgb.g) << 8) | parseInt(rgb.b)).toString(16).substr(1);
-                return '0x' + ((1 << 24) | (parseInt(rgb.r) << 16) | (parseInt(rgb.g) << 8) | parseInt(rgb.b)).toString(16).substr(1);
+                return '#' + ((1 << 24) | (parseInt(rgb.r) << 16) | (parseInt(rgb.g) << 8) | parseInt(rgb.b)).toString(16).substr(1);
             },
             toHSL: function(h, s, b, a) {
                 h = h || this.value.h;
@@ -411,7 +411,7 @@
             // from John Resig color plugin
             // https://github.com/jquery/jquery-color/
             stringParsers: [{
-                re: /0x?([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
+                re: /#?([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
                 format: 'hex',
                 parse: function(execResult) {
                     return [
@@ -422,7 +422,7 @@
                     ];
                 }
             }, {
-                re: /0x?([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
+                re: /#?([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
                 format: 'hex',
                 parse: function(execResult) {
                     return [
@@ -727,9 +727,11 @@
                 return val;
             },
             updateInput: function(val) {
+
                 val = val || this.color.toString(this.format);
                 if (this.input !== false) {
-                    this.input.prop('value', val);
+                    //this.input.prop('value', val);
+                    this.input.prop('value', val.replace('#', '0x') );
                 }
                 return val;
             },

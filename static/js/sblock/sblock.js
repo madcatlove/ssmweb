@@ -274,7 +274,7 @@ function createModalWindowForBlock( param, paramSize, $blockObj ) {
             formInput.colorpicker({
                 format : 'hex'
             });
-            formInput.prop('readonly','readonly');
+            //formInput.prop('readonly','readonly');
         }
 
         formGroup.append( formInput );
@@ -329,7 +329,11 @@ function updateHiddenForm( $blockObj, $modalForm ) {
 
         //---- 유효성 검사 ----
         if( hParamName == 'hex') {
-            if( isNaN( Number( item.val() ) )  ) {
+            var hVal = Number( item.val() );
+            if( isNaN( hVal )) {
+                return false;
+            }
+            else if( hVal < 0 ) {
                 return false;
             }
         }
