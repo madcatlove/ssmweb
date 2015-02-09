@@ -23,7 +23,7 @@ function initMoveBlock( blockList, stackList ) {
             //--- DEEP COPY 위해서 새로운 객체 생성 ----
             var nBlock = new FBlock( originalBlock.bType, stackList.length );
             var nBlockQuery = nBlock.toHTML();
-
+            nBlock.initTooltipInfo();
             nBlock.setButtonListen(true); // 버튼 작동 활성화
 
             //--- 스택에 추가 ---
@@ -67,16 +67,7 @@ function initMoveBlock( blockList, stackList ) {
             revert: "invalid",
             containment: "document",
             helper: "clone",
-            cursor: "move",
-
-            /*start : function() {
-                //$('#blocklist').css('display','none');
-                $('#blocklist_overlay').css('display','block');
-            },
-
-            stop : function() {
-                $('#blocklist_overlay').css('display','none');
-            } */
+            cursor: "move"
         })
     }
 
@@ -90,7 +81,9 @@ function initMoveBlock( blockList, stackList ) {
 
     $(window).load( function() {
 
+        //----------------------
         // 슬롯 데이터 복구
+        //----------------------
         if( slotData ) {
             for(var i = 0; i < slotData.length; i++) {
                 var blockItem = recoverBlockdata( slotData[i], i );
@@ -99,6 +92,7 @@ function initMoveBlock( blockList, stackList ) {
                 var html = blockItem.toHTML();
                 blockItem.setButtonListen(true);
                 blockItem.injectData( slotData[i].data );
+                blockItem.initTooltipInfo();
 
                 arrStackList.push( blockItem );
                 appendItemToStack( html );

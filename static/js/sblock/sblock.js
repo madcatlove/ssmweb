@@ -309,7 +309,7 @@ function createModalWindowForBlock( param, paramSize, $blockObj ) {
 }
 
 /**
- * Tooltip 타이틀 업데이트를 위한 함수.
+ * 히튼폼 업데이트
  * @param $blockObj
  * @param $modalForm
  */
@@ -332,6 +332,10 @@ function updateHiddenForm( $blockObj, $modalForm ) {
 
 }
 
+/**
+ * 툴팁 타이틀 업데이트
+ * @param $blockObj
+ */
 function updateBlockObjTitle( $blockObj ) {
 
     var blockHiddenInput = $('input', $blockObj );
