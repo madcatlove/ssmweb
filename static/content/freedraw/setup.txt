@@ -4,6 +4,8 @@ Camera myCam;
 boolean autoCamera = true;
 float VIEW_WIDTH;
 float VIEW_HEIGHT;
+PVector v1, v2, v3;
+PVector vX = new PVector(1, 0, 0);
 
 void setup() {
   VIEW_WIDTH = #_WIDTH_#;
@@ -271,10 +273,38 @@ void setupAxis() {
   fill(255);
 }
 
-void drawLine(float x1,float y1,float z1,float x2, float y2, float z2){
-  beginShape(LINES);
-  vertex(x1,y1,z1);
-  vertex(x2,y2,z2);
-  endShape();
+void drawLine(float x1, float y1, float z1, float x2, float y2, float z2) {
+  v1 = new PVector(x1, y1, z1);
+  v2 = new PVector(x2, y2, z2);
+  v3 = new PVector((float)v2.x-(float)v1.x, (float)v2.y-(float)v1.y, (float)v2.z-(float)v1.z);
+  float x = v3.x;
+  float y = v3.y;
+  float z = v3.z;
+  PVector tV;
+
+  float distance = PVector.dist(v1, v2);
+
+  tV = new PVector(v3.x, 0, v3.z);
+  float angleY = degrees(PVector.angleBetween(tV, vX));
+
+  tV = new PVector(v3.x, 0, v3.z );
+  float angleZ = degrees(PVector.angleBetween(v3, tV));
+
+  pushMatrix();
+  // root move
+  translate(x1,-y1,z1);
+
+  // rotate
+  println("angleY : " + angleY);
+  println("angleZ : " + angleZ);
+  rotateY(radians(-angleY));
+  rotateZ(radians(-angleZ));
+  // translate
+ translate(distance/2,0,0);
+
+  // draw
+  box(distance, 2, 2);
+  popMatrix();
 }
+
 
