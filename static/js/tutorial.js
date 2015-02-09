@@ -39,7 +39,22 @@ function initTutorialInfo(tid) {
 
             // 이미지가 로딩이 다 되면.
             if( $('img', $guideContent).length ) {
-                $guideContent.find('img').load( guideEventHandler );
+
+                /* 이벤트 핸들러 동작 */
+                var tCallback = (function() {
+                    var count = 0;
+                    return function() {
+                        count++;
+                        if( $('img', $guideContent).length == count) {
+                            guideEventHandler();
+                        }
+                    }
+                })();
+
+                /* 모든 이미지가 로딩되면 콜백 호출 */
+                $guideContent.find('img').load( function() {
+                    tCallback();
+                });
             }
             else {
                 guideEventHandler();
@@ -50,7 +65,6 @@ function initTutorialInfo(tid) {
             function guideEventHandler() {
                     var guideContentOuterHeight = $guideContent.outerHeight() + 5;
                     sminHeight = (sminHeight > guideContentOuterHeight ) ? guideContentOuterHeight : sminHeight;
-
                     $guideContent.attr('box_height',  guideContentOuterHeight ); // 원래 높이 기억.
                     $guideContent.attr('box_shrink', true);
 
@@ -59,8 +73,6 @@ function initTutorialInfo(tid) {
                         height : sminHeight + 'px',
                         'overflow-y' : 'hidden'
                     });
-
-
 
 
                     $guideContent.hover(function(){
