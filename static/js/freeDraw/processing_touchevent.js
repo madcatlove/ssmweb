@@ -82,6 +82,7 @@ function touchMove(event) {
         if( _MOTION_STATE != 1 ) return;
         processingInstance.mouseButton = processingInstance.LEFT;
         setLastXY(event);
+        processingInstance.mouseDragged();
     }
     else if( countFinger == 2 ) {
         if( _MOTION_STATE != 2 ) return;
@@ -91,8 +92,10 @@ function touchMove(event) {
         var dy = event.touches[0].pageY - event.touches[1].pageY;
         var d = Math.sqrt( dx*dx + dy*dy );
         setLastY(d);
+        processingInstance.mouseDragged();
+        setFirstY(d);
     }
-    processingInstance.mouseDragged();
+
 }
 
 function touchEnd(event) {
