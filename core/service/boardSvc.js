@@ -24,8 +24,18 @@ var service = {
             sParam.startOffset = startOffset;
 
             boardDA.getArticleList( sParam, function(result) {
-                //-- DA 에서 받아온 데이터 콜백으로 넘김
-                //-- 나중에 뭔가 처리를 위해서..
+
+                if( result && result.length ) {
+                    /* HTML ENTITY 이스케이핑 처리 */
+                    for( var i = 0; i < result.length; i++) {
+                        result[i].userid = u.htmlEntity( result[i].userid );
+                        result[i].content = u.htmlEntity( result[i].content );
+                        result[i].seq = parseInt( result[i].seq );
+                        result[i].parentSeq = parseInt( result[i].parentSeq );
+                    }
+                }
+
+                // 리턴.
                 resultCallback( result );
             })
         },

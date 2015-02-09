@@ -7,6 +7,9 @@ $(document).ready( function() {
     $('button[data-loader="save"]').on('click', blockDataSaver);
 })
 
+/**
+ * 블럭 데이터 로더
+ */
 function blockDataLoader() {
 
     var $tableHead= $('#dataLoaderHead');
@@ -40,6 +43,8 @@ function blockDataLoader() {
                         if( item.blockInfoStr.length > 20 ) item.blockInfoStr = item.blockInfoStr.substring(0, 20) + ' ... ';
                         //---- //아이템 이름 긁어옴 ------
 
+                        // 시간 수정.
+                        item.regdate = dateNormalize( item.regdate );
 
                         var rowData = $tableBody.tmpl( item );
                         console.log( rowData );
@@ -84,6 +89,9 @@ function blockDataLoader() {
     })
 }
 
+/**
+ * 블럭 데이터 저장
+ */
 function blockDataSaver() {
     var $tableHead= $('#dataLoaderHead');
     var $tableBody = $('#dataLoaderBody');
@@ -116,7 +124,17 @@ function blockDataSaver() {
                         if( item.blockInfoStr.length > 20 ) item.blockInfoStr = item.blockInfoStr.substring(0, 20) + ' ... ';
                         //---- //아이템 이름 긁어옴 ------
 
+                        // 시간 수정.
+                        item.regdate = dateNormalize( item.regdate );
+
+
                         var rowData = $tableBody.tmpl( item );
+
+                        // 데이터가 없다면 수정.
+                        if( !item.data ) {
+                            rowData.find('td:eq(1)').attr('colspan', 2).html(' <span class="text-danger"><b>데이터가 없습니다.</b></span> ');
+                            rowData.find('td:eq(2)').remove();
+                        }
 
                         rowData.appendTo( contentBody );
                     }

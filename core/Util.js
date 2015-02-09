@@ -45,11 +45,16 @@ var utility = {
         }
     },
 
-
+    /* 에러 타입 정의 */
     ETYPE : {
         UNAUTH : genErrorCode(401, ' 접근 권한이 없습니다. '),
         FORBID : genErrorCode(403, ' 잘못된 접근입니다. '),
         CRITICAL : genErrorCode(500, ' 내부 서버 오류 발생 ')
+    },
+
+    /* HTML 특수 기호 치환 */
+    htmlEntity : function(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
 
