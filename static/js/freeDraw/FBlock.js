@@ -604,7 +604,7 @@ var processingMapper = function( item ) {
     var data = item.data;
     switch( item.blockType ) {
         case 1 :
-            str = sFormat('drawLine(?,?,?,?,?,?);', [data.x1, -data.y1, data.z1, data.x2, -data.y2, data.z2]);
+            str = sFormat('drawLine(?,?,?,?,?,?);', [data.x1, data.y1, data.z1, data.x2, data.y2, data.z2]);
             break;
         case 2 :
             str = sFormat('box(?,?,?);', [data.width, data.height, data.depth]);
