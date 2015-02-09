@@ -16,6 +16,10 @@ $(document).ready( function() {
         arrBlockList.push( block );
     }
 
+    var blockListHeight = $blockList.height();
+    $('#stacklist').height( blockListHeight );
+
+
     // Drag & Drop 활성화
     initMoveBlock( arrBlockList, arrStackList );
 

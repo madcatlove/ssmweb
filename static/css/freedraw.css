@@ -11,3 +11,13 @@
 #blocklist {
     width: 90%;
 }
+
+#stacklist {
+    width: 90%;
+    background-image: url('/static/images/blocks/stacklist.jpg');
+    background-repeat : no-repeat;
+    background-position: top center;
+    background-size: 80% 100%;
+    padding-top: 25%;
+    text-align : center;
+}
