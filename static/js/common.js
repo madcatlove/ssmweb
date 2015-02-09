@@ -133,3 +133,29 @@ $(document).ready( function() {
         $navMenu.eq(0).addClass('active');
     }
 })
+
+/**
+ * ISO 형태의 데이트를 현재 로케일에 맞게 수정.
+ * @param isoDate
+ */
+function dateNormalize( isoDate ) {
+    var d = new Date( isoDate);
+    d.setHours(d.getHours() + 9 );
+
+    var year = d.getFullYear(),
+        month = d.getMonth() + 1,
+        day = d.getDate(),
+        hour = d.getHours(),
+        min = d.getMinutes();
+
+    if( isNaN(year) || isNaN(month) || isNaN(day) || isNaN(hour) || isNaN(min) ) {
+        return '0000/00/00 00:00';
+    }
+
+    if( month < 10 ) month = '0' + month;
+    if( day < 10 ) day = '0' + day;
+    if( hour < 10 ) hour = '0'+hour;
+    if( min < 10 ) min = '0'+min;
+
+    return [year,month,day].join('/') + ' ' + [hour,min].join(':');
+}
