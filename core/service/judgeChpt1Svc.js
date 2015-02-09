@@ -32,7 +32,7 @@ var judgeChpt1 = {
         } else if (!jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
 
             messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
-//
+////
         }
 
         callback(messages);
