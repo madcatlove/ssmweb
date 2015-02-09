@@ -298,7 +298,11 @@ function createModalWindowForBlock( param, paramSize, $blockObj ) {
                 label: 'Confirm',
                 cssClass: 'btn-warning',
                 action: function (dialog) {
-                    updateHiddenForm($blockObj, container);
+                    var r = updateHiddenForm($blockObj, container);
+                    if( !r  ) {
+                        alert(' 잘못된 값이 입력되었습니다. ');
+                        return;
+                    }
                     updateBlockObjTitle($blockObj);
                     dialog.close();
                 }
@@ -320,8 +324,21 @@ function updateHiddenForm( $blockObj, $modalForm ) {
 
     // 모달폼에서 생성된 값 받아옴.
     for(var i = 0; i < modalInput.length; i++) {
-        var item = modalInput.eq(i);
-        modalFormValue[ item.attr('data-paramname') ] = item.val() || 0;
+        var item = modalInput.eq(i),
+            hParamName = item.attr('data-paramname');
+
+        //---- 유효성 검사 ----
+        if( hParamName == 'hex') {
+            if( isNaN( Number( item.val() ) )  ) {
+                return false;
+            }
+        }
+        else {
+            if( isNaN( parseFloat( item.val() ) ) ) {
+                return false;
+            }
+        }
+        modalFormValue[ hParamName ] = item.val() || 0;
     }
 
     // block 오브젝트에 있는 인풋들 업데이트.
@@ -330,6 +347,7 @@ function updateHiddenForm( $blockObj, $modalForm ) {
         item.val( modalFormValue[ item.attr('data-paramname') ] );
     }
 
+    return true;
 }
 
 /**

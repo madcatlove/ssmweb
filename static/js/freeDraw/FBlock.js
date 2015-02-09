@@ -190,11 +190,19 @@ FBlock.prototype.toJSON = function() {
 /**
  * 모달창에서 받은 값을 히든폼에 업데이트.
  * @param container
+ * @return true/false
  */
 FBlock.prototype.updateHiddenForm = function( container ) {
     var input = $('input', container);
     var hiddenInput = $('input[type=hidden]', this.blockQuery);
     var hiddenInputObj = {};
+    var returnValue = true;
+
+    // 파라메타 타입 객체 생성.
+    var paramType = {};
+    for(var i = 0; i < this.bType.paramName.length; i++) {
+        paramType[ this.bType.paramName[i] ] = this.bType.paramType[i];
+    }
 
     // 히든 인풋 생성.
     hiddenInput.each( function() {
@@ -204,11 +212,31 @@ FBlock.prototype.updateHiddenForm = function( container ) {
 
     // 컨테이너 인풋값으로 업데이트.
     input.each( function() {
-        var currentInput = $(this);
-        var hInput = hiddenInputObj[ currentInput.attr('data-paramname') ];
-        hInput.val( currentInput.val() );
+        var currentInput = $(this),
+            currentValue = currentInput.val(),
+            hParamName = currentInput.attr('data-paramname');
+        var hInput = hiddenInputObj[ hParamName ];
+
+        // 유효성 검사.
+        if( paramType[hParamName] == 'float' ) {
+            if( isNaN( parseFloat(currentValue ) ) ) {
+                returnValue = false;
+                return false;
+            }
+        }
+        else if( paramType[hParamName] == 'hex') {
+            if( isNaN( Number( currentValue) ) ) {
+                returnValue = false;
+                return false;
+            }
+        }
+
+        hInput.val( currentValue );
+
+
     })
 
+    return returnValue;
 };
 
 /**
@@ -293,7 +321,11 @@ FBlock.prototype.buttonEvent = function($btn, execFunc) {
                     label: 'Confirm',
                     cssClass: 'btn-warning',
                     action: function (dialog) {
-                        self.updateHiddenForm(container);
+                        var r = self.updateHiddenForm(container);
+                        if( !r ) {
+                            alert(' 잘못된 값이 입력되었습니다. ');
+                            return;
+                        }
                         $(document).trigger('blockModified'); // 블락 수정 이벤트 보냄.
                         self.updateTooltipInfo();
                         dialog.close();

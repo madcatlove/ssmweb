@@ -269,7 +269,8 @@
             },
             toHex: function(h, s, b, a) {
                 var rgb = this.toRGB(h, s, b, a);
-                return '#' + ((1 << 24) | (parseInt(rgb.r) << 16) | (parseInt(rgb.g) << 8) | parseInt(rgb.b)).toString(16).substr(1);
+                //return '#' + ((1 << 24) | (parseInt(rgb.r) << 16) | (parseInt(rgb.g) << 8) | parseInt(rgb.b)).toString(16).substr(1);
+                return '0x' + ((1 << 24) | (parseInt(rgb.r) << 16) | (parseInt(rgb.g) << 8) | parseInt(rgb.b)).toString(16).substr(1);
             },
             toHSL: function(h, s, b, a) {
                 h = h || this.value.h;
