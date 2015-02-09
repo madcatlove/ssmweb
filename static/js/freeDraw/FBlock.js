@@ -294,7 +294,8 @@ FBlock.prototype.buttonEvent = function($btn, execFunc) {
                     cssClass: 'btn-warning',
                     action: function (dialog) {
                         self.updateHiddenForm(container);
-                        $(document).trigger('blockModified');
+                        $(document).trigger('blockModified'); // 블락 수정 이벤트 보냄.
+                        self.updateTooltipInfo();
                         dialog.close();
                     }
                 }
@@ -302,6 +303,59 @@ FBlock.prototype.buttonEvent = function($btn, execFunc) {
         })
     }
 
+}
+
+
+/**
+ * 툴팁 정보 초기화.
+ */
+FBlock.prototype.initTooltipInfo = function() {
+    var blockHiddenInput = $('input[type=hidden]', this.blockQuery );
+    var stitle = [];
+
+    // 타이틀 업데이트를 위해 블락 input 정보를 긁어옴.
+    for(var i = 0; i < blockHiddenInput.length; i++) {
+        var item = blockHiddenInput.eq(i);
+        stitle.push( item.attr('data-paramname').toUpperCase() + ' : ' + item.val() );
+    }
+
+    var strStitle = stitle.join("\n");
+
+
+    // 툴팁 시작
+    this.blockQuery.attr('title', strStitle)
+        .tooltip({
+            placement : 'left',
+            container : 'body'
+        });
+
+    return this;
+}
+
+/**
+ * 블락 툴팁 업데이트
+ */
+FBlock.prototype.updateTooltipInfo = function() {
+
+    var blockHiddenInput = $('input[type=hidden]', this.blockQuery );
+    var stitle = [];
+
+    // 타이틀 업데이트를 위해 블락 input 정보를 긁어옴.
+    for(var i = 0; i < blockHiddenInput.length; i++) {
+        var item = blockHiddenInput.eq(i);
+        stitle.push( item.attr('data-paramname').toUpperCase() + ' : ' + item.val() );
+    }
+
+    var strStitle = stitle.join("\n");
+
+
+    // 툴팁 다시 계산.
+    this.blockQuery.attr('title', strStitle)
+        .attr('data-placement', 'right')
+        .tooltip('fixTitle')
+        .tooltip('hide');
+
+    return this;
 }
 
 /**

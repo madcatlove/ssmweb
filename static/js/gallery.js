@@ -29,6 +29,7 @@ function galleryLoader(page) {
                 galleryBlockData.push( JSON.parse( item.extraInfo ) ); // 블럭 뼈대 데이터 생성.
             }
 
+            /* 포토라마 이벤트 처리 */
             $fotorama.on('fotorama:show', function(e, foto, extra) {
                 var currentItem = foto.activeFrame;
 
@@ -53,13 +54,14 @@ function updateBlockRender( blockSeq ) {
     var blockTempItem = galleryBlockData[blockSeq];
     console.log('called updateBlockRender : ', blockSeq, blockTempItem);
 
-    var $stacklist = $('#stacklist');
+    var $stacklist = $('#stacklist'); // 스택 리스트 Division
     var blockStackData = [];
 
     // 스택 리스트 초기화.
     $stacklist.children().remove();
 
 
+    //-- 블락 데이터 추가 시작 --
     for(var i = 0; i < blockTempItem.length; i++) {
         var item = blockTempItem[i];
         var nBlock = recoverBlockdata( item, i);
@@ -69,6 +71,7 @@ function updateBlockRender( blockSeq ) {
         var toShortHTML = nBlock.toShortHTML();
         $stacklist.append( toShortHTML );
         nBlock.injectData( item.data );
+        nBlock.initTooltipInfo();
         blockStackData.push( nBlock );
     }
     doRender( blockStackData );
