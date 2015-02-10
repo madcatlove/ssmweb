@@ -7,6 +7,22 @@ $(document).ready( function() {
 
     var $blockList = $('#blocklist');
 
+    // stack top , stack bottom 높이 조정
+    var $stackTopImg = $('#stacklist_top');
+    var $stackBotImg = $('#stacklist_bottom');
+
+    var stackTopWidth = $stackTopImg.width() * 0.9;
+    var stackBotWidth = $stackBotImg.width() * 0.9;
+
+    $stackTopImg.css({
+        height : ((136.0/460.0) * stackTopWidth) + 'px'
+    });
+    $stackBotImg.css({
+        height : ((64.0/460.0) * stackBotWidth) + 'px'
+    })
+
+
+
     //----------- 블락 생성 -----------------
     var blockTypeList = Object.keys( FBlock.TYPE );
     for(var i = 0; i < blockTypeList.length; i++) {
@@ -17,12 +33,11 @@ $(document).ready( function() {
     }
 
     var blockListHeight = $blockList.height();
+    console.log('blockheight',blockListHeight);
     $('#stacklist').height( blockListHeight );
 
-
     // Drag & Drop 활성화
-    initMoveBlock( arrBlockList, arrStackList );
-
+    initMoveBlock( arrBlockList, arrStackList , blockListHeight );
 
     $(document).on('movedBlock', movedBlockListener);
     $(document).on('removedBlock', removedBlockListener);
