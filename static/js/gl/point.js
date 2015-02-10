@@ -38,9 +38,11 @@ sGL.prototype.run = function() {
 
 
         if( movedlist.length > 0 ) {
-            var item = movedlist[0].toJSON();
-            var point = getNewPoint( item );
-            self.scene.add(point);
+            for(var i = 0; i < movedlist.length; i++) {
+                var item = movedlist[i].toJSON();
+                var point = getNewPoint(item);
+                self.scene.add(point);
+            }
         }
 
     })

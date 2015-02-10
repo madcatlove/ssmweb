@@ -69,7 +69,6 @@ sGL.prototype.run = function() {
 
                 // 버텍스 2와 같다면.
                 if( self.VERTEX2 == item.blockType ) {
-                    console.log( ' 진입 ' );
                     tStack.push( item.toJSON() );
                     count++;
 
@@ -84,7 +83,7 @@ sGL.prototype.run = function() {
             }
             else{ // vertex만 집어 넣었을 땐 Point 찍음
                 if(self.VERTEX2 == item.blockType){
-                    var item = movedlist[0].toJSON();
+                    var item = movedlist[i].toJSON();
                     var point = getNewPoint( item );
                     self.scene.add(point);
                 }

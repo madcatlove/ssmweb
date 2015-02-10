@@ -77,7 +77,7 @@ sGL.prototype.run = function() {
             }
             else{ // vertex만 집어 넣었을 땐 Point 찍음
                 if(self.VERTEX2 == item.blockType){
-                    var item = movedlist[0].toJSON();
+                    var item = movedlist[i].toJSON();
                     var point = getNewPoint( item );
                     self.scene.add(point);
                 }
