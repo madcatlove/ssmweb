@@ -139,23 +139,13 @@ $(document).ready( function() {
  * @param isoDate
  */
 function dateNormalize( isoDate ) {
-    var d = new Date( isoDate);
-    d.setHours(d.getHours() );
+    // 2015-02-10 17:01:06
 
-    var year = d.getFullYear(),
-        month = d.getMonth() + 1,
-        day = d.getDate(),
-        hour = d.getHours(),
-        min = d.getMinutes();
+    var ymd = isoDate.split(' ')[0];
+    var hm = (isoDate.split(' ')[1]).split(':');
+    delete hm[2];
+    hm.length = 2;
 
-    if( isNaN(year) || isNaN(month) || isNaN(day) || isNaN(hour) || isNaN(min) ) {
-        return '0000/00/00 00:00';
-    }
-
-    if( month < 10 ) month = '0' + month;
-    if( day < 10 ) day = '0' + day;
-    if( hour < 10 ) hour = '0'+hour;
-    if( min < 10 ) min = '0'+min;
-
-    return [year,month,day].join('/') + ' ' + [hour,min].join(':');
+    ymd = ymd.replace(/\-/g, '/');
+    return [ymd, hm.join(':')].join(' ');
 }

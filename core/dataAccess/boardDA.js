@@ -81,7 +81,6 @@ var dataAccess = {
             queryStatement += ' WHERE MEMBER.seq = B.memberSeq ORDER BY B.parentSeq DESC , B.regdate ASC';
 
         db.getConnection( function(conn) {
-            console.log( queryStatement );
             conn.query( queryStatement, [sParam.tid, sParam.tid, sParam.tid], function(err, result) {
                 if( err ) {
                     console.error(' boardDA Error (getArticleList)', err);

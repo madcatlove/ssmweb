@@ -13,7 +13,8 @@ var pool = mysql.createPool({
     user : mysqlConfig.userid,
     password : mysqlConfig.userpwd,
     database : mysqlConfig.userdb,
-    charset : 'utf8_general_ci'
+    charset : 'utf8_general_ci',
+    dateStrings : true
 });
 
 var db = {

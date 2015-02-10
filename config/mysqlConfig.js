@@ -21,5 +21,5 @@ module.exports = {
     userid : 'ssm',
     userpwd : 'ssm2014',
     userdb : 'ssm',
-    dbPoolSize : 10
+    dbPoolSize : 10,
 }
