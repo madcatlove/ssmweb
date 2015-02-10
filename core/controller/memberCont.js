@@ -17,8 +17,8 @@ var controller = {
         var s_userpwd = u.trim(req.body.userpwd);
         var s_userpwd2 = u.trim(req.body.userpwd2);
 
-        u.assert( s_userid.length > 0 , null);
-        u.assert( s_userpwd > 0 && s_userpwd == s_userpwd2, null);
+        u.assert( s_userid.length > 0 , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
+        u.assert( s_userpwd > 0 && s_userpwd == s_userpwd2, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
 
         var member = {
             userid: s_userid,

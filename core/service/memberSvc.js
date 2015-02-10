@@ -47,7 +47,7 @@ var service = {
                             _callback(null, insertid);
                         }
                     }
-                });
+                })();
 
                 for(var i = 1; i <= 5; i++) {
                     (function( slotid) {
@@ -61,6 +61,7 @@ var service = {
         ],
             /* 최종 콜백 실행 */
             function finalExec(err, result) {
+                console.log(' execute final callback (memberSVC : insertMember() ) ');
                 resultCallback( result );
             }
 
