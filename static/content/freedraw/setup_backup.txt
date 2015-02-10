@@ -12,7 +12,7 @@ void setup() {
   VIEW_HEIGHT = #_HEIGHT_#;
   size(VIEW_WIDTH, VIEW_HEIGHT, P3D);
   myCam = new Camera(200, true);
-  myCam.setTarget( 100, -100, 100 );
+  myCam.setTarget( 0, 0, 300 );
   hint(ENABLE_OPENGL_4X_SMOOTH);
 }
 
