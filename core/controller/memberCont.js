@@ -89,8 +89,8 @@ var controller = {
         var s_userpwd = u.trim( req.body.userpwd);
 
 
-        u.assert( s_userid.length > 0 );
-        u.assert( s_userpwd.length > 0 );
+        u.assert( s_userid.length > 0 , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
+        u.assert( s_userpwd.length > 0 , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
 
         var sParam = {
             userid : s_userid,
@@ -118,6 +118,19 @@ var controller = {
         memberService.removeMemberSession(req);
         res.json( u.result(true, false) );
     },
+
+    /* 튜토리얼 가이드 클리어 */
+    clearTutorialGuide : function(req, res) {
+        var sess = req.session;
+
+        u.assert( sess  , u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+        u.assert( sess.member ,u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+
+        memberService.clearTutorialGuide( sess.member, function(result) {
+            res.json(u.result(result) );
+        })
+
+    }
 }
 
 /* EXPORT */
