@@ -13,6 +13,7 @@
 
   background(0);
   translate(width/2, height/2);
+  gridHelper(100);
   pushMatrix();
   setupAxis();
 
