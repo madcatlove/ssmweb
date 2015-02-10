@@ -86,11 +86,19 @@ function procMemberLogin() {
 }
 
 function procMemberLogout() {
+    var pathName = document.location.pathname;
+
 
     urlReq.get('/member/logout', {}, function(result) {
         if( !result.error) {
             alert(' 정상적으로 로그아웃 되었습니다. ');
-            window.location.reload();
+
+            if( /(tutorial|freedraw)/i.test(pathName) ) {
+                window.location.href = '/';
+            }
+            else {
+                window.location.reload();
+            }
         }
     })
 
