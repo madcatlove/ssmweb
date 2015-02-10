@@ -135,7 +135,12 @@ dragDropBlockList.prototype.eventRun = function() {
     var trashAppend = function(item) {
         var blist = $('#blocklist').width();
         console.log( blist );
-        var $handler = ( $('div', $trash).length ) ? $('div', $trash).eq(0) : $("<div />").css('display','inline').addClass('text-left').appendTo($trash);
+        var $handler = ( $('div', $trash).length ) ? $('div', $trash).eq(0) : $("<div />").css({
+            'display' : 'inline-block',
+            'width' : (blist+10) + 'px'
+        }).addClass('text-left').appendTo($trash);
+
+
         item.appendTo( $handler );
     }
 

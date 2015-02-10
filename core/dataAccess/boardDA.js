@@ -63,7 +63,7 @@ var dataAccess = {
         var limitIdentifier = ''+ parseInt(sParam.startOffset) + ',' + parseInt(sParam.countOffset);
 
         var queryStatement = '';
-            queryStatement += ' SELECT B.*, MEMBER.userid FROM';
+            queryStatement += " SELECT B.*, CONVERT_TZ(B.regdate, '+00:00', '+09:00') `cregdate`, MEMBER.userid FROM";
             queryStatement += ' (';
             //-- 부모글만 가져오는 쿼리
             queryStatement += ' (SELECT * FROM qnaBoard WHERE tutorialSeq = ? AND seq = parentSeq ORDER BY seq DESC LIMIT '+limitIdentifier+')'
@@ -81,7 +81,7 @@ var dataAccess = {
             queryStatement += ' WHERE MEMBER.seq = B.memberSeq ORDER BY B.parentSeq DESC , B.regdate ASC';
 
         db.getConnection( function(conn) {
-
+            console.log( queryStatement );
             conn.query( queryStatement, [sParam.tid, sParam.tid, sParam.tid], function(err, result) {
                 if( err ) {
                     console.error(' boardDA Error (getArticleList)', err);
@@ -122,7 +122,7 @@ var dataAccess = {
      */
     getArticleBySeq : function(bid, resultCallback) {
 
-        var queryStatement = 'SELECT * FROM qnaBoard WHERE seq = ?';
+        var queryStatement = "SELECT *, CONVERT_TZ(regdate, '+00:00', '+09:00') `cregdate` FROM qnaBoard WHERE seq = ?";
 
         db.getConnection( function(conn) {
             conn.query( queryStatement, [bid], function(err, result) {

@@ -44,7 +44,7 @@ function blockDataLoader() {
                         //---- //아이템 이름 긁어옴 ------
 
                         // 시간 수정.
-                        item.regdate = dateNormalize( item.regdate );
+                        item.regdate = dateNormalize( item.cregdate );
 
                         var rowData = $tableBody.tmpl( item );
                         console.log( rowData );
@@ -125,7 +125,7 @@ function blockDataSaver() {
                         //---- //아이템 이름 긁어옴 ------
 
                         // 시간 수정.
-                        item.regdate = dateNormalize( item.regdate );
+                        item.regdate = dateNormalize( item.cregdate );
 
 
                         var rowData = $tableBody.tmpl( item );
