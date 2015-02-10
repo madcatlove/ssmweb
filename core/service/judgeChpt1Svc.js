@@ -17,25 +17,33 @@ var judgeChpt1 = {
 
         var messages = [];
 
-        var block = data[0]; // 포스트를 통하여 넘어온 블럭 데이터들중 가장 처음 블럭
-        var sPoint = extraInfo.startpoint; // 데이터베이스의 엑스트라 인포에서 시작점
+        var points = extraInfo.points;
 
-        /**
-         * 데이터베이스에서의 블럭 타입과 넘어온 데이터의 블럭 타입이 일치하는지 확인하고
-         * float으로 형변환하여 x,y 좌표가 맞는지 확인한다
-         */
+        for (var i = 0 ; i < data.length ; i ++) {
+            if (data[i].blockType == jUtils.VERTEX2) {
 
-        if (block.blockType != jUtils.VERTEX2) {
+                var cmpVals = [];
 
-            messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
+                cmpVals.push([data[i].data.x, points[i].x]);
+                cmpVals.push([data[i].data.y, points[i].y]);
 
-        } else if (!jMath.isEqualFloat([[block.data.x, sPoint.x], [block.data.y, sPoint.y]])) {
+                if (!jMath.isEqualFloat(cmpVals)) {
 
-            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
-////
+                    messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
+                    break;
+
+                }
+
+            } else {
+
+                messages.push(jUtils.MSG_WRONG_BLOCK_TYPE);
+
+            }
+
         }
 
         callback(messages);
+
     },
 
     /**
