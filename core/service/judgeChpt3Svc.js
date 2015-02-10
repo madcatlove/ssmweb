@@ -472,7 +472,7 @@ var judgeChpt3 = {
 
             }
 
-            if (jMath.isEqualFloat(cmpVals)) {
+            if (!jMath.isEqualFloat(cmpVals)) {
 
                 messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
                 break;
@@ -486,7 +486,7 @@ var judgeChpt3 = {
     },
 
     /**
-     * 15) Spot Light
+     * 16) Spot Light
      * 1. 입력 패러미터 비교
      * @param extraInfo
      * @param data
@@ -499,6 +499,9 @@ var judgeChpt3 = {
         var spotLight = extraInfo.spotLight;
         var lightPos = extraInfo.lightPos;
         var lightDir = extraInfo.lightDir;
+
+        console.log("datainput",data[0]);
+        console.log('extrainfo /' + extraInfo.spotLight);
 
         for (var i = 0 ; i < data.length ; i ++) {
 
@@ -531,7 +534,7 @@ var judgeChpt3 = {
 
             }
 
-            if (jMath.isEqualFloat(cmpVals)) {
+            if (!jMath.isEqualFloat(cmpVals)) {
 
                 messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
                 break;
