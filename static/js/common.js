@@ -141,7 +141,7 @@ $(document).ready( function() {
 function dateNormalize( isoDate ) {
     // 2015-02-10 17:01:06
 
-    if( typeof isoDate === 'undefined' ) {
+    if( typeof isoDate === 'undefined' || !isoDate ) {
         return '0000-00-00 00:00';
     }
 
