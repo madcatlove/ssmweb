@@ -55,6 +55,7 @@ function updateBlockRender( blockSeq ) {
     console.log('called updateBlockRender : ', blockSeq, blockTempItem);
 
     var $stacklist = $('#stacklist'); // 스택 리스트 Division
+    var stacklist_width = $stacklist.width();
     var blockStackData = [];
 
     // 스택 리스트 초기화.
@@ -72,6 +73,8 @@ function updateBlockRender( blockSeq ) {
         $stacklist.append( toShortHTML );
         nBlock.injectData( item.data );
         nBlock.initTooltipInfo();
+        nBlock.blockQuery.css('width', stacklist_width);
+        console.log(' width => ', stacklist_width);
         blockStackData.push( nBlock );
     }
     doRender( blockStackData );
