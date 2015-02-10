@@ -88,6 +88,7 @@ dragDropBlockList.prototype.eventRun = function() {
         drop : function( event, ui ) {
             var blockSeq = ui.draggable.attr('data-blockseq');
             _self.movedlist.push( _self.getBlockBySeq( blockSeq ) );
+            ui.draggable.attr('data-isstacked', '1');
             trashAppend(ui.draggable );
 
 
@@ -120,7 +121,7 @@ dragDropBlockList.prototype.eventRun = function() {
             }
             _self.movedlist.pop();
 
-
+            ui.draggable.attr('data-isstacked', '0');
             stackAppend( ui.draggable );
 
             /* 이벤트 발생 */
@@ -132,7 +133,9 @@ dragDropBlockList.prototype.eventRun = function() {
 
 
     var trashAppend = function(item) {
-        var $handler = ( $('ul', $trash).length ) ? $('div', $trash) : $("<div />").css('display','inline').appendTo($trash);
+        var blist = $('#blocklist').width();
+        console.log( blist );
+        var $handler = ( $('div', $trash).length ) ? $('div', $trash).eq(0) : $("<div />").css('display','block').appendTo($trash);
         item.appendTo( $handler );
     }
 

@@ -38,7 +38,7 @@ sBlock.prototype.toHTML = function() {
     var imageInfo = imageMapper( blockType );
 
     /* 블락 뼈대 */
-    var s =  $('<div class="blockitem" data-blockseq="'+ this.blockSeq +'" />');
+    var s =  $('<div class="blockitem" data-blockseq="'+ this.blockSeq +'" />').attr('data-isstacked', '0');
     s.css({
         'display' : 'inline-block'
     })
@@ -248,6 +248,13 @@ function createBlockInfo( blockType, blockName, numParams, paramName) {
  * @param $blockObj
  */
 function createModalWindowForBlock( param, paramSize, $blockObj ) {
+
+    var isstacked = $blockObj.attr('data-isstacked') || '0';
+    if( isstacked == '1') {
+        alert(' 스택 내에서는 값을 변경 할 수 없습니다. ');
+        return;
+    }
+
 
     var container = $('<div />');
     var hiddenFormValue = {};
