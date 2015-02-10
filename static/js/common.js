@@ -141,6 +141,10 @@ $(document).ready( function() {
 function dateNormalize( isoDate ) {
     // 2015-02-10 17:01:06
 
+    if( typeof isoDate === 'undefined' ) {
+        return '0000-00-00 00:00';
+    }
+
     var ymd = isoDate.split(' ')[0];
     var hm = (isoDate.split(' ')[1]).split(':');
     delete hm[2];
