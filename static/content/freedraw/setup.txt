@@ -255,6 +255,21 @@ void setupAxis() {
   box(5,10,5);
   popMatrix();
 
+  // axis indicator
+  pushMatrix();
+  for(int i=1; i<100; i++;){
+    translate(50,0,0);
+    box(1,10,1);
+  }
+  popMatrix();
+  pushMatrix();
+  for(int i=1; i<100; i++;){
+     translate(-50,0,0);
+     box(1,10,1);
+  }
+  popMatrix();
+
+
   // Y축
   fill(0,255,0);
   box(1,10000,1);
@@ -263,13 +278,43 @@ void setupAxis() {
   box(10,5,5);
   popMatrix();
 
+    // axis indicator
+    pushMatrix();
+    for(int i=1; i<100; i++;){
+      translate(0,-50,0);
+      box(10,1,1);
+    }
+    popMatrix();
+    pushMatrix();
+    for(int i=1; i<100; i++;){
+       translate(0,50,0);
+       box(10,1,1);
+    }
+    popMatrix();
+
   // Z축
   fill(0,0,255);
   box(1,1,10000);
   pushMatrix();
   translate(0,0,25);
-  box(10,5,5);
+  box(5,10,5);
   popMatrix();
+
+    // axis indicator
+    pushMatrix();
+    for(int i=1; i<100; i++;){
+      translate(0,0,50);
+      box(1,10,1);
+    }
+    popMatrix();
+    pushMatrix();
+    for(int i=1; i<100; i++;){
+       translate(0,0,-50);
+       box(1,10,1);
+    }
+    popMatrix();
+
+
   fill(255);
 }
 
@@ -320,4 +365,12 @@ void drawLine(float x1, float y1, float z1, float x2, float y2, float z2) {
   // draw
   box(distance, 2, 2);
   popMatrix();
+}
+
+void gridHelper(int size){
+  int gridSize = size;
+  for (int i = 0; i < width/gridSize; i++)
+    line(i*gridSize, 0, i*gridSize, height);
+  for (int i = 0; i < height/gridSize; i++)
+    line(0, i*gridSize, width, i*gridSize);
 }

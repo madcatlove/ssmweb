@@ -123,7 +123,7 @@ FBlock.prototype.toShortHTML = function() {
             'position' : 'relative',
             'display' : 'inline-block',
             'z-index' : 2,
-            'width' : parentWidth + 'px',
+            //'width' : parentWidth + 'px',
             // 'height' : (parentWidth * imageRatio) + 'px'
         });
 
@@ -401,8 +401,6 @@ FBlock.prototype.getProcessingCode = function() {
 
 FBlock.prototype.injectData = function( data ) {
     var hiddenInput = $('input[type=hidden]', this.blockQuery);
-    console.log('injectdata', hiddenInput);
-
     var inputObjectManager = {};
 
     for( var i = 0; i < hiddenInput.length; i++) {
