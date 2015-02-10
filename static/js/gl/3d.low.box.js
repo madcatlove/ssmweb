@@ -138,6 +138,13 @@ sGL.prototype.run = function() {
                     }
                 }
             }
+            else{ // vertex만 집어 넣었을 땐 Point 찍음
+                if(self.VERTEX3 == item.blockType){
+                    var item = movedlist[0].toJSON();
+                    var point = getNewPoint( item );
+                    self.scene.add(point);
+                }
+            }
         } /* end for */
 
     })
@@ -145,6 +152,17 @@ sGL.prototype.run = function() {
 
 
 }
+
+
+var getNewPoint = function(item) {
+    var geometry = new THREE.SphereGeometry( 0.1, 100, 100 );
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var sphere = new THREE.Mesh( geometry, material );
+    sphere.position.set( item.data.x,item.data.y, item.data.z);
+
+    return sphere;
+}
+
 
 var getNewLine = function( item1, item2 ) {
     var material = new THREE.LineBasicMaterial({ color: 0xffff00 });
