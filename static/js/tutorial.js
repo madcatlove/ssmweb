@@ -220,7 +220,7 @@ function procJudge( blocks_JSON, tid ) {
                         label: ' NEXT STEP ',
                         cssClass: 'btn-info',
                         action: function (dialog) {
-                            if( globalParam.nextTid ) {
+                            if( globalParam.nextTid == 255 ) {
                                 dialog.setMessage(' 마지막 단계를 완료하셨습니다. Freedraw 에서 자유롭게 그려보세요. ');
                             } else {
                                 window.location.href = '/tutorial/' + globalParam.nextTid;
