@@ -14,10 +14,32 @@
 
 #stacklist {
     width: 90%;
-    background-image: url('/static/images/blocks/stacklist.jpg');
+    background-image: url('/static/images/freeblocks/stack_mid.png');
     background-repeat : no-repeat;
     background-position: top center;
     background-size: 80% 100%;
     padding-top: 25%;
     text-align : center;
+    margin: 0;
+}
+
+#stacklist_top {
+    width: 90%;
+    background-image: url('/static/images/freeblocks/stack_top.png');
+    background-repeat : no-repeat;
+    background-position: top center;
+    background-size: 80% 100%;
+    padding-top: 10px;
+    text-align : center;
+}
+
+#stacklist_bottom {
+    width: 90%;
+    background-image: url('/static/images/freeblocks/stack_bot.png');
+    background-repeat : no-repeat;
+    background-position: top center;
+    background-size: 80% 100%;
+    padding-top: 25%;
+    text-align : center;
+    margin: 0;
 }
