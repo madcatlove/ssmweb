@@ -1,5 +1,10 @@
-
-function initMoveBlock( blockList, stackList ) {
+/**
+ * Moveblock 초기화 함수
+ * @param blockList
+ * @param stackList
+ * @param initStacklistHeight
+ */
+function initMoveBlock( blockList, stackList, initStacklistHeight ) {
 
     var $blocklist = $('#blocklist'),
         $stacklist = $('#stacklist');
@@ -38,6 +43,9 @@ function initMoveBlock( blockList, stackList ) {
         }
     })
 
+    /**
+     * 스택리스트 높이 유동조절
+     */
     function stackListAutoHeight() {
 
         var stackHandler = $('#stackHandler', $stacklist);
@@ -45,10 +53,17 @@ function initMoveBlock( blockList, stackList ) {
 
         if (stackHandler.height() > stackList.height()) {
             stackList.height(
-                stackHandler.height() + 60
-            )
-
+                stackHandler.height()
+            );
+        } else {
+            if( stackHandler.height() > initStacklistHeight ) {
+                stackList.height(
+                    stackHandler.height()
+                )
+            }
         }
+
+
     }
 
     // 스택에있는거 버릴수있게.
@@ -57,9 +72,30 @@ function initMoveBlock( blockList, stackList ) {
         //activeClass : 'enableRemoveItem',
         drop : function(evt, ui) {
 
+            // 중간 블럭 제거 방지.
+            var currentStackSequence = parseInt(ui.draggable.attr('data-blockseq'));
+            if( stackList.length != currentStackSequence+1) {
+                BootstrapDialog.show({
+                    type : BootstrapDialog.TYPE_WARNING,
+                    title : 'Error !!',
+                    message : '중간에 있는 블럭은 제거 할 수 없습니다. ',
+                    buttons: [{
+                        label: ' 닫기 ',
+                        cssClass: 'btn-primary',
+                        action: function(dialog){
+                            dialog.close();
+                        }
+                    }]
+                });
+                return false;
+            }
+
             ui.draggable.remove();
             stackList.pop();
             console.log( stackList );
+            // 높이 조정 시작.
+            stackListAutoHeight();
+
             $(document).trigger('removedBlock', {data : stackList});
         }
     })

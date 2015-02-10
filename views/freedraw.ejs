@@ -28,9 +28,11 @@
 
             <div class="col-md-7" style="height: 100%;">
                 <div style="height: 100%">
+                    <div id="stacklist_top"></div>
                     <div id="stacklist">
                         <!--<button id="debugStack">stackJSON</button>-->
                     </div>
+                    <div id="stacklist_bottom"></div>
                 </div>
                 <!--<button onclick="void( console.log( JSON.stringify(tutorialBlock.blocksToJSON()) ));">toJSON</button>-->
             </div>
@@ -44,11 +46,27 @@
         <!-- 우측 렌더링 부분 -->
         <div class="col-md-7" style="height: 100%;" >
             <div style="position: relative; height: 100%;">
+
+                <!-- 실제 렌더러 -->
                 <div style="z-index:2; position:relative; background: #000000; border-radius: 10px; width:100%; height:100%;"
                      id="srender">
                     <!--<canvas id="canvasRender"></canvas>-->
                 </div>
-                <div style="z-index:3; position:absolute; padding:5px; top:0;"><h2 style="color: #cccccc;">Renderer</h2></div>
+
+                <!-- 렌더러 표시 -->
+                <div style="z-index:3; position:absolute; padding:5px; top:0;">
+                    <h2 style="color: #cccccc;">Renderer</h2>
+                </div>
+
+                <!-- 축 설명 -->
+                <div style="z-index:3; position: absolute; bottom:0; right:0;">
+                    <h4>
+
+                        <span class="text-danger"><b>X</b></span> /
+                        <span class="text-success"><b>Y</b></span> /
+                        <span class="text-primary"><b>Z</b></span>
+                    </h4>
+                </div>
 
             </div>
         </div>

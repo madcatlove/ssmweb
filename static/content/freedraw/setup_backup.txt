@@ -12,7 +12,7 @@ void setup() {
   VIEW_HEIGHT = #_HEIGHT_#;
   size(VIEW_WIDTH, VIEW_HEIGHT, P3D);
   myCam = new Camera(200, true);
-  myCam.setTarget( 100, -100, 100 );
+  myCam.setTarget( 0, 0, 300 );
   hint(ENABLE_OPENGL_4X_SMOOTH);
 }
 
@@ -135,8 +135,8 @@ class Camera
 
   void orbit(float dx, float dy)
   {
-    this.rotCamY(-dx *rotationSpeed);
-    this.rotCamZ(-dy *rotationSpeed);
+    this.rotCamZ(-dx *rotationSpeed);
+    this.rotCamX(-dy *rotationSpeed);
   }
 
   void setTarget(float x, float y, float z)
