@@ -16,6 +16,7 @@ function initMoveBlock( blockList, stackList ) {
     $stacklist.droppable( {
         accept : '#blocklist div.blockitem',
         drop : function(evt, ui) {
+
             var cloneItem = $(ui.draggable).clone();
             var blockSeq = cloneItem.attr('data-blockSeq');
             var originalBlock = blockList[ blockSeq ];
@@ -32,9 +33,23 @@ function initMoveBlock( blockList, stackList ) {
             //--- 스택 바구니에(뷰) 추가 ---
             appendItemToStack( nBlockQuery  );
             enableStackItemDraggable( nBlockQuery );
+            stackListAutoHeight();
 
         }
     })
+
+    function stackListAutoHeight() {
+
+        var stackHandler = $('#stackHandler', $stacklist);
+        var stackList = $('#stacklist');
+
+        if (stackHandler.height() > stackList.height()) {
+            stackList.height(
+                stackHandler.height() + 60
+            )
+
+        }
+    }
 
     // 스택에있는거 버릴수있게.
     $blocklist.droppable( {

@@ -17,12 +17,11 @@ $(document).ready( function() {
     }
 
     var blockListHeight = $blockList.height();
+    console.log('blockheight',blockListHeight);
     $('#stacklist').height( blockListHeight );
-
 
     // Drag & Drop 활성화
     initMoveBlock( arrBlockList, arrStackList );
-
 
     $(document).on('movedBlock', movedBlockListener);
     $(document).on('removedBlock', removedBlockListener);
