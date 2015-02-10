@@ -123,6 +123,15 @@ var service = {
         if( sess.member.userid != member.userid ) return false;
         if( sess.member.seq != member.seq ) return false;
         return true;
+    },
+
+    /* 튜토리얼 가이드 클리어 */
+    clearTutorialGuide : function(member, resultCallback) {
+        u.assert( member  , u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode);
+
+        memberDA.clearTutorialGuide(member, function(result) {
+            resultCallback(result);
+        })
     }
 
 }

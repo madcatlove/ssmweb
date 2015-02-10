@@ -131,11 +131,13 @@ function initTutorialInfo(tid) {
 $(document).ready( function() {
 
     // 시작하자마자 모달창 띄움.
-    $('#tutorialModal').modal({
-       backdrop: 'static',
-       //keyboard: false,
-       show: true
-    });
+    if( typeof isBlocked === 'undefined') {
+        $('#tutorialModal').modal({
+            backdrop: 'static',
+            //keyboard: false,
+            show: true
+        });
+    }
 
     $('.selectpicker').change( function(e) {
         var current = $(this).find('option:selected');
@@ -218,7 +220,11 @@ function procJudge( blocks_JSON, tid ) {
                         label: ' NEXT STEP ',
                         cssClass: 'btn-info',
                         action: function (dialog) {
-                            window.location.href = '/tutorial/' + globalParam.nextTid;
+                            if( globalParam.nextTid == 255 ) {
+                                dialog.setMessage(' 마지막 단계를 완료하셨습니다. Freedraw 에서 자유롭게 그려보세요. ');
+                            } else {
+                                window.location.href = '/tutorial/' + globalParam.nextTid;
+                            }
                         }
                     },
                 ] /* end button */

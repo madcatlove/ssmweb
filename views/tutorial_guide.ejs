@@ -1,0 +1,264 @@
+<%- include header.ejs %>
+<link rel="stylesheet" href="/static/css/bootstrap-select.css" />
+<style type="text/css">
+    html, body {
+        overflow : hidden;
+    }
+</style>
+
+<script type="text/javascript">
+    var isBlocked = true;
+    SyntaxHighlighter.all();
+    var globalParam = {
+        tid : <%=tid%>,
+        nextTid : <%=nextTid%>
+    }
+    var vSGL = null;
+    $(document).ready( function() {
+
+        initTutorialInfo(<%=tid%>);
+
+        vSGL = new sGL( $('#srender') );
+        vSGL.initAll();
+        vSGL.insertDOM();
+        vSGL.renders();
+        vSGL.run();
+
+        SyntaxHighlighter.all();
+    })
+</script>
+
+
+
+<div class="container-fluid" style="padding-top:60px; height:100%;">
+
+    <div class="row" style="height: 100%;">
+
+
+        <!-- 좌측 메뉴 -->
+        <div class="col-md-3 block_leftside" style="height: 100%;">
+
+            <!-- 과제 메뉴 -->
+            <div style="padding-bottom: 7px;">
+                <select class="selectpicker" data-width="100%">
+
+                    <%
+                    if( tutorialChapterList ) {
+                            for(var key in  tutorialChapterList) {
+                    %>
+                    <optgroup label="<%=key%>">
+
+                        <% for( var i = 0; i < tutorialChapterList[key].length; i++) {
+                            var item = tutorialChapterList[key][i];
+                        %>
+                        <% if( tutorialProgressList[ item.seq ] ) { %>
+                        <option data-icon="glyphicon glyphicon-ok-sign" data-tid="<%=item.seq%>" <%=(tid==item.seq) ? 'selected="selected"' : ''%>><%=item.title%></option>
+                        <% } else { %>
+                        <option data-tid="<%=item.seq%>" <%=(tid==item.seq) ? 'selected="selected"' : ''%>><%=item.title%></option>
+                        <% }%>
+                        <% } %>
+                    </optgroup>
+                    <% }  } %>
+                </select>
+            </div>
+            <!-- // 과제메뉴 -->
+
+            <!-- 가이드 정보 -->
+            <div class="panel panel-info" id="panelInfoGuide">
+                <div class="panel-heading">
+                    <h3 class="panel-title tutorialTitle">  </h3>
+                </div>
+
+                <div class="panel-body guideContent">
+                    <div style="overflow:hidden; word-break: break-all; padding:0; position:relative;"></div>
+                </div>
+            </div>
+            <!-- //가이드 정보 -->
+
+            <!-- 해볼것 -->
+            <div class="panel panel-success" id="panelInfoPractice">
+                <div class="panel-heading">
+                    <h3 class="panel-title"> 직접 한번 해보세요 </h3>
+                </div>
+
+                <div class="panel-body practiceContent">
+
+                </div>
+            </div>
+            <!-- // 해볼것 -->
+
+            <div class="col-md-12 text-right" id="panelInfoButton">
+                <br />
+                <button class="btn btn-info" onclick="void(procMoveBoard(<%=tid%>, 1));">
+                    <span class="glyphicon glyphicon-comment"></span> 질문게시판
+                </button>
+
+                <button class="btn btn-info" onclick="void(procJudge( tutorialBlock.blocksToJSON(), <%=tid%>));">
+                    <span class="glyphicon glyphicon-play"></span> 실행
+                </button>
+            </div>
+
+        </div>
+        <!-- //좌측 메뉴 -->
+
+
+        <!-- 중앙 블락 조합 -->
+        <div class="col-md-5" style="overflow-y: scroll; height:100%;">
+
+            <div class="col-md-5" style="height: 100%">
+                <!-- 블락 리스트 -->
+                <div style="border-right: 1px solid #cccccc; height: 100%;">
+                    <div id="blocklist">
+                        <h1 style="text-align: center; opacity: 0.5;" >Blocks </h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7" style="height: 100%;">
+                <div style="height: 100%">
+                    <div id="stacklist" style="margin: auto;">
+
+                    </div>
+                </div>
+                <!--<button onclick="void( console.log( JSON.stringify(tutorialBlock.blocksToJSON()) ));">toJSON</button>-->
+            </div>
+        </div>
+        <!-- // 중앙 블락 조합 -->
+
+
+
+
+
+        <!-- 우측 렌더링 부분 -->
+        <div class="col-md-4" style="height: 100%;" id="panelInfoRender">
+            <div style="position: relative; height: 60%;">
+                <div style="z-index:2; position:relative; background: #000000; border-radius: 10px; width:100%; height:100%;"
+                     id="srender"></div>
+                <div style="z-index:3; position:absolute; padding:5px; top:0;"><h2 style="color: #cccccc;">Renderer</h2></div>
+
+            </div>
+
+            <div style="position: relative; height: 35%;">
+                <div style="z-index:2; position:relative; background: #000000; border-radius: 10px; margin-top: 1%; width:100%; height:100%;"
+                     id="spreview"></div>
+                <div style="z-index:3; position:absolute; top:0; padding:5px;"><h2 style="color: #cccccc;">Expected</h2></div>
+
+            </div>
+        </div>
+        <!-- // 우측 렌더링 부분 -->
+
+
+    </div>
+</div>
+
+
+<!-- 튜토리얼 모달창 -->
+<!-- Modal -->
+<div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="tutorialModalWindow" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"> 튜토리얼 가이드 </h4>
+            </div>
+            <div class="modal-body guideContent">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- // 튜토리얼 모달창 -->
+
+
+<script type="text/javascript">
+    $(document).ready( function() {
+        /* select picker 활성화 */
+        $('.selectpicker').selectpicker({
+            style: 'btn-info',
+            size: 100
+        });
+
+        console.log(' ddd ');
+        startIntro();
+    })
+
+    function clearGuideStep() {
+
+        urlReq.put('/member/clearTutorial', {}, function(result) {
+
+            if( result.error ) {
+                alert( result.data );
+                return;
+            }
+            else {
+                window.location.href = '/tutorial/1';
+                return;
+            }
+
+        })
+
+    }
+
+
+    function startIntro(){
+        var intro = introJs();
+
+        intro.oncomplete( function() { /* DONE BUTTON */
+            clearGuideStep();
+        })
+
+        intro.onexit( function() { /* Skip Button */
+            clearGuideStep();
+        })
+
+        intro.setOptions({
+            steps: [
+                {
+                    element: $('select.selectpicker').parent().get(0),
+                    intro: "This is a <b>bold</b> tooltip."
+                },
+                {
+                    element: $('#panelInfoGuide').get(0),
+                    intro: "여기는 가이드 정보임 ㅋ ",
+                    position: 'right'
+                },
+                {
+                    element: $('#panelInfoPractice').get(0),
+                    intro: ' 실습해보세요 정보임 ㅋ ',
+                    position: 'right'
+                },
+                {
+                    element: $('#panelInfoButton').get(0),
+                    intro: "키읔. 질게랑 ㅋ 실행 ㅋ",
+                    position: 'top'
+                },
+                {
+                    element: '#blocklist',
+                    intro: ' 블락 리스트에염 ',
+                    position: 'left'
+                },
+
+                {
+                    element: '#stacklist',
+                    intro: ' 스택 리스트에요 ',
+                    position: 'left'
+                },
+
+                {
+                    element: '#panelInfoRender',
+                    intro: ' 렌더링 부분이에요 ',
+                    position: 'left'
+                },
+
+            ]
+        });
+        intro.start();
+    }
+
+</script>
+
+
+<%- include footer.ejs %>
