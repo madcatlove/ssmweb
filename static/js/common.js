@@ -140,7 +140,7 @@ $(document).ready( function() {
  */
 function dateNormalize( isoDate ) {
     var d = new Date( isoDate);
-    d.setHours(d.getHours() + 9 );
+    d.setHours(d.getHours() );
 
     var year = d.getFullYear(),
         month = d.getMonth() + 1,

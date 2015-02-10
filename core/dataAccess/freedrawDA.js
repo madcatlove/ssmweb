@@ -13,7 +13,7 @@ var dataAccess = {
      */
     getSlotInfoByMember : function( member , resultCallback) {
 
-        var queryStatement = 'SELECT * FROM freeBlock WHERE memberSeq = ? ORDER BY slotSeq ASC';
+        var queryStatement = "SELECT *, CONVERT_TZ(regdate, '+00:00', '+09:00') `cregdate` FROM freeBlock WHERE memberSeq = ? ORDER BY slotSeq ASC";
 
         db.getConnection( function(conn) {
             conn.query( queryStatement, [member.seq], function(err, result) {
@@ -35,7 +35,7 @@ var dataAccess = {
      * @param resultCallback
      */
     getSlotInfoBySlotid : function( sParam, resultCallback) {
-        var queryStatement = 'SELECT * FROM freeBlock WHERE memberSeq = ? AND slotSeq = ?';
+        var queryStatement = "SELECT *, CONVERT_TZ(regdate, '+00:00', '+09:00') `cregdate` FROM freeBlock WHERE memberSeq = ? AND slotSeq = ?";
 
         var member = sParam.member;
         var slotid = sParam.slotid;

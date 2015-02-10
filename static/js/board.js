@@ -102,7 +102,7 @@ sBoard.prototype.render = function() {
         var parentSeq = this.parentArticle[key].seq;
 
         // -- append parent --
-        this.parentArticle[key].regdate = dateNormalize(this.parentArticle[key].regdate);
+        this.parentArticle[key].regdate = dateNormalize(this.parentArticle[key].cregdate);
 
         $('#parentList').tmpl( this.parentArticle[key] ).appendTo( $('.panel-group'));
 
@@ -110,7 +110,7 @@ sBoard.prototype.render = function() {
         //-- append child --
         if( this.childArticle.hasOwnProperty(parentSeq) ) {
             for( var i = 0; i < this.childArticle[parentSeq].length; i++) {
-                 this.childArticle[parentSeq][i].regdate = dateNormalize(this.childArticle[parentSeq][i].regdate);
+                 this.childArticle[parentSeq][i].regdate = dateNormalize(this.childArticle[parentSeq][i].cregdate);
                  $('#childList').tmpl( this.childArticle[parentSeq][i] ).appendTo( $('#collapse'+parentSeq+' .panel-body') );
             }
         }
