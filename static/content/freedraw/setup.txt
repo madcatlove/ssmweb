@@ -135,8 +135,8 @@ class Camera
 
   void orbit(float dx, float dy)
   {
-    this.rotCamZ(-dx *rotationSpeed);
-    this.rotCamX(-dy *rotationSpeed);
+    this.rotCamY(-dx *rotationSpeed);
+    this.rotCamZ(-dy *rotationSpeed);
   }
 
   void setTarget(float x, float y, float z)
