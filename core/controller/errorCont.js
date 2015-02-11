@@ -32,10 +32,11 @@ var controller = {
      */
     errorHandler : function(err, req, res, next) {
 
-        console.log( app.get('env') );
-        console.error(' //----- ERROR HANDLER ------// ');
-        console.error( err );
-        console.error( err.stack );
+        if( err && err.hasOwnProperty('status') && err.status != 404) {
+            console.error(' //----- ERROR HANDLER ------// ');
+            console.error(err);
+            console.error(err.stack);
+        }
 
         if( !err.hasOwnProperty('status') || typeof err.status === 'undefined' ) {
             err.status = 500;

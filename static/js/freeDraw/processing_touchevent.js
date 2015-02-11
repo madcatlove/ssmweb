@@ -53,7 +53,10 @@ function setLastY(value){
 function touchStart(event) {
     event.preventDefault();
 
+    //alert(' 진입 ');
     var countFinger = event.touches.length;
+    //alert( countFinger );
+
 
     if( countFinger == 1 ) {
         _MOTION_STATE = 1;

@@ -115,6 +115,9 @@ var doRender = function(stackList) {
 
             var isCanvas = $('#srender canvas');
 
+            if( typeof processingInstance !== 'undefined') {
+                processingInstance = undefined;
+            }
 
             if( isCanvas.length ) {
                 isCanvas.remove();
@@ -122,11 +125,26 @@ var doRender = function(stackList) {
 
             wheelEventLocker();
             var sCanvas = $('<canvas />').attr('id', 'canvasRender');
-                sCanvas.attr('ontouchstart', 'touchStart(event);')
+                /*sCanvas.attr('ontouchstart', 'touchStart(event);')
                 .attr('ontouchmove', 'touchMove(event);')
                 .attr('ontouchend', 'touchEnd(event);')
-                .attr('ontouchcancel', 'touchCancel(event);');
+                .attr('ontouchcancel', 'touchCancel(event);'); */
+
             $('#srender').append( sCanvas );
+
+            sCanvas.bind('touchstart', function(e) {
+                touchStart(e.originalEvent);
+            });
+            sCanvas.bind('touchmove', function(e) {
+                touchMove(e.originalEvent);
+            });
+            sCanvas.bind('touchend', function(e) {
+                touchEnd(e.originalEvent);
+            });
+            sCanvas.bind('touchcancel', function(e) {
+                touchCancel(e.originalEvent);
+            });
+
 
             var p = new Processing( sCanvas.get(0), executableCode );
 

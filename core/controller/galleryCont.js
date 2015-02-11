@@ -17,7 +17,7 @@ var controller = {
 
         var opt = {
 
-            extraJS : [ 'freeDraw/FBlock.js', 'freeDraw/processing.js', 'gallery.js', 'fotorama.js'],
+            extraJS : [ 'freeDraw/FBlock.js', 'freeDraw/processing.js', 'gallery.js', 'fotorama.js' , 'freeDraw/processing_touchevent.js'],
             extraCSS : [ 'fotorama.css'],
             member : sess.member
         };

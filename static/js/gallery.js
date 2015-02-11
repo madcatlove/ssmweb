@@ -52,7 +52,7 @@ function galleryLoader(page) {
 function updateBlockRender( blockSeq ) {
 
     var blockTempItem = galleryBlockData[blockSeq];
-    console.log('called updateBlockRender : ', blockSeq, blockTempItem);
+    //console.log('called updateBlockRender : ', blockSeq, blockTempItem);
 
     var $stacklist = $('#stacklist'); // 스택 리스트 Division
     var stacklist_width = $stacklist.width();
@@ -154,6 +154,10 @@ var doRender = function(stackList) {
                 isCanvas.remove();
             }
 
+            if( typeof processingInstance !== 'undefined') {
+                processingInstance = undefined;
+            }
+
 
             /**
              * ontouchstart="touchStart(event);"
@@ -163,10 +167,24 @@ var doRender = function(stackList) {
              * @type {*|jQuery}
              */
             var sCanvas = $('<canvas />').attr('id', 'canvasRender');
-            sCanvas.attr('ontouchstart', 'touchStart(event);')
+            /*sCanvas.attr('ontouchstart', 'touchStart(event);')
                 .attr('ontouchmove', 'touchMove(event);')
                 .attr('ontouchend', 'touchEnd(event);')
-                .attr('ontouchcancel', 'touchCancel(event);');
+                .attr('ontouchcancel', 'touchCancel(event);');*/
+
+            sCanvas.bind('touchstart', function(e) {
+                touchStart(e.originalEvent);
+            });
+            sCanvas.bind('touchmove', function(e) {
+                touchMove(e.originalEvent);
+            });
+            sCanvas.bind('touchend', function(e) {
+                touchEnd(e.originalEvent);
+            });
+            sCanvas.bind('touchcancel', function(e) {
+                touchCancel(e.originalEvent);
+            });
+
             $('#srender').append( sCanvas );
 
             var p = new Processing( sCanvas.get(0), executableCode );
