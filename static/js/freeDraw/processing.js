@@ -15883,7 +15883,7 @@ module.exports = function setupParser(Processing, options) {
     Drawing3D.prototype.stroke = function() {
       DrawingShared.prototype.stroke.apply(this, arguments);
       strokeStyle = p.color.toGLArray(currentStrokeColor);
-        console.log( ' stroke style ' , strokeStyle );
+        //console.log( ' stroke style ' , strokeStyle );
 
     };
 
