@@ -530,7 +530,7 @@ extraInfo = {
         edit : 'light/edit.png'
     }
 }
-FBlock.TYPE.DIRECTIONALLIGHT = createFBlockInfo('DirectionalLight', 13, 'RGB,intensity,nx,ny,nz', 'hex,float,float,float,float', extraInfo);
+FBlock.TYPE.DIRECTIONALLIGHT = createFBlockInfo('DirectionalLight', 13, 'RGB,nx,ny,nz', 'hex,float,float,float', extraInfo);
 
 extraInfo = {
     image : {
