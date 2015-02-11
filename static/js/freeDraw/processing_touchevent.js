@@ -15,8 +15,8 @@ function setLastXY(event){
     var x = event.touches[0].pageX;
     var y = event.touches[0].pageY;
 
-    processingInstance.pmouseX = x/50;
-    processingInstance.pmouseY = y/50;
+    processingInstance.pmouseX = x/10 * -1.0;
+    processingInstance.pmouseY = y/10 * -1.0;
 }
 
 function setFirstXY(event){
@@ -28,8 +28,8 @@ function setFirstXY(event){
     var x = event.touches[0].pageX;
     var y = event.touches[0].pageY;
 
-    processingInstance.mouseX = x/50;
-    processingInstance.mouseY = y/50;
+    processingInstance.mouseX = x/10 * -1.0;
+    processingInstance.mouseY = y/10 * -1.0;
 }
 
 function setFirstY(value){
@@ -37,7 +37,7 @@ function setFirstY(value){
         processingInstance = Processing.getInstanceById('canvasRender');
     }
 
-    processingInstance.pmouseY = value/50;
+    processingInstance.pmouseY = value;
 }
 
 function setLastY(value){
@@ -45,7 +45,7 @@ function setLastY(value){
         processingInstance = Processing.getInstanceById('canvasRender');
     }
 
-    processingInstance.mouseY = value/50;
+    processingInstance.mouseY = value;
 };
 
 
