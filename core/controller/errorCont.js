@@ -4,6 +4,7 @@
  */
 
 var u = require('../Util');
+var app = require('express')();
 
 var controller = {
 
@@ -31,13 +32,19 @@ var controller = {
      */
     errorHandler : function(err, req, res, next) {
 
-
+        console.log( app.get('env') );
         console.error(' //----- ERROR HANDLER ------// ');
         console.error( err );
         console.error( err.stack );
 
+        if( !err.hasOwnProperty('status') || typeof err.status === 'undefined' ) {
+            err.status = 500;
+        }
+        if( !err.hasOwnProperty('message') || typeof err.message === 'undefined') {
+            err.message = ' 내부서버 오류 ';
+        }
 
-        res.status(err.status || 500);
+        res.status(err.status);
 
         /* 에러에 eType 가 있고 internal 값을 가지고있으면 JSON 으로 렌더링 */
         if( err.hasOwnProperty('eType') && err.eType == 'internal' ) {

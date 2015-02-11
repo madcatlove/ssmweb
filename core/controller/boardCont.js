@@ -15,13 +15,15 @@ var controller = {
      */
     getArticleListView : function(req, res) {
         var memberSession = req.session.member;
-        var page = req.param('page') || 1;
+        var page = req.query.page || 1;
 
         var opt = {
             member : memberSession,
             tid : req.tid,
             page : page,
-            extraJS : ['board.js']
+            extraJS : ['board.js'],
+            tutorialChapterList : null,
+            tutorialTitle : ''
         };
 
         async.waterfall([
@@ -29,6 +31,19 @@ var controller = {
             function makeChapterList( _callback) {
                 tutorialService.getTutorialChapterList( function(result) {
                     opt.tutorialChapterList = result;
+                    _callback( null );
+                })
+            },
+
+            /* 튜토리얼 제목 가져옴 */
+            function tutorialTitle( _callback) {
+                tutorialService.getTutorialInfo(req.tid, function(result) {
+                    if( result && result.hasOwnProperty('chapterName') && result.hasOwnProperty('title') ) {
+                        opt.tutorialTitle = result.chapterName + ' - ' + result.title;
+                    }
+                    else {
+                        throw u.error(u.ETYPE.FORBID.message , u.ETYPE.FORBID.errorCode, true);
+                    }
                     _callback( null );
                 })
             }
