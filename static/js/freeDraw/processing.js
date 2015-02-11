@@ -2007,7 +2007,7 @@ module.exports = function(options,undef) {
 
       // set up the template element
       var element = document.createElement("span");
-      element.style.cssText = 'position: absolute; top: 0; left: 0; opacity: 0; font-family: "PjsEmptyFont", fantasy;';
+      element.style.cssText = 'display:none; position: absolute; top: 0; left: 0; opacity: 0; font-family: "PjsEmptyFont", fantasy;';
       element.innerHTML = "AAAAAAAA";
       document.body.appendChild(element);
       this.template = element;
@@ -15883,7 +15883,7 @@ module.exports = function setupParser(Processing, options) {
     Drawing3D.prototype.stroke = function() {
       DrawingShared.prototype.stroke.apply(this, arguments);
       strokeStyle = p.color.toGLArray(currentStrokeColor);
-        console.log( ' stroke style ' , strokeStyle );
+        //console.log( ' stroke style ' , strokeStyle );
 
     };
 
