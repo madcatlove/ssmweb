@@ -333,10 +333,6 @@ void drawLine(float x1, float y1, float z1, float x2, float y2, float z2) {
   // root move
   translate(x1,-y1,z1);
 
-  // rotate
-  println("angleY : " + angleY);
-  println("angleZ : " + angleZ);
-
   if(v3.z>=0){
       rotateY(radians(-angleY));
   }
