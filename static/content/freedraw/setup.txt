@@ -254,13 +254,13 @@ void setupAxis() {
   // axis indicator
   pushMatrix();
   for(int i=1; i<length; i++;){
-    translate(50,0,0);
+    translate(100,0,0);
     box(1,10,1);
   }
   popMatrix();
   pushMatrix();
   for(int i=1; i<length; i++;){
-     translate(-50,0,0);
+     translate(-100,0,0);
      box(1,10,1);
   }
   popMatrix();
@@ -277,13 +277,13 @@ void setupAxis() {
     // axis indicator
     pushMatrix();
     for(int i=1; i<length; i++;){
-      translate(0,-50,0);
+      translate(0,-100,0);
       box(10,1,1);
     }
     popMatrix();
     pushMatrix();
     for(int i=1; i<length; i++;){
-       translate(0,50,0);
+       translate(0,100,0);
        box(10,1,1);
     }
     popMatrix();
@@ -299,13 +299,13 @@ void setupAxis() {
     // axis indicator
     pushMatrix();
     for(int i=1; i<length; i++;){
-      translate(0,0,50);
+      translate(0,0,100);
       box(1,10,1);
     }
     popMatrix();
     pushMatrix();
     for(int i=1; i<length; i++;){
-       translate(0,0,-50);
+       translate(0,0,-100);
        box(1,10,1);
     }
     popMatrix();
