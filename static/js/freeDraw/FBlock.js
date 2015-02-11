@@ -530,7 +530,7 @@ extraInfo = {
         edit : 'light/edit.png'
     }
 }
-FBlock.TYPE.DIRECTIONALLIGHT = createFBlockInfo('DirectionalLight', 13, 'RGB,intensity,nx,ny,nz', 'hex,float,float,float,float', extraInfo);
+FBlock.TYPE.DIRECTIONALLIGHT = createFBlockInfo('DirectionalLight', 13, 'RGB,nx,ny,nz', 'hex,float,float,float', extraInfo);
 
 extraInfo = {
     image : {
@@ -608,8 +608,8 @@ var processingMapper = function( item ) {
             str = sFormat('box(?,?,?);', [data.width, data.height, data.depth]);
             break;
         case 3 :
-            str = sFormat('sphere(?);', [data.radius]);
-            str += sFormat('sphereDetail(?,?);', [data.ures, data.vres]);
+            str = sFormat('sphereDetail(?,?);', [data.ures, data.vres]);
+            str += sFormat('sphere(?);', [data.radius]);
             break;
         case 4 :
             str = sFormat('pushMatrix();');
@@ -649,14 +649,16 @@ var processingMapper = function( item ) {
             // /camera(width/2.0, height/2.0, (height/2.0) / tan(PI*60.0 / 360.0), width/2.0, height/2.0, 0, 0, 1, 0);
             break;
         case 13 :
+            str += sFormat('lightFalloff(1.0, 0.0, 0.0);', [data.intensity]);
             str = sFormat('directionalLight(?,?,?,?,?,?);', [(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
             data.rgb & 0x0000FF, data.nx, -data.ny, data.nz]);
-            str += sFormat('lightFalloff(?, 0.0, 0.0);', [data.intensity]);
+
             break;
         case 14 :
-            str = sFormat('spotLight(?,?,?,?,?,?,?,?,?,?,?);', [ (data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
+            str = sFormat('lightFalloff((0.1+?), 0.0, 0.0);', [data.intensity]);
+            str += sFormat('spotLight(?,?,?,?,?,?,?,?,?,?,?);', [ (data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8,
                 data.rgb & 0x0000FF , data.x, -data.y, data.z, data.nx, -data.ny, data.nz, data.angle, data.exponent]);
-            str += sFormat('lightFalloff(?, 0.0, 0.0);', [data.intensity]);
+
             break;
         case 15 :
             str = sFormat('fill(?,?,?);',[(data.rgb & 0xFF0000) >> 16 , (data.rgb & 0x00FF00) >> 8, data.rgb & 0x0000FF]);

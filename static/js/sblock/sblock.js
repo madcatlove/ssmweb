@@ -163,7 +163,7 @@ var getBlockInfo = (function() {
     blockInfo.push( createBlockInfo( 13, blockNameList[13], 3, ['fov', 'near', 'far'])); //PERSPECTIVE
     blockInfo.push( createBlockInfo( 14, blockNameList[14], 6, ['left','right','bottom','top','near','far'])); // ORTHOGRAPHIC
     blockInfo.push( createBlockInfo( 15, blockNameList[15], 3, ['x','y','z'])); // LOOKAT
-    blockInfo.push( createBlockInfo( 16, blockNameList[16], 2, ['hex','intensity'])); // DIRECTIONAL LIGHT
+    blockInfo.push( createBlockInfo( 16, blockNameList[16], 1, ['hex'])); // DIRECTIONAL LIGHT
     blockInfo.push( createBlockInfo( 17, blockNameList[17], 4, ['hex','intensity','angle','exp'])); // SPOT LIGHT
     blockInfo.push( createBlockInfo( 18, blockNameList[18], 3, ['x','y','z'])); // CAMERA POSITION
     blockInfo.push( createBlockInfo( 19, blockNameList[19], 3, ['x','y','z'])); // LIGHT POSITION
