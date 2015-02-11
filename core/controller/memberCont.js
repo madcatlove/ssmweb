@@ -20,6 +20,12 @@ var controller = {
         u.assert( s_userid.length > 0 , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
         u.assert( s_userpwd.length > 0 && s_userpwd == s_userpwd2, u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
 
+        // 아이디에 불필요한 문자가 들어가있는지?
+        var idRegex = /<(.|\n)*?>/gi;
+        if( idRegex.test(s_userid) ) {
+            throw u.error( u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
+        }
+
         var member = {
             userid: s_userid,
             userpwd : s_userpwd
@@ -91,6 +97,13 @@ var controller = {
 
         u.assert( s_userid.length > 0 , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
         u.assert( s_userpwd.length > 0 , u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
+
+        // 아이디에 불필요한 문자가 들어가있는지?
+        var idRegex = /<(.|\n)*?>/gi;
+        if( idRegex.test(s_userid) ) {
+            throw u.error( u.ETYPE.FORBID.message, u.ETYPE.FORBID.errorCode);
+        }
+
 
         var sParam = {
             userid : s_userid,
