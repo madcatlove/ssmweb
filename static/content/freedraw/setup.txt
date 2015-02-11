@@ -11,8 +11,8 @@ void setup() {
   VIEW_WIDTH = #_WIDTH_#;
   VIEW_HEIGHT = #_HEIGHT_#;
   size(VIEW_WIDTH, VIEW_HEIGHT, P3D);
-  myCam = new Camera(200, true);
-  myCam.setTarget( 0, 0, 0 );
+  myCam = new Camera(700, true);
+  myCam.setTarget( 0, -200, 0 );
   hint(ENABLE_OPENGL_4X_SMOOTH);
 }
 
@@ -42,12 +42,7 @@ void mouseScrolled(MouseEvent evt) {
 // Camera change
 void keyPressed() {
   if (key == 'R' || key == 'r') {
-    if (autoCamera){
-      autoCamera = false;
-      }
-    else{
-      autoCamera = true;
-     }
+     myCam.setTarget( 0, -200, 0 );
   }
 
         if (key == CODED)
