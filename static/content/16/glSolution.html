@@ -1,12 +1,12 @@
 /******** 16단계 : Spot Light  ********/
 // light info.
-GLfloat diffuse0[]={1.0, 1.0, 0.0, 0.5};
-GLfloat ambient0[]={1.0, 0.0, 0.0, 0.5};
-GLfloat specular0[]={1.0, 1.0, 0.0, 0.5};
+GLfloat diffuse0[]={0.0, 1.0, 0.0, 0.5};
+GLfloat ambient0[]={0.0, 1.0, 0.0, 0.5};
+GLfloat specular0[]={0.0, 1.0, 0.0, 0.5};
 GLfloat cutoff = 80.0;
 GLfloat exponet = 15.0;
 GLfloat lightConstant = 1.0;
-GLfloat light0_direction[]={-1.0,-1.0,-1.0};
+GLfloat light0_direction[]={-1.0,-1.0,1.0};
 GLfloat light0_pos[]={10.0, 10.0, -10.0, 1.0};
 
 void Display()
@@ -22,13 +22,13 @@ void Display()
     glLightfv(GL_LIGHT0, GL_CUTOFF, cutoff);
     glLightfv(GL_LIGHT0, GL_EXPONENT, exponent);
 
-    glLightfv(GL_LIGHT0, GL_CONSTANT_ATTENUNATION, lightConstant);
-    glLightfv(GL_LIGHT0, GL_DIRECTION,light0_direction);
-    glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);
+    glLightfv(GL_LIGHT0, GL_CONSTANT_ATTENUNATION, lightConstant);   // intensity 조절
+    glLightfv(GL_LIGHT0, GL_DIRECTION,light0_direction);    // 방향
+    glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);       // 위치
 
     // material
-    GLfloat ambient[] = {0.2, 0.2, 0.2, 1.0};
-    GLfloat diffuse[] = {1.0, 0.8, 0.0, 1.0};
+    GLfloat ambient[] = {1.0, 1.0, 0.2, 1.0};
+    GLfloat diffuse[] = {1.0, 1.0, 0.0, 1.0};
     GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat shine = 100.0;
 
