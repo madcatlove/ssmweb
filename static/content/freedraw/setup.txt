@@ -357,13 +357,36 @@ void drawLine(float x1, float y1, float z1, float x2, float y2, float z2) {
   popMatrix();
 }
 
-void gridHelper(int size){
-  int gridSize = size;
-    stroke();
-  for (int i = 0; i <= width/gridSize; i++)
-    line(i*gridSize, 0, i*gridSize, height-10);
-  for (int i = 0; i <= height/gridSize; i++)
-    line(0, i*gridSize, width-42, i*gridSize);
+void gridHelper(){
+  stroke();
+  pushMatrix();
+  for(int i=1; i<=5; i++){
+    translate(50,0,0);
+    line(0,0,-250,0,0,250);
+  }
+  popMatrix();
+  pushMatrix();
+    for(int i=1; i<=5; i++){
+      translate(-50,0,0);
+      line(0,0,-250,0,0,250);
+    }
+  popMatrix();
+  pushMatrix();
+  for(int i=1; i<=5; i++){
+      translate(0,0,50);
+      line(250,0,0,-250,0,0);
+    }
+  popMatrix();
+  pushMatrix();
+  for(int i=1; i<=5; i++){
+      translate(0,0,-50);
+      line(250,0,0,-250,0,0);
+    }
+  popMatrix();
+
+
+
+
   noStroke();
 }
 
