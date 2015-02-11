@@ -12,15 +12,18 @@
   smooth();
 
   background(0);
- // translate(width/2, height/2);
+
+  // draw grid
   pushMatrix();
   rotateX(radians(90));
   translate(-width/2,-height/2);
   gridHelper(50);
   popMatrix();
+
+
   pushMatrix();
   setupAxis();
-  drawSomeCubes();
+
 
 
 

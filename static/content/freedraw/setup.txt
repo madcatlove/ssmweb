@@ -12,7 +12,7 @@ void setup() {
   VIEW_HEIGHT = #_HEIGHT_#;
   size(VIEW_WIDTH, VIEW_HEIGHT, P3D);
   myCam = new Camera(200, true);
-  myCam.setTarget( 100, -100, 100 );
+  myCam.setTarget( 0, 0, 0 );
   hint(ENABLE_OPENGL_4X_SMOOTH);
 }
 
@@ -128,15 +128,15 @@ class Camera
 
   void pan(float dx, float dy)
   {
-    this.transX += dx *cos(currAngleZ) ;//+dx*sin(currAngleX);
-    this.transY += -dx*sin(currAngleZ)  +dy * cos(currAngleX);
-    this.transZ += -dy *sin(currAngleX) ;
+    this.transX += dx *cos(currAngleY) ;//+dx*sin(currAngleX);
+    this.transY += -dy *sin(currAngleX) ;
+    this.transZ += dx*sin(currAngleY)  +-dy * cos(currAngleX);
   }
 
   void orbit(float dx, float dy)
   {
-    this.rotCamY(-dx *rotationSpeed);
-    this.rotCamZ(-dy *rotationSpeed);
+    this.rotCamY(dx *rotationSpeed);
+    this.rotCamX(-dy *rotationSpeed);
   }
 
   void setTarget(float x, float y, float z)
@@ -368,26 +368,12 @@ void drawLine(float x1, float y1, float z1, float x2, float y2, float z2) {
 
 void gridHelper(int size){
   int gridSize = size;
+    stroke();
   for (int i = 0; i <= width/gridSize; i++)
     line(i*gridSize, 0, i*gridSize, height);
   for (int i = 0; i <= height/gridSize; i++)
     line(0, i*gridSize, width, i*gridSize);
+  noStroke();
 }
-void drawSomeCubes()
-{
-        float offset = 100;
-        noStroke();
-        stroke(255, 40);
-        for (int i=0; i<5; i++)
-        {
-                for (int k=0; k<5; k++)
-                {
-                        for (int m=0; m<5; m++)
-                        {
-                                color c = color( i * (255/5), k * (255/5), m * (255/5) );
-                                fill( c );
-                              //  cube(offset *i, offset*k, offset* m, 20);
-                        }
-                }
-        }
-}
+
+
