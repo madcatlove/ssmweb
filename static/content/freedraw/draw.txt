@@ -16,8 +16,8 @@
   // draw grid
   pushMatrix();
   rotateX(radians(90));
-  translate(-width/2-5,-height/2+5);
-  gridHelper(25);
+  translate(-width/2+21,-height/2+2);
+  gridHelper(50);
   popMatrix();
 
 
