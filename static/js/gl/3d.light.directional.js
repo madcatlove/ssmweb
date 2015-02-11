@@ -58,7 +58,7 @@ sGL.prototype.initCamera = function() {
     //-----------------------------
     // 빛 추가
     //-----------------------------
-    this.light = new THREE.DirectionalLight(0xffffff,0.5);
+    this.light = new THREE.DirectionalLight(0xffffff,1.0);
     this.light.position.set(100, 100, 100 );
     this.light.castShadow = true;
     this.light.shadowDarkness = 0.5;
@@ -210,8 +210,6 @@ sGL.prototype.run = function() {
             else if( item.blockType == self.DIRECTIONALLIGHT ) {
                 var hex = item.data.hex;
                 self.light.color.setHex(hex);
-
-
             }
 
         }
