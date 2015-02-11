@@ -450,7 +450,6 @@ var judgeChpt3 = {
             if (data[i].blockType == jUtils.DIRECTIONALLIGHT) {
 
                 cmpVals.push([data[i].data.hex, dirLight.hex]);
-                cmpVals.push([data[i].data.intensity, dirLight.intensity]);
 
             } else {
 
