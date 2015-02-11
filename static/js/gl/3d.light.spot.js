@@ -214,7 +214,7 @@ sGL.prototype.run = function() {
                     exp = item.data.exp;
 
                 self.light.color.setHex(hex);
-                self.light.intensity = intensity;
+                self.light.intensity = 1/intensity;
                 self.light.angle = angle*Math.PI/180;
                 self.light.exponent = exp;
             }

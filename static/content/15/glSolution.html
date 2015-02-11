@@ -5,7 +5,6 @@ GLfloat ambient0[]={0.0, 0.0, 1.0, 1.0};
 GLfloat specular0[]={0.0, 0.0, 1.0, 1.0};
 GLfloat light0_pos[]={-10.0, -10.0, -10.0, 1.0};
 GLfloat light0_direction[]={1.0,1.0,1.0};
-GLfloat lightConstant = 1.0;
 
 void Display()
 {
@@ -17,7 +16,6 @@ void Display()
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient0);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse0);
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular0);
-    glLightfv(GL_LIGHT0, GL_CONSTANT_ATTENUNATION, lightConstant);
     glLightfv(GL_LIGHT0, GL_DIRECTION, light0_direction);
     glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);
 

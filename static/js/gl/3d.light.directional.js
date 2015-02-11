@@ -197,7 +197,7 @@ sGL.prototype.run = function() {
                 self.light.position.set(x,y,z);
             }
             else if( item.blockType == self.LIGHTDIRECTION ) {
-                console.log( ' sdfsd f? ')
+
                 var x = item.data.x,
                     y = item.data.y,
                     z = item.data.z;
@@ -208,11 +208,9 @@ sGL.prototype.run = function() {
                 self.light.target.position.set( x, y, z );
             }
             else if( item.blockType == self.DIRECTIONALLIGHT ) {
-                var hex = item.data.hex,
-                    intensity = item.data.intensity;
-
+                var hex = item.data.hex;
                 self.light.color.setHex(hex);
-                self.light.intensity = intensity;
+
 
             }
 
