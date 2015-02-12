@@ -354,7 +354,7 @@ function updateHiddenForm( $blockObj, $modalForm ) {
                 return false;
             }
 
-            if( /([^0-9\.])+/g.test( item.val() ) )  {
+            if( /([^0-9\.\-])+/g.test( item.val() ) )  {
                 return false;
             }
         }

@@ -26,10 +26,46 @@ function initTutorialInfo(tid) {
             // OpenGL 코드는 전역으로 관리.
             _glSourceCode = data.glSolution;
 
-            $('#tutorialModal .guideContent').html( guide_content );
-            $('#tutorialModal .guideContent img').load( function() {
-                $('#tutorialModal')
-            })
+
+            var $tutorialModal = $('#tutorialModal .guideContent'),
+                $tutorialImgModalContext = $('img', $tutorialModal);
+            $tutorialModal.html( guide_content );
+
+            var tutorialModalFunc = function() {
+                BootstrapDialog.show({
+                    type : BootstrapDialog.TYPE_INFO,
+                    nl2br : false,
+                    message : function(dialog) {
+                        return guide_content;
+                    },
+                    buttons: [{
+                        label: ' 닫기 ',
+                        cssClass : 'btn-success',
+                        action: function(dialog){
+                            dialog.close();
+                        }
+                    }]
+                });
+            }
+
+            if( $tutorialImgModalContext.length ) {
+                var firstModalLoader = +function() {
+                    var count = 0;
+                    return function() {
+                        count++;
+                        if( count == $tutorialImgModalContext.length) {
+                            tutorialModalFunc();
+                        }
+                    }
+                }();
+
+                $tutorialImgModalContext.load(function () {
+                    firstModalLoader();
+                })
+            }
+            else {
+                tutorialModalFunc();
+            }
 
 
             //----------------------------------------------------------
@@ -138,13 +174,14 @@ function initTutorialInfo(tid) {
 $(document).ready( function() {
 
     // 시작하자마자 모달창 띄움.
+    /*
     if( typeof isBlocked === 'undefined') {
         $('#tutorialModal').modal({
             backdrop: 'static',
             //keyboard: false,
             show: true
         });
-    }
+    }*/
 
     $('.selectpicker').change( function(e) {
         var current = $(this).find('option:selected');
