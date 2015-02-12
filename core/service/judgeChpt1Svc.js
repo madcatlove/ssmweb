@@ -22,16 +22,16 @@ var judgeChpt1 = {
         for (var i = 0 ; i < data.length ; i ++) {
             if (data[i].blockType == jUtils.VERTEX2) {
 
-                var cmpVals = [];
+                for (var j = 0 ; j < points.length; j++) {
+                    var cmpVals = [];
 
-                cmpVals.push([data[i].data.x, points[i].x]);
-                cmpVals.push([data[i].data.y, points[i].y]);
+                    cmpVals.push([data[i].data.x, points[j].x]);
+                    cmpVals.push([data[i].data.y, points[j].y]);
 
-                if (!jMath.isEqualFloat(cmpVals)) {
-
-                    messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
-                    break;
-
+                    if (jMath.isEqualFloat(cmpVals)) {
+                        points.splice(j,1);
+                        break;
+                    }
                 }
 
             } else {
@@ -40,6 +40,10 @@ var judgeChpt1 = {
 
             }
 
+        }
+
+        if (points.length != 0) {
+            messages.push(jUtils.MSG_WRONG_BLOCK_PARAMS);
         }
 
         callback(messages);
