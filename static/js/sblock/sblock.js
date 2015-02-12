@@ -344,7 +344,7 @@ function updateHiddenForm( $blockObj, $modalForm ) {
                 return false;
             }
 
-            if( !(/^0x[0-9a-f]{2}[0-9a-f]{2}[0-9a-f]{2}$/gi.test(currentValue)) ) {
+            if( !(/^0x[0-9a-f]{2}[0-9a-f]{2}[0-9a-f]{2}$/gi.test( item.val() )) ) {
                 return false;
             }
 
@@ -354,7 +354,7 @@ function updateHiddenForm( $blockObj, $modalForm ) {
                 return false;
             }
 
-            if( /([^0-9\.])+/g.test(currentValue) )  {
+            if( /([^0-9\.])+/g.test( item.val() ) )  {
                 return false;
             }
         }

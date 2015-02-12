@@ -14,7 +14,7 @@ function procMemberJoin() {
 
     var s_userid = userid.val().trim();
     var s_userpwd = userpwd.val().trim();
-    var s_userpwd2 = userpwd.val().trim();
+    var s_userpwd2 = userpwd2.val().trim();
 
     if( s_userid.length == 0 || s_userpwd.length == 0 || s_userpwd2 == 0) {
         alert(' 모두 입력하셔야 합니다. ');

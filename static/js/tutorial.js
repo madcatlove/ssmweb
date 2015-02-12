@@ -27,6 +27,9 @@ function initTutorialInfo(tid) {
             _glSourceCode = data.glSolution;
 
             $('#tutorialModal .guideContent').html( guide_content );
+            $('#tutorialModal .guideContent img').load( function() {
+                $('#tutorialModal')
+            })
 
 
             //----------------------------------------------------------
