@@ -224,7 +224,7 @@ FBlock.prototype.updateHiddenForm = function( container ) {
                 return false;
             }
 
-            if( /([^0-9\.])+/g.test(currentValue) )  {
+            if( /([^0-9\.\-])+/g.test(currentValue) )  {
                 returnValue = false;
                 return false;
             }
