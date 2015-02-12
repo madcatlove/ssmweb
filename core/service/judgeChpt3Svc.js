@@ -300,7 +300,6 @@ var judgeChpt3 = {
         var messages = [];
 
         var obj = extraInfo.objs[0];
-        var pers = extraInfo.pers;
         var ortho = extraInfo.ortho;
 
         for (var i = 0 ; i < data.length ; i ++) {
@@ -313,12 +312,6 @@ var judgeChpt3 = {
                 cmpVals.push([data[i].data.y, obj.y]);
                 cmpVals.push([data[i].data.z, obj.z]);
                 cmpVals.push([data[i].data.size, obj.size]);
-
-            } else if(data[i].blockType == 13) {
-
-                cmpVals.push([data[i].data.fov, pers.fov]);
-                cmpVals.push([data[i].data.near, pers.near]);
-                cmpVals.push([data[i].data.far, pers.far]);
 
             }  else if(data[i].blockType == 14) {
 
