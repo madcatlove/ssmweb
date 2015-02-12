@@ -223,9 +223,24 @@ FBlock.prototype.updateHiddenForm = function( container ) {
                 returnValue = false;
                 return false;
             }
+
+            if( /([^0-9\.])+/g.test(currentValue) )  {
+                returnValue = false;
+                return false;
+            }
         }
         else if( paramType[hParamName] == 'hex') {
             if( isNaN( Number( currentValue) ) ) {
+                returnValue = false;
+                return false;
+            }
+
+            if( Number(currentValue) < 0) {
+                returnValue = false;
+                return false;
+            }
+
+            if( !(/^0x[0-9a-f]{2}[0-9a-f]{2}[0-9a-f]{2}$/gi.test(currentValue)) ) {
                 returnValue = false;
                 return false;
             }

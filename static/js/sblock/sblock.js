@@ -343,9 +343,18 @@ function updateHiddenForm( $blockObj, $modalForm ) {
             else if( hVal < 0 ) {
                 return false;
             }
+
+            if( !(/^0x[0-9a-f]{2}[0-9a-f]{2}[0-9a-f]{2}$/gi.test(currentValue)) ) {
+                return false;
+            }
+
         }
         else {
             if( isNaN( parseFloat( item.val() ) ) ) {
+                return false;
+            }
+
+            if( /([^0-9\.])+/g.test(currentValue) )  {
                 return false;
             }
         }
