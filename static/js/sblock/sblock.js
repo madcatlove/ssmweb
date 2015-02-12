@@ -334,6 +334,7 @@ function updateHiddenForm( $blockObj, $modalForm ) {
         var item = modalInput.eq(i),
             hParamName = item.attr('data-paramname');
 
+
         //---- 유효성 검사 ----
         if( hParamName == 'hex') {
             var hVal = Number( item.val() );
@@ -350,13 +351,25 @@ function updateHiddenForm( $blockObj, $modalForm ) {
 
         }
         else {
+            if( /^(R|Lo|La|intensity)$/i.test(hParamName) ) {
+                if( parseFloat( item.val() ) < 0 ) {
+                    return false;
+                }
+            }
+
             if( isNaN( parseFloat( item.val() ) ) ) {
                 return false;
             }
 
-            if( /([^0-9\.\-])+/g.test( item.val() ) )  {
+
+            var floatRegex = /^[+-]?\d+(\.?\d*)$/i;
+            if( !floatRegex.test( item.val() ) ) {
                 return false;
             }
+
+            //if( /([^0-9\.\-])+/g.test( item.val() ) )  {
+            //    return false;
+            //}
         }
         modalFormValue[ hParamName ] = item.val() || 0;
     }

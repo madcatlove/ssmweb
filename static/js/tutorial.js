@@ -54,7 +54,7 @@ function initTutorialInfo(tid) {
                     return function() {
                         count++;
                         if( count == $tutorialImgModalContext.length) {
-                            tutorialModalFunc();
+                            if( typeof isBlocked === 'undefined' ) tutorialModalFunc();
                         }
                     }
                 }();
@@ -64,7 +64,7 @@ function initTutorialInfo(tid) {
                 })
             }
             else {
-                tutorialModalFunc();
+                if( typeof isBlocked === 'undefined' ) tutorialModalFunc();
             }
 
 

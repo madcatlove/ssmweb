@@ -224,10 +224,16 @@ FBlock.prototype.updateHiddenForm = function( container ) {
                 return false;
             }
 
-            if( /([^0-9\.\-])+/g.test(currentValue) )  {
-                returnValue = false;
+            //if( /([^0-9\.\-])+/g.test(currentValue) )  {
+            //    returnValue = false;
+            //    return false;
+            //}
+
+            var floatRegex = /^[+-]?\d+(\.?\d*)$/i;
+            if( !floatRegex.test( currentValue ) ) {
                 return false;
             }
+
         }
         else if( paramType[hParamName] == 'hex') {
             if( isNaN( Number( currentValue) ) ) {
