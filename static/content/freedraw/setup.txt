@@ -238,13 +238,13 @@ class Camera
 }
 /********************************************* Camera End *********************************************/
 void setupAxis() {
-  int length = 50;
+  int length = 16;
 
   noStroke();
   smooth();
   // X축
   fill(255,0,0);
-  box(5000,1,1);
+  box(3000,1,1);
   fill(200,0,0);
   pushMatrix();
   translate(25,0,0);
@@ -268,7 +268,7 @@ void setupAxis() {
 
   // Y축
   fill(0,255,0);
-  box(1,5000,1);
+  box(1,1500,1);
   pushMatrix();
   translate(0,-25,0);
   box(10,5,5);
@@ -290,7 +290,7 @@ void setupAxis() {
 
   // Z축
   fill(0,0,255);
-  box(1,1,5000);
+  box(1,1,3000);
   pushMatrix();
   translate(0,0,25);
   box(5,10,5);
