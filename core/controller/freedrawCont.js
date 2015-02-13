@@ -33,6 +33,23 @@ var controller = {
                 })
             },
 
+            /* 접근 가능한 레벨인지 */
+                /*
+            function validLevelForFreedraw( _callback) {
+                tutorialService.getTutorialProgressInfo(sess.member, function(result) {
+                    if( typeof result === 'undefined' ) throw u.error(u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode , true);
+
+                    // 접근 가능하지 않다면.
+                    for(var key in result) {
+                        if( !result[key] ) {
+                            throw u.error(u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode , true);
+                        }
+                    }
+
+
+                    _callback( null );
+                })
+            } */
 
         ],
             /* 최종 실행 콜백 */
@@ -79,7 +96,25 @@ var controller = {
                     opt.slotData = result.data;
                     _callback(null);
                 })
-            }
+            },
+
+            /* 접근 가능한 레벨인지 */
+            /*
+             function validLevelForFreedraw( _callback) {
+             tutorialService.getTutorialProgressInfo(sess.member, function(result) {
+             if( typeof result === 'undefined' ) throw u.error(u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode , true);
+
+             // 접근 가능하지 않다면.
+             for(var key in result) {
+             if( !result[key] ) {
+             throw u.error(u.ETYPE.UNAUTH.message, u.ETYPE.UNAUTH.errorCode , true);
+             }
+             }
+
+
+             _callback( null );
+             })
+             } */
 
         ],
             function finalExec(err, result) {
