@@ -39,7 +39,7 @@ else {
     var server = http.createServer(app);
     server.listen(port, function() {
         var message = ' WORKER ' +
-                    cluster.worker.workerID +
+                    cluster.worker.id +
                     ' ( PID : \u001b[96m' + cluster.worker.process.pid + '\u001b[0m ) ' +
                     ' \u001b[32mONLINE\u001b[0m ';
         console.info( message );
